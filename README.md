@@ -2,6 +2,7 @@
 ## Team 9
 ### Class
 CS 3354.002
+### Project Thresh
 ### Team Members
 - Neel 
 - Isaac Philo
