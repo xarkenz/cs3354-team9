@@ -6,7 +6,7 @@ CS 3354.002
 - Neel 
 - Isaac Philo
 - Aaryaa 
-- Sarah 
+- Sarah Jacob
 - Elizah 
 - Syed 
 - Sean 
