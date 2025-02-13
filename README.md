@@ -5,7 +5,7 @@ CS 3354.002
 ### Team Members
 - Neel 
 - Isaac Philo
-- Aaryaa 
+- Aaryaa Moharir
 - Sarah Jacob
 - Elizah 
 - Syed 
