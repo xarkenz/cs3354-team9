@@ -8,7 +8,7 @@ CS 3354.002
 - Isaac Philo
 - Aaryaa Moharir
 - Sarah Jacob
-- Elizah 
+- Eliza Heasley
 - Syed 
 - Sean 
 - Kutsal 
