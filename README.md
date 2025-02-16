@@ -10,5 +10,5 @@ CS 3354.002
 - Sarah Jacob
 - Eliza Heasley
 - Syed 
-- Sean 
+- Sean Clarke
 - Kutsal Aksu
