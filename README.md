@@ -11,4 +11,4 @@ CS 3354.002
 - Eliza Heasley
 - Syed 
 - Sean 
-- Kutsal 
+- Kutsal Aksu
