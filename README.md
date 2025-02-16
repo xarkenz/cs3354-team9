@@ -4,7 +4,7 @@
 CS 3354.002
 ### Project Thresh
 ### Team Members
-- Neel 
+- Neel Suresh 
 - Isaac Philo
 - Aaryaa Moharir
 - Sarah Jacob
