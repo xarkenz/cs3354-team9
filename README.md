@@ -9,6 +9,6 @@ CS 3354.002
 - Aaryaa Moharir
 - Sarah Jacob
 - Eliza Heasley
-- Syed 
+- Syed Hasan
 - Sean Clarke
 - Kutsal Aksu
