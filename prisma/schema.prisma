@@ -23,7 +23,8 @@ model Business{
 model User{
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  username  String?
+  username  String
+  password String
   reviews   Review[]
 }
 
