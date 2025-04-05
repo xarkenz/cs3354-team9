@@ -44,7 +44,7 @@ export default {
       successMessage: ''
     };
   },
-    created() {
+  created() {
     // When the components are created, we fetch the list of flagged restaurants.
     this.fetchFlaggedRestaurants();
   },
