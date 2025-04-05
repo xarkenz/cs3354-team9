@@ -1,5 +1,5 @@
 <template>
-<body>
+  <body>
   <div class="admin-dashboard">
     <h1>Flagged Restaurants</h1>
     <!-- List all flagged restaurants -->
