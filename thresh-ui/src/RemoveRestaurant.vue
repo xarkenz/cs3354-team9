@@ -1,4 +1,5 @@
 <template>
+<body>
   <div class="admin-dashboard">
     <h1>Flagged Restaurants</h1>
     <!-- List all flagged restaurants -->
@@ -26,6 +27,7 @@
       <p>{{ successMessage }}</p>
     </div>
   </div>
+  </body>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
 Page not found!
 </p>
 <p>
-<a href = "/">Return to home</a>
+<a href = "/#">Return to home</a>
 </p>
 </template>
 
