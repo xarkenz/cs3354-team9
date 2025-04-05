@@ -1,9 +1,8 @@
 <template>
 <body>
-<div class="inline-block align-baseline">
+<div class="inline-block align-text-middle">  
   <div><h1>Create an account</h1></div>
-  
-  <div class="Interactive Parts">
+  <div>
   <div>
     <p>Email</p>
     <input for="email" id = "emailInput" type="email">
