@@ -25,13 +25,12 @@ const currentView = computed(() => {
 
 <template>
   <header>
-    <div>
-      <a href="#/"><span>Thresh</span></a>
+    <div class = "flex items-center gap-x-3">
       <nav>
-        <ul>
-          <li><a href="#/">Home</a></li>
+        <ul class = "flex items-center gap-x-3">
           <li><a href="#/create-account">Create an account</a></li>
-          <li><a href="#/remove-restaurant">Remove a restaurant</a></li>
+          <li><a href="#/remove-restaurant">Remove a restaurant</a></li> <!-- This should later be moved to only be accessible by admins-->
+          <li><a href="#/" class = "flex items-center gap-x-3 mr-auto"><img src="./assets/THRESH textual logo.png"><img class = "size-24" src="./assets/Thresh circular logo.png"></a></li>
         </ul>
       </nav>
     </div>
