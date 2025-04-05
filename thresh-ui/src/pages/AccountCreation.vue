@@ -1,6 +1,6 @@
 <template>
 <body>
-<div class="inline-block align-text-middle">  
+<div>  
   <div><h1>Create an account</h1></div>
   <div>
   <div>
@@ -14,13 +14,10 @@
   </div>
 
   <div>
-    <button id = "signIn"> Sign in </button>
     <button id = "register"> Register </button>
   </div>
 
-  <div><a>Forgot password?</a></div>
-
-  <div><button id = "signInGoogle">Sign in with Google</button></div>
+  <div><button id = "signUpGoogle">Sign up with Google</button></div>
   </div>
 </div>
 </body>
