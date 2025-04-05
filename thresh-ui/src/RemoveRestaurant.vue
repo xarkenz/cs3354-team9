@@ -54,5 +54,7 @@ export default {
         { id: 2, name: 'Inappropriate Eatery', details: 'Flagged for fake reviews.' }
       ];
     },
-
+  }
+}
     // Opens the confirmation modal for the selected restaurant.
+</script>
