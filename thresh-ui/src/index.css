@@ -1,3 +1,10 @@
 @import "tailwindcss";
 @import "tailwindcss/preflight";
 @tailwind utilities;
+@layer base {
+    html {
+        @apply font-black;
+        @apply text-black;
+        @apply bg-lime-50;
+    }
+}

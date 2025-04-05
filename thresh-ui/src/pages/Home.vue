@@ -1,11 +1,22 @@
 <template>
   <body>
     <div class="container">
-      <h1>Thresh Homepage!</h1>
-      <p>View the pages we have created:</p>
-      <a href = "/#"> Homepage </a>
-      <a href = "/#/create-account"> Create an account </a>
-      <a href = "/#/remove-restaurant"> Remove a restaurant</a>
+      <div class="text-xl py-30 block">Thresh Homepage!</div>
+      <div>
+        <p>View the pages we have created:</p>
+        <p>
+          <a href = "/#"> Homepage </a>
+        </p>
+        <p>
+          <a href = "/#/sign-in"> Sign in </a>
+        </p>
+        <p>
+          <a href = "/#/create-account"> Create an account </a>
+        </p>
+        <p>
+          <a href = "/#/remove-restaurant"> Remove a restaurant</a>
+        </p>
+        </div>
     </div>
   </body>
 </template>

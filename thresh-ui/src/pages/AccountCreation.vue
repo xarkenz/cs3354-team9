@@ -1,24 +1,28 @@
+<!--Created by Isaac Philo for UC01: Make an account.-->
+
 <template>
 <body>
-<div>  
-  <div><h1>Create an account</h1></div>
-  <div>
-  <div>
+<div class="rounded outline-1 h-min w-full justify-center align-center text-center">  
+  <div><h1 class = "">Sign up</h1></div>
+  <div class="outline-1">
+  <div class="py-4">
     <p>Email</p>
-    <input for="email" id = "emailInput" type="email">
+    <input for="email" id = "emailInput" type="email" class="outline-1">
   </div>
-  
-  <div>
+  <div class="py-4">
+    <p>Username</p>
+    <input for="username" id = "usernameInput" type="text" class="outline-1">
+  </div>
+  <div class="py-4">
     <p>Password</p>
-    <input for="password" id = "passwordInput" type="password">
+    <input for="password" id = "passwordInput" type="password" class="outline-1">
   </div>
-
+  </div>
   <div>
-    <button id = "register"> Register </button>
+    <button id = "register" class="py-4"> Register </button>
   </div>
 
-  <div><button id = "signUpGoogle">Sign up with Google</button></div>
-  </div>
+  <div><button id = "registerGoogle" class="py-4">Sign up with Google</button></div>
 </div>
 </body>
 </template>
