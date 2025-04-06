@@ -3,7 +3,7 @@
 <template>
 <body>
 <div class="rounded outline-1 h-min w-full justify-center align-center text-center">  
-  <div><h1 class = "">Sign up</h1></div>
+  <div><h1 class = "text-xl py-2 font-semibold">Sign Up</h1></div>
   <div class="outline-1">
   <div class="py-4">
     <p>Email</p>
@@ -15,14 +15,16 @@
   </div>
   <div class="py-4">
     <p>Password</p>
-    <input for="password" id = "passwordInput" type="password" class="outline-1">
+    <input for="password" id = "passwordInput" type="password" class="outline-1 mb-4">
   </div>
   </div>
-  <div>
-    <button id = "register" class="py-4"> Register </button>
+  <div class="mt-2">
+    <button id = "register" class="my-2 py-0.5 px-2 rounded outline-2"> Register </button>
   </div>
 
-  <div><button id = "registerGoogle" class="py-4">Sign up with Google</button></div>
+  <div class="mb-2">
+    <button id = "registerGoogle" class="my-2 py-0.5 px-2 rounded outline-2">Sign up with Google</button>
+  </div>
 </div>
 </body>
 </template>

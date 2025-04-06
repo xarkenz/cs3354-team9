@@ -1,21 +1,23 @@
 <template>
   <body>
-    <div class="container">
-      <div class="text-xl py-30 block">Thresh Homepage!</div>
+    <div class="container text-center align-top">
+      <div class="text-xl py-30 block mb-5 underline">Thresh Homepage!</div>
       <div>
         <p>View the pages we have created:</p>
-        <p>
+        <ul>
+        <li>
           <a href = "/#"> Homepage </a>
-        </p>
-        <p>
+        </li>
+        <li>
           <a href = "/#/sign-in"> Sign in </a>
-        </p>
-        <p>
+        </li>
+        <li>
           <a href = "/#/create-account"> Create an account </a>
-        </p>
-        <p>
+        </li>
+        <li>
           <a href = "/#/remove-restaurant"> Remove a restaurant</a>
-        </p>
+        </li>
+        </ul>
         </div>
     </div>
   </body>
