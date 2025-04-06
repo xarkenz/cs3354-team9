@@ -1,3 +1,7 @@
+// Author: Syed Hasan
+// This code is for UC11: Remove inappropriate and/or Fake Restaurants.
+// It displays a list of flagged restaurants for the administrator and confirms the removal of a chosen restaurant.
+
 <template>
   <body>
   <div class="admin-dashboard">
@@ -31,9 +35,6 @@
 </template>
 
 <script>
-// Author: Syed Hasan
-// This code is for UC11: Remove inappropriate and/or Fake Restaurants.
-// It displays a list of flagged restaurants for the administrator and confirms removal of a chosen restaurant.
 export default {
   name: 'RemoveRestaurant',
   data() {
