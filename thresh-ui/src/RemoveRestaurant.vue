@@ -45,7 +45,7 @@ export default {
     };
   },
   created() {
-    // When the components are created, we fetch the list of flagged restaurants.
+    // When the components are created, fetch the list of flagged restaurants.
     this.fetchFlaggedRestaurants();
   },
   methods: {
@@ -56,7 +56,44 @@ export default {
         { id: 2, name: 'Inappropriate Eatery', details: 'Flagged for fake reviews.' }
       ];
     },
+    // Opens the confirmation modal (type of user interface element that appears on top of the main content) for the selected restaurant.
+    confirmRemoval(restaurant) {
+      this.restaurantToRemove = restaurant;
+      this.showConfirmModal = true;
+    },
+    // Cancels the removal action and hides the modal.
+    cancelRemoval() {
+      this.showConfirmModal = false;
+      this.restaurantToRemove = null;
+    },
+    // Removes the restaurant from the list and simulates an API deletion call.
+    removeRestaurant() {
+      // In a real app, make an API call here to remove the restaurant from the database.
+      this.flaggedRestaurants = this.flaggedRestaurants.filter(
+        r => r.id !== this.restaurantToRemove.id
+      );
+      this.successMessage = `${this.restaurantToRemove.name} has been removed successfully.`;
+      this.showConfirmModal = false;
+      this.restaurantToRemove = null;
+    }
   }
-}
-    // Opens the confirmation modal for the selected restaurant.
+};
 </script>
+
+<style scoped>
+/* Basic styling for the admin dashboard component */
+.admin-dashboard {
+  padding: 20px;
+}
+
+.modal {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.success-message {
+  margin-top: 15px;
+  color: green;
+}
+</style>
