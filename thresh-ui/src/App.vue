@@ -28,19 +28,18 @@ const currentView = computed(() => {
 </script>
 
 <template>
-  <div class="container w-screen bg-slate-50 text-black"> <!--this prevents the header from being to the left of the body but also puts everything on the left half of the page-->
-    <header class="align-top">
-      <div class="flex items-center justify-between gap-x-3 px-5 outline-1 container">
-        <nav>
-          <ul class="flex items-center gap-x-3">
-            <li class="justify-start"><a href="#/" class = "flex items-center gap-x-3 mr-auto"><img src="./assets/THRESH textual logo.png"><img class="size-18" src="./assets/Thresh circular logo.png"></a></li>
-            <li><a href="#/sign-in" class="justify-end px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">Sign In</a></li>
-            <li><a href="#/create-account" class="justify-end px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">Sign Up</a></li>
-          </ul>
-        </nav>
-      </div>
+  <div>
+    <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300">
+      <nav>
+        <ul class="flex items-center gap-x-5">
+          <li><a href="#/" class="flex items-center gap-x-3 mr-auto"><img src="./assets/THRESH textual logo.png"><img class="size-18" src="./assets/Thresh circular logo.png"></a></li>
+          <li><a href="#/create-account" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">Sign Up</a></li>
+          <li><a href="#/sign-in" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">Sign In</a></li>
+        </ul>
+      </nav>
     </header>
-
-    <component :is="currentView" class="bg-slate-50 text-black justify-center"/> <!--This is replaced with the HTML of each given page (via VueJS)-->
+    <main>
+      <component :is="currentView" class="container mx-auto p-6"/> <!--This is replaced with the HTML of each given page (via VueJS)-->
+    </main>
   </div>
 </template>
