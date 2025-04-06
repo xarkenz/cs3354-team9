@@ -7,15 +7,15 @@
   <div class="outline-1">
   <div class="py-4">
     <p>Email</p>
-    <input for="email" id = "emailInput" type="email" class="outline-1">
+    <input for="email" id = "emailInput" type="email" class="outline-1" v-model="email">
   </div>
   <div class="py-4">
     <p>Username</p>
-    <input for="username" id = "usernameInput" type="text" class="outline-1">
+    <input for="username" id = "usernameInput" type="text" class="outline-1" v-model="username">
   </div>
   <div class="py-4">
     <p>Password</p>
-    <input for="password" id = "passwordInput" type="password" class="outline-1 mb-4">
+    <input for="password" id = "passwordInput" type="password" class="outline-1 mb-4" v-model="password">
   </div>
   </div>
   <div class="mt-2">
@@ -35,5 +35,17 @@
 // It allows a user to create an account with an email and password.
 export default {
   name: 'AccountCreation',
+  data() {
+    return {
+      email: "",
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    createAccount(){
+      
+    }
+  }
 }
 </script>
