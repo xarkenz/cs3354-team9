@@ -9,6 +9,7 @@
         <li><a href="#/create-account">Create an account</a></li>
         <li><a href="#/remove-restaurant">Remove a restaurant</a></li>
         <li><a href="#/filter-search">Filter search</a></li>
+        <li><a href="#/view-allergens">View allergens</a></li>
       </ul>
     </div>
   </div>
