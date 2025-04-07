@@ -7,6 +7,7 @@ import AccountCreation from './pages/AccountCreation.vue'
 import SignIn from './pages/SignIn.vue'
 import RemoveRestaurant from './pages/RemoveRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
+import ViewAllergens from './pages/ViewAllergens.vue'
 
 const routes = {
   '/': Home,
@@ -14,6 +15,7 @@ const routes = {
   '/sign-in': SignIn,
   '/remove-restaurant': RemoveRestaurant,
   '/filter-search': FilterSearch,
+  '/view-allergens': ViewAllergens,
 }
 
 const currentPath = ref(window.location.hash)
