@@ -11,6 +11,7 @@
         <li><a href="#/filter-search">Filter search</a></li>
         <li><a href="#/view-allergens">View allergens</a></li>
         <li><a href="#/delete-account">Delete account</a></li>
+        <li><a href="#/user-profile">User Profile</a></li>
       </ul>
     </div>
   </div>
