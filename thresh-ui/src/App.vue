@@ -6,6 +6,7 @@ import Home from './pages/Home.vue'
 import AccountCreation from './pages/AccountCreation.vue'
 import SignIn from './pages/SignIn.vue'
 import RemoveRestaurant from './pages/RemoveRestaurant.vue'
+import RateRestaurant from './pages/RateRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
 import DeleteAccount from './pages/DeleteAccount.vue'
@@ -18,6 +19,7 @@ const routes = {
   '/remove-restaurant': RemoveRestaurant,
   '/filter-search': FilterSearch,
   '/view-allergens': ViewAllergens,
+  '/rate-restaurant': RateRestaurant,
   '/delete-account': DeleteAccount,
   '/user-profile': UserProfile,
 }
