@@ -11,6 +11,7 @@ import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
 import DeleteAccount from './pages/DeleteAccount.vue'
 import UserProfile from './pages/UserProfile.vue'
+import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 
 const routes = {
   '/': Home,
@@ -22,6 +23,7 @@ const routes = {
   '/rate-restaurant': RateRestaurant,
   '/delete-account': DeleteAccount,
   '/user-profile': UserProfile,
+  '/save-favorite-restaurant': SaveFavoriteRestaurant,
 }
 
 const currentPath = ref(window.location.hash)
