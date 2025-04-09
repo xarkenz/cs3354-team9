@@ -7,11 +7,11 @@ Created by Sean Clarke for UC17: Delete Own Account
     <div v-if="showConfirmMessage" class="w-fit mx-auto my-4 px-4 rounded-lg border-2 border-red-500">
       <p class="text-lg text-red-600"><strong>Are you sure you want to delete your account?</strong></p>
       <p>All of your account data will be deleted, including:</p>
-      <p><ul>
+      <ul>
         <li>Account history and preferences</li>
         <li>Dietary profiles</li>
         <li>Restaurant reviews</li>
-      </ul></p>
+      </ul>
       <p><strong>This action cannot be undone!</strong></p>
       <p><label class="italic">
         <input v-model="acknowledged" type="checkbox" class="mx-2">
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-p {
+p, ul {
   margin-block: 1rem;
 }
 
