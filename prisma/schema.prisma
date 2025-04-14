@@ -36,4 +36,5 @@ model Review{
   business Business @relation(fields:[businessID], references:[id])
   title String
   content String
+  numStars Int
 }
