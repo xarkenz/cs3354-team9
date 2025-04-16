@@ -12,6 +12,7 @@ import ViewAllergens from './pages/ViewAllergens.vue'
 import DeleteAccount from './pages/DeleteAccount.vue'
 import UserProfile from './pages/UserProfile.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
+import Map from './pages/Map.vue'
 
 const routes = {
   '/': Home,
@@ -24,6 +25,7 @@ const routes = {
   '/delete-account': DeleteAccount,
   '/user-profile': UserProfile,
   '/save-favorite-restaurant': SaveFavoriteRestaurant,
+  '/map': Map,
 }
 
 const currentPath = ref(window.location.hash)
@@ -41,15 +43,17 @@ const currentView = computed(() => {
   <div>
     <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300">
       <nav>
-        <ul class="flex items-center gap-x-5">
-          <li><a href="#/" class="flex items-center gap-x-3 mr-auto"><img src="./assets/THRESH textual logo.png"><img class="size-18" src="./assets/Thresh circular logo.png"></a></li>
-          <li><a href="#/create-account" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">Sign Up</a></li>
-          <li><a href="#/sign-in" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">Sign In</a></li>
+        <ul class="flex items-center gap-x-5 mx-5">
+          <li><a href="#/" class="flex items-center gap-x-3 mr-auto"><img class="size-18" src="./assets/Thresh circular logo.png"><img src="./assets/THRESH textual logo.png"></a></li>
+          <li class="ml-auto flex items-center gap-x-5">
+            <a href="#/create-account" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">Sign Up</a>
+            <a href="#/sign-in" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">Sign In</a>
+          </li>
         </ul>
       </nav>
     </header>
-    <main>
-      <component :is="currentView" class="container mx-auto p-6"/> <!--This is replaced with the HTML of each given page (via VueJS)-->
+    <main class="w-full">
+      <component :is="currentView" />
     </main>
   </div>
 </template>

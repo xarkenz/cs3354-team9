@@ -5,6 +5,11 @@
     "prisma": "^6.5.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0"
+    "@prisma/client": "^6.5.0",
+    "axios": "^1.8.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "vue3-google-map": "^0.21.1"
   }
 }
