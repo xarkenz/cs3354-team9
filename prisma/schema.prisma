@@ -27,6 +27,7 @@ model User {
   username  String
   password String
   reviews   Review[]
+  dishRestrictionReviews DishRestrictionReview[]
 }
 
 model Review {
@@ -40,20 +41,25 @@ model Review {
   numStars Int
 }
 
+model DietaryRestriction {
+  id Int @id @default(autoincrement())
+  name String @unique
+}
+
 model Dish {
   id Int @id @default(autoincrement())
+  name String
   businessID Int
-  business Business @relation(fields:[businessID], references:[id])
-  //what we need to add 
-  allergens         Json      // Use JSON array like ["Dairy", "Egg"]
-  unidentified      Json      // Use JSON array like ["Mystery Sauce"]
-  allergenFree      Json 
+  business Business @relation(fields: [businessID], references: [id])
+  dishRestrictionReviews DishRestrictionReview[]
+}
 
-  isVegan           Boolean
-  hasGlutenFree     Boolean
-  hasWheatFree      Boolean
-  hasDairyFree      Boolean
-  hasShellfishFree  Boolean
-
-
+model DishRestrictionReview {
+  id Int @id @default(autoincrement())
+  userID Int
+  user User @relation(fields: [userID], references: [id])
+  dishID Int
+  dish Dish @relation(fields: [dishID], references: [id])
+  dishSatisfiesRestriction Boolean
+  @@unique([userID, dishID])
 }
