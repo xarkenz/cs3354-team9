@@ -13,14 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Business{
+model Business {
   id        Int      @id @default(autoincrement())
   name String
   reviews Review[]
   //address String //I'm not sure the best way to store locations right now
 }
 
-model User{
+model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   username  String
@@ -28,7 +28,7 @@ model User{
   reviews   Review[]
 }
 
-model Review{
+model Review {
   id Int @id @default(autoincrement())
   authorID Int
   author User @relation(fields:[authorID], references:[id])
