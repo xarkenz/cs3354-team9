@@ -14,6 +14,7 @@
         <li><a href="#/delete-account">Delete account</a></li>
         <li><a href="#/user-profile">User Profile</a></li>
         <li><a href="#/save-favorite-restaurant">Save Favorite Restaruant</a></li>
+        <li><a href="#/map">Map</a></li>
       </ul>
     </div>
   </div>
