@@ -10,7 +10,7 @@ import testImage from '@/assets/istockphoto-1457433817-612x612.jpg';
       <img
         :src="testImage"
         alt="Drinks"
-        class="rounded-lg shadow-lg max-w-full h-auto lg:max-h-[500px]"
+        class="rounded-lg shadow-lg w-[50vw] h-[50vh] object-cover"
       />
     </div>
 
