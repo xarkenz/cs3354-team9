@@ -6,7 +6,7 @@
   "main": "server/index.cjs",
   "scripts": {
     "dev:frontend": "vite",
-    "dev:backend": "nodemon server/index.js",
+    "dev:backend": "nodemon server/index.cjs",
     "dev": "concurrently 'npm:dev:frontend' 'npm:dev:backend'",
     "build": "vite build",
     "preview": "vite preview",
