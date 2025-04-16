@@ -61,5 +61,5 @@ model DishRestrictionReview {
   dishID Int
   dish Dish @relation(fields: [dishID], references: [id])
   dishSatisfiesRestriction Boolean
-  @@unique([userID, dishID])
+  @@unique([userID, dishID]) // each user can only review each dish once (i.e. edit review rather than making new one)
 }
