@@ -25,5 +25,5 @@ app.get('/api/places', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${3001}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
