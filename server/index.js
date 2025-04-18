@@ -2,7 +2,6 @@
 // https://expressjs.com/ and
 // https://blog.codeminer42.com/making-a-full-stack-app-with-vue-vite-and-express-that-supports-hot-reload/
 const jsSHA = require("jssha"); //For hashing passwords
-const jsSHA1 = require("jssha/sha1");
 const uuid = require('uuid').v4; //for making unique session tokens
 const sessions = {}; //for storing session tokens
 const express = require('express')
@@ -34,7 +33,11 @@ function getSessionToken(request){ //Extract the session token from among the co
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to sign up for an account with an email, username, password, and confirmation password. Presently, the frontend also checks to see whether the password and confirmation password are the same, but I figured I'd check here as well.
 app.post("/api/signup", async (req, res) => {
-  const {email, username, password, confirmationPassword} = req.body;
+  console.log(req.body);
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+  const confirmationPassword = req.body.confirmationPassword;
   if(password !== confirmationPassword){
     return res.status(401).send('Signup Failed! Password and confirmation password do not match!');
   }
@@ -42,22 +45,31 @@ app.post("/api/signup", async (req, res) => {
     const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
     shaObj.update(`${password}`);
     const hash = shaObj.getHash("HEX");
-    const prismaResponse = await prisma.user.create({
-      data: {
-        email: email,
-        username: username,
-        password: hash,
-      },
-    });
-    if(!prismaResponse){
-      return res.status(401).send('Signup Failed!');
+    try{
+      const prismaResponse = await prisma.user.create({
+        data: {
+          email: email,
+          username: username,
+          password: hash,
+        },
+      });
+      if(!prismaResponse){
+        return res.status(401).send('Signup Failed!');
+      }
+      else{
+        console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
+        const sessionToken = uuid();
+        sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
+        res.set('Set-Cookie', `session=${sessionToken}`);
+        res.write(JSON.stringify({"sessionToken": sessionToken}));
+        res.status(200);
+        // res.json({redirectUrl: "#/"});
+        res.send();
+      }
     }
-    else{
-      console.log(prismaResponse);
-      const sessionToken = uuid();
-      sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
-      res.set('Set-Cookie', `session=${sessionToken}`);
-      res.send('success');
+    catch (error) {
+      console.log(error);
+      res.send(error);
     }
   }
 });
