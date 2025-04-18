@@ -135,17 +135,22 @@ exports.Prisma.ReviewScalarFieldEnum = {
   numStars: 'numStars'
 };
 
+exports.Prisma.DietaryRestrictionScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+};
+
 exports.Prisma.DishScalarFieldEnum = {
   id: 'id',
-  businessID: 'businessID',
-  allergens: 'allergens',
-  unidentified: 'unidentified',
-  allergenFree: 'allergenFree',
-  isVegan: 'isVegan',
-  hasGlutenFree: 'hasGlutenFree',
-  hasWheatFree: 'hasWheatFree',
-  hasDairyFree: 'hasDairyFree',
-  hasShellfishFree: 'hasShellfishFree'
+  name: 'name',
+  businessID: 'businessID'
+};
+
+exports.Prisma.DishRestrictionReviewScalarFieldEnum = {
+  id: 'id',
+  userID: 'userID',
+  dishID: 'dishID',
+  dishSatisfiesRestriction: 'dishSatisfiesRestriction'
 };
 
 exports.Prisma.SortOrder = {
@@ -153,27 +158,14 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.JsonNullValueInput = {
-  JsonNull: Prisma.JsonNull
-};
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-};
-
 
 exports.Prisma.ModelName = {
   Business: 'Business',
   User: 'User',
   Review: 'Review',
-  Dish: 'Dish'
+  DietaryRestriction: 'DietaryRestriction',
+  Dish: 'Dish',
+  DishRestrictionReview: 'DishRestrictionReview'
 };
 
 /**

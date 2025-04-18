@@ -29,10 +29,20 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
+ * Model DietaryRestriction
+ * 
+ */
+export type DietaryRestriction = $Result.DefaultSelection<Prisma.$DietaryRestrictionPayload>
+/**
  * Model Dish
  * 
  */
 export type Dish = $Result.DefaultSelection<Prisma.$DishPayload>
+/**
+ * Model DishRestrictionReview
+ * 
+ */
+export type DishRestrictionReview = $Result.DefaultSelection<Prisma.$DishRestrictionReviewPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -190,6 +200,16 @@ export class PrismaClient<
   get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.dietaryRestriction`: Exposes CRUD operations for the **DietaryRestriction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DietaryRestrictions
+    * const dietaryRestrictions = await prisma.dietaryRestriction.findMany()
+    * ```
+    */
+  get dietaryRestriction(): Prisma.DietaryRestrictionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.dish`: Exposes CRUD operations for the **Dish** model.
     * Example usage:
     * ```ts
@@ -198,6 +218,16 @@ export class PrismaClient<
     * ```
     */
   get dish(): Prisma.DishDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dishRestrictionReview`: Exposes CRUD operations for the **DishRestrictionReview** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DishRestrictionReviews
+    * const dishRestrictionReviews = await prisma.dishRestrictionReview.findMany()
+    * ```
+    */
+  get dishRestrictionReview(): Prisma.DishRestrictionReviewDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -641,7 +671,9 @@ export namespace Prisma {
     Business: 'Business',
     User: 'User',
     Review: 'Review',
-    Dish: 'Dish'
+    DietaryRestriction: 'DietaryRestriction',
+    Dish: 'Dish',
+    DishRestrictionReview: 'DishRestrictionReview'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -660,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "business" | "user" | "review" | "dish"
+      modelProps: "business" | "user" | "review" | "dietaryRestriction" | "dish" | "dishRestrictionReview"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -886,6 +918,80 @@ export namespace Prisma {
           }
         }
       }
+      DietaryRestriction: {
+        payload: Prisma.$DietaryRestrictionPayload<ExtArgs>
+        fields: Prisma.DietaryRestrictionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DietaryRestrictionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DietaryRestrictionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          findFirst: {
+            args: Prisma.DietaryRestrictionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DietaryRestrictionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          findMany: {
+            args: Prisma.DietaryRestrictionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>[]
+          }
+          create: {
+            args: Prisma.DietaryRestrictionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          createMany: {
+            args: Prisma.DietaryRestrictionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DietaryRestrictionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>[]
+          }
+          delete: {
+            args: Prisma.DietaryRestrictionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          update: {
+            args: Prisma.DietaryRestrictionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          deleteMany: {
+            args: Prisma.DietaryRestrictionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DietaryRestrictionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DietaryRestrictionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>[]
+          }
+          upsert: {
+            args: Prisma.DietaryRestrictionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionPayload>
+          }
+          aggregate: {
+            args: Prisma.DietaryRestrictionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDietaryRestriction>
+          }
+          groupBy: {
+            args: Prisma.DietaryRestrictionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DietaryRestrictionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DietaryRestrictionCountArgs<ExtArgs>
+            result: $Utils.Optional<DietaryRestrictionCountAggregateOutputType> | number
+          }
+        }
+      }
       Dish: {
         payload: Prisma.$DishPayload<ExtArgs>
         fields: Prisma.DishFieldRefs
@@ -957,6 +1063,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DishCountArgs<ExtArgs>
             result: $Utils.Optional<DishCountAggregateOutputType> | number
+          }
+        }
+      }
+      DishRestrictionReview: {
+        payload: Prisma.$DishRestrictionReviewPayload<ExtArgs>
+        fields: Prisma.DishRestrictionReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DishRestrictionReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DishRestrictionReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.DishRestrictionReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DishRestrictionReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          findMany: {
+            args: Prisma.DishRestrictionReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>[]
+          }
+          create: {
+            args: Prisma.DishRestrictionReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          createMany: {
+            args: Prisma.DishRestrictionReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DishRestrictionReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.DishRestrictionReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          update: {
+            args: Prisma.DishRestrictionReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.DishRestrictionReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DishRestrictionReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DishRestrictionReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.DishRestrictionReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DishRestrictionReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.DishRestrictionReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDishRestrictionReview>
+          }
+          groupBy: {
+            args: Prisma.DishRestrictionReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DishRestrictionReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DishRestrictionReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<DishRestrictionReviewCountAggregateOutputType> | number
           }
         }
       }
@@ -1047,7 +1227,9 @@ export namespace Prisma {
     business?: BusinessOmit
     user?: UserOmit
     review?: ReviewOmit
+    dietaryRestriction?: DietaryRestrictionOmit
     dish?: DishOmit
+    dishRestrictionReview?: DishRestrictionReviewOmit
   }
 
   /* Types for Logging */
@@ -1183,10 +1365,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     reviews: number
+    dishRestrictionReviews: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+    dishRestrictionReviews?: boolean | UserCountOutputTypeCountDishRestrictionReviewsArgs
   }
 
   // Custom InputTypes
@@ -1205,6 +1389,44 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DishRestrictionReviewWhereInput
+  }
+
+
+  /**
+   * Count Type DishCountOutputType
+   */
+
+  export type DishCountOutputType = {
+    dishRestrictionReviews: number
+  }
+
+  export type DishCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dishRestrictionReviews?: boolean | DishCountOutputTypeCountDishRestrictionReviewsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DishCountOutputType without action
+   */
+  export type DishCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishCountOutputType
+     */
+    select?: DishCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DishCountOutputType without action
+   */
+  export type DishCountOutputTypeCountDishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DishRestrictionReviewWhereInput
   }
 
 
@@ -2494,6 +2716,7 @@ export namespace Prisma {
     username?: boolean
     password?: boolean
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    dishRestrictionReviews?: boolean | User$dishRestrictionReviewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2521,6 +2744,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    dishRestrictionReviews?: boolean | User$dishRestrictionReviewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2530,6 +2754,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      dishRestrictionReviews: Prisma.$DishRestrictionReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2931,6 +3156,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dishRestrictionReviews<T extends User$dishRestrictionReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$dishRestrictionReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3371,6 +3597,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.dishRestrictionReviews
+   */
+  export type User$dishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    where?: DishRestrictionReviewWhereInput
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
   }
 
   /**
@@ -4516,6 +4766,994 @@ export namespace Prisma {
 
 
   /**
+   * Model DietaryRestriction
+   */
+
+  export type AggregateDietaryRestriction = {
+    _count: DietaryRestrictionCountAggregateOutputType | null
+    _avg: DietaryRestrictionAvgAggregateOutputType | null
+    _sum: DietaryRestrictionSumAggregateOutputType | null
+    _min: DietaryRestrictionMinAggregateOutputType | null
+    _max: DietaryRestrictionMaxAggregateOutputType | null
+  }
+
+  export type DietaryRestrictionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DietaryRestrictionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DietaryRestrictionMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type DietaryRestrictionMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+  }
+
+  export type DietaryRestrictionCountAggregateOutputType = {
+    id: number
+    name: number
+    _all: number
+  }
+
+
+  export type DietaryRestrictionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DietaryRestrictionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type DietaryRestrictionMinAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type DietaryRestrictionMaxAggregateInputType = {
+    id?: true
+    name?: true
+  }
+
+  export type DietaryRestrictionCountAggregateInputType = {
+    id?: true
+    name?: true
+    _all?: true
+  }
+
+  export type DietaryRestrictionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DietaryRestriction to aggregate.
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DietaryRestrictions to fetch.
+     */
+    orderBy?: DietaryRestrictionOrderByWithRelationInput | DietaryRestrictionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DietaryRestrictionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DietaryRestrictions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DietaryRestrictions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DietaryRestrictions
+    **/
+    _count?: true | DietaryRestrictionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DietaryRestrictionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DietaryRestrictionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DietaryRestrictionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DietaryRestrictionMaxAggregateInputType
+  }
+
+  export type GetDietaryRestrictionAggregateType<T extends DietaryRestrictionAggregateArgs> = {
+        [P in keyof T & keyof AggregateDietaryRestriction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDietaryRestriction[P]>
+      : GetScalarType<T[P], AggregateDietaryRestriction[P]>
+  }
+
+
+
+
+  export type DietaryRestrictionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DietaryRestrictionWhereInput
+    orderBy?: DietaryRestrictionOrderByWithAggregationInput | DietaryRestrictionOrderByWithAggregationInput[]
+    by: DietaryRestrictionScalarFieldEnum[] | DietaryRestrictionScalarFieldEnum
+    having?: DietaryRestrictionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DietaryRestrictionCountAggregateInputType | true
+    _avg?: DietaryRestrictionAvgAggregateInputType
+    _sum?: DietaryRestrictionSumAggregateInputType
+    _min?: DietaryRestrictionMinAggregateInputType
+    _max?: DietaryRestrictionMaxAggregateInputType
+  }
+
+  export type DietaryRestrictionGroupByOutputType = {
+    id: number
+    name: string
+    _count: DietaryRestrictionCountAggregateOutputType | null
+    _avg: DietaryRestrictionAvgAggregateOutputType | null
+    _sum: DietaryRestrictionSumAggregateOutputType | null
+    _min: DietaryRestrictionMinAggregateOutputType | null
+    _max: DietaryRestrictionMaxAggregateOutputType | null
+  }
+
+  type GetDietaryRestrictionGroupByPayload<T extends DietaryRestrictionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DietaryRestrictionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DietaryRestrictionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DietaryRestrictionGroupByOutputType[P]>
+            : GetScalarType<T[P], DietaryRestrictionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DietaryRestrictionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["dietaryRestriction"]>
+
+  export type DietaryRestrictionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["dietaryRestriction"]>
+
+  export type DietaryRestrictionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+  }, ExtArgs["result"]["dietaryRestriction"]>
+
+  export type DietaryRestrictionSelectScalar = {
+    id?: boolean
+    name?: boolean
+  }
+
+  export type DietaryRestrictionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["dietaryRestriction"]>
+
+  export type $DietaryRestrictionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DietaryRestriction"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+    }, ExtArgs["result"]["dietaryRestriction"]>
+    composites: {}
+  }
+
+  type DietaryRestrictionGetPayload<S extends boolean | null | undefined | DietaryRestrictionDefaultArgs> = $Result.GetResult<Prisma.$DietaryRestrictionPayload, S>
+
+  type DietaryRestrictionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DietaryRestrictionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DietaryRestrictionCountAggregateInputType | true
+    }
+
+  export interface DietaryRestrictionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DietaryRestriction'], meta: { name: 'DietaryRestriction' } }
+    /**
+     * Find zero or one DietaryRestriction that matches the filter.
+     * @param {DietaryRestrictionFindUniqueArgs} args - Arguments to find a DietaryRestriction
+     * @example
+     * // Get one DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DietaryRestrictionFindUniqueArgs>(args: SelectSubset<T, DietaryRestrictionFindUniqueArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DietaryRestriction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DietaryRestrictionFindUniqueOrThrowArgs} args - Arguments to find a DietaryRestriction
+     * @example
+     * // Get one DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DietaryRestrictionFindUniqueOrThrowArgs>(args: SelectSubset<T, DietaryRestrictionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DietaryRestriction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionFindFirstArgs} args - Arguments to find a DietaryRestriction
+     * @example
+     * // Get one DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DietaryRestrictionFindFirstArgs>(args?: SelectSubset<T, DietaryRestrictionFindFirstArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DietaryRestriction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionFindFirstOrThrowArgs} args - Arguments to find a DietaryRestriction
+     * @example
+     * // Get one DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DietaryRestrictionFindFirstOrThrowArgs>(args?: SelectSubset<T, DietaryRestrictionFindFirstOrThrowArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DietaryRestrictions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestriction.findMany()
+     * 
+     * // Get first 10 DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestriction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dietaryRestrictionWithIdOnly = await prisma.dietaryRestriction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DietaryRestrictionFindManyArgs>(args?: SelectSubset<T, DietaryRestrictionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DietaryRestriction.
+     * @param {DietaryRestrictionCreateArgs} args - Arguments to create a DietaryRestriction.
+     * @example
+     * // Create one DietaryRestriction
+     * const DietaryRestriction = await prisma.dietaryRestriction.create({
+     *   data: {
+     *     // ... data to create a DietaryRestriction
+     *   }
+     * })
+     * 
+     */
+    create<T extends DietaryRestrictionCreateArgs>(args: SelectSubset<T, DietaryRestrictionCreateArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DietaryRestrictions.
+     * @param {DietaryRestrictionCreateManyArgs} args - Arguments to create many DietaryRestrictions.
+     * @example
+     * // Create many DietaryRestrictions
+     * const dietaryRestriction = await prisma.dietaryRestriction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DietaryRestrictionCreateManyArgs>(args?: SelectSubset<T, DietaryRestrictionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DietaryRestrictions and returns the data saved in the database.
+     * @param {DietaryRestrictionCreateManyAndReturnArgs} args - Arguments to create many DietaryRestrictions.
+     * @example
+     * // Create many DietaryRestrictions
+     * const dietaryRestriction = await prisma.dietaryRestriction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DietaryRestrictions and only return the `id`
+     * const dietaryRestrictionWithIdOnly = await prisma.dietaryRestriction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DietaryRestrictionCreateManyAndReturnArgs>(args?: SelectSubset<T, DietaryRestrictionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DietaryRestriction.
+     * @param {DietaryRestrictionDeleteArgs} args - Arguments to delete one DietaryRestriction.
+     * @example
+     * // Delete one DietaryRestriction
+     * const DietaryRestriction = await prisma.dietaryRestriction.delete({
+     *   where: {
+     *     // ... filter to delete one DietaryRestriction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DietaryRestrictionDeleteArgs>(args: SelectSubset<T, DietaryRestrictionDeleteArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DietaryRestriction.
+     * @param {DietaryRestrictionUpdateArgs} args - Arguments to update one DietaryRestriction.
+     * @example
+     * // Update one DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DietaryRestrictionUpdateArgs>(args: SelectSubset<T, DietaryRestrictionUpdateArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DietaryRestrictions.
+     * @param {DietaryRestrictionDeleteManyArgs} args - Arguments to filter DietaryRestrictions to delete.
+     * @example
+     * // Delete a few DietaryRestrictions
+     * const { count } = await prisma.dietaryRestriction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DietaryRestrictionDeleteManyArgs>(args?: SelectSubset<T, DietaryRestrictionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DietaryRestrictions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DietaryRestrictions
+     * const dietaryRestriction = await prisma.dietaryRestriction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DietaryRestrictionUpdateManyArgs>(args: SelectSubset<T, DietaryRestrictionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DietaryRestrictions and returns the data updated in the database.
+     * @param {DietaryRestrictionUpdateManyAndReturnArgs} args - Arguments to update many DietaryRestrictions.
+     * @example
+     * // Update many DietaryRestrictions
+     * const dietaryRestriction = await prisma.dietaryRestriction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DietaryRestrictions and only return the `id`
+     * const dietaryRestrictionWithIdOnly = await prisma.dietaryRestriction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DietaryRestrictionUpdateManyAndReturnArgs>(args: SelectSubset<T, DietaryRestrictionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DietaryRestriction.
+     * @param {DietaryRestrictionUpsertArgs} args - Arguments to update or create a DietaryRestriction.
+     * @example
+     * // Update or create a DietaryRestriction
+     * const dietaryRestriction = await prisma.dietaryRestriction.upsert({
+     *   create: {
+     *     // ... data to create a DietaryRestriction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DietaryRestriction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DietaryRestrictionUpsertArgs>(args: SelectSubset<T, DietaryRestrictionUpsertArgs<ExtArgs>>): Prisma__DietaryRestrictionClient<$Result.GetResult<Prisma.$DietaryRestrictionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DietaryRestrictions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionCountArgs} args - Arguments to filter DietaryRestrictions to count.
+     * @example
+     * // Count the number of DietaryRestrictions
+     * const count = await prisma.dietaryRestriction.count({
+     *   where: {
+     *     // ... the filter for the DietaryRestrictions we want to count
+     *   }
+     * })
+    **/
+    count<T extends DietaryRestrictionCountArgs>(
+      args?: Subset<T, DietaryRestrictionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DietaryRestrictionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DietaryRestriction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DietaryRestrictionAggregateArgs>(args: Subset<T, DietaryRestrictionAggregateArgs>): Prisma.PrismaPromise<GetDietaryRestrictionAggregateType<T>>
+
+    /**
+     * Group by DietaryRestriction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DietaryRestrictionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DietaryRestrictionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DietaryRestrictionGroupByArgs['orderBy'] }
+        : { orderBy?: DietaryRestrictionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DietaryRestrictionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDietaryRestrictionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DietaryRestriction model
+   */
+  readonly fields: DietaryRestrictionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DietaryRestriction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DietaryRestrictionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DietaryRestriction model
+   */
+  interface DietaryRestrictionFieldRefs {
+    readonly id: FieldRef<"DietaryRestriction", 'Int'>
+    readonly name: FieldRef<"DietaryRestriction", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DietaryRestriction findUnique
+   */
+  export type DietaryRestrictionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter, which DietaryRestriction to fetch.
+     */
+    where: DietaryRestrictionWhereUniqueInput
+  }
+
+  /**
+   * DietaryRestriction findUniqueOrThrow
+   */
+  export type DietaryRestrictionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter, which DietaryRestriction to fetch.
+     */
+    where: DietaryRestrictionWhereUniqueInput
+  }
+
+  /**
+   * DietaryRestriction findFirst
+   */
+  export type DietaryRestrictionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter, which DietaryRestriction to fetch.
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DietaryRestrictions to fetch.
+     */
+    orderBy?: DietaryRestrictionOrderByWithRelationInput | DietaryRestrictionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DietaryRestrictions.
+     */
+    cursor?: DietaryRestrictionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DietaryRestrictions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DietaryRestrictions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DietaryRestrictions.
+     */
+    distinct?: DietaryRestrictionScalarFieldEnum | DietaryRestrictionScalarFieldEnum[]
+  }
+
+  /**
+   * DietaryRestriction findFirstOrThrow
+   */
+  export type DietaryRestrictionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter, which DietaryRestriction to fetch.
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DietaryRestrictions to fetch.
+     */
+    orderBy?: DietaryRestrictionOrderByWithRelationInput | DietaryRestrictionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DietaryRestrictions.
+     */
+    cursor?: DietaryRestrictionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DietaryRestrictions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DietaryRestrictions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DietaryRestrictions.
+     */
+    distinct?: DietaryRestrictionScalarFieldEnum | DietaryRestrictionScalarFieldEnum[]
+  }
+
+  /**
+   * DietaryRestriction findMany
+   */
+  export type DietaryRestrictionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter, which DietaryRestrictions to fetch.
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DietaryRestrictions to fetch.
+     */
+    orderBy?: DietaryRestrictionOrderByWithRelationInput | DietaryRestrictionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DietaryRestrictions.
+     */
+    cursor?: DietaryRestrictionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DietaryRestrictions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DietaryRestrictions.
+     */
+    skip?: number
+    distinct?: DietaryRestrictionScalarFieldEnum | DietaryRestrictionScalarFieldEnum[]
+  }
+
+  /**
+   * DietaryRestriction create
+   */
+  export type DietaryRestrictionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DietaryRestriction.
+     */
+    data: XOR<DietaryRestrictionCreateInput, DietaryRestrictionUncheckedCreateInput>
+  }
+
+  /**
+   * DietaryRestriction createMany
+   */
+  export type DietaryRestrictionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DietaryRestrictions.
+     */
+    data: DietaryRestrictionCreateManyInput | DietaryRestrictionCreateManyInput[]
+  }
+
+  /**
+   * DietaryRestriction createManyAndReturn
+   */
+  export type DietaryRestrictionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * The data used to create many DietaryRestrictions.
+     */
+    data: DietaryRestrictionCreateManyInput | DietaryRestrictionCreateManyInput[]
+  }
+
+  /**
+   * DietaryRestriction update
+   */
+  export type DietaryRestrictionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DietaryRestriction.
+     */
+    data: XOR<DietaryRestrictionUpdateInput, DietaryRestrictionUncheckedUpdateInput>
+    /**
+     * Choose, which DietaryRestriction to update.
+     */
+    where: DietaryRestrictionWhereUniqueInput
+  }
+
+  /**
+   * DietaryRestriction updateMany
+   */
+  export type DietaryRestrictionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DietaryRestrictions.
+     */
+    data: XOR<DietaryRestrictionUpdateManyMutationInput, DietaryRestrictionUncheckedUpdateManyInput>
+    /**
+     * Filter which DietaryRestrictions to update
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * Limit how many DietaryRestrictions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DietaryRestriction updateManyAndReturn
+   */
+  export type DietaryRestrictionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * The data used to update DietaryRestrictions.
+     */
+    data: XOR<DietaryRestrictionUpdateManyMutationInput, DietaryRestrictionUncheckedUpdateManyInput>
+    /**
+     * Filter which DietaryRestrictions to update
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * Limit how many DietaryRestrictions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DietaryRestriction upsert
+   */
+  export type DietaryRestrictionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DietaryRestriction to update in case it exists.
+     */
+    where: DietaryRestrictionWhereUniqueInput
+    /**
+     * In case the DietaryRestriction found by the `where` argument doesn't exist, create a new DietaryRestriction with this data.
+     */
+    create: XOR<DietaryRestrictionCreateInput, DietaryRestrictionUncheckedCreateInput>
+    /**
+     * In case the DietaryRestriction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DietaryRestrictionUpdateInput, DietaryRestrictionUncheckedUpdateInput>
+  }
+
+  /**
+   * DietaryRestriction delete
+   */
+  export type DietaryRestrictionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+    /**
+     * Filter which DietaryRestriction to delete.
+     */
+    where: DietaryRestrictionWhereUniqueInput
+  }
+
+  /**
+   * DietaryRestriction deleteMany
+   */
+  export type DietaryRestrictionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DietaryRestrictions to delete
+     */
+    where?: DietaryRestrictionWhereInput
+    /**
+     * Limit how many DietaryRestrictions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DietaryRestriction without action
+   */
+  export type DietaryRestrictionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DietaryRestriction
+     */
+    select?: DietaryRestrictionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DietaryRestriction
+     */
+    omit?: DietaryRestrictionOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model Dish
    */
 
@@ -4539,35 +5777,20 @@ export namespace Prisma {
 
   export type DishMinAggregateOutputType = {
     id: number | null
+    name: string | null
     businessID: number | null
-    isVegan: boolean | null
-    hasGlutenFree: boolean | null
-    hasWheatFree: boolean | null
-    hasDairyFree: boolean | null
-    hasShellfishFree: boolean | null
   }
 
   export type DishMaxAggregateOutputType = {
     id: number | null
+    name: string | null
     businessID: number | null
-    isVegan: boolean | null
-    hasGlutenFree: boolean | null
-    hasWheatFree: boolean | null
-    hasDairyFree: boolean | null
-    hasShellfishFree: boolean | null
   }
 
   export type DishCountAggregateOutputType = {
     id: number
+    name: number
     businessID: number
-    allergens: number
-    unidentified: number
-    allergenFree: number
-    isVegan: number
-    hasGlutenFree: number
-    hasWheatFree: number
-    hasDairyFree: number
-    hasShellfishFree: number
     _all: number
   }
 
@@ -4584,35 +5807,20 @@ export namespace Prisma {
 
   export type DishMinAggregateInputType = {
     id?: true
+    name?: true
     businessID?: true
-    isVegan?: true
-    hasGlutenFree?: true
-    hasWheatFree?: true
-    hasDairyFree?: true
-    hasShellfishFree?: true
   }
 
   export type DishMaxAggregateInputType = {
     id?: true
+    name?: true
     businessID?: true
-    isVegan?: true
-    hasGlutenFree?: true
-    hasWheatFree?: true
-    hasDairyFree?: true
-    hasShellfishFree?: true
   }
 
   export type DishCountAggregateInputType = {
     id?: true
+    name?: true
     businessID?: true
-    allergens?: true
-    unidentified?: true
-    allergenFree?: true
-    isVegan?: true
-    hasGlutenFree?: true
-    hasWheatFree?: true
-    hasDairyFree?: true
-    hasShellfishFree?: true
     _all?: true
   }
 
@@ -4704,15 +5912,8 @@ export namespace Prisma {
 
   export type DishGroupByOutputType = {
     id: number
+    name: string
     businessID: number
-    allergens: JsonValue
-    unidentified: JsonValue
-    allergenFree: JsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
     _count: DishCountAggregateOutputType | null
     _avg: DishAvgAggregateOutputType | null
     _sum: DishSumAggregateOutputType | null
@@ -4736,62 +5937,38 @@ export namespace Prisma {
 
   export type DishSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     businessID?: boolean
-    allergens?: boolean
-    unidentified?: boolean
-    allergenFree?: boolean
-    isVegan?: boolean
-    hasGlutenFree?: boolean
-    hasWheatFree?: boolean
-    hasDairyFree?: boolean
-    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    dishRestrictionReviews?: boolean | Dish$dishRestrictionReviewsArgs<ExtArgs>
+    _count?: boolean | DishCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dish"]>
 
   export type DishSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     businessID?: boolean
-    allergens?: boolean
-    unidentified?: boolean
-    allergenFree?: boolean
-    isVegan?: boolean
-    hasGlutenFree?: boolean
-    hasWheatFree?: boolean
-    hasDairyFree?: boolean
-    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dish"]>
 
   export type DishSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     businessID?: boolean
-    allergens?: boolean
-    unidentified?: boolean
-    allergenFree?: boolean
-    isVegan?: boolean
-    hasGlutenFree?: boolean
-    hasWheatFree?: boolean
-    hasDairyFree?: boolean
-    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dish"]>
 
   export type DishSelectScalar = {
     id?: boolean
+    name?: boolean
     businessID?: boolean
-    allergens?: boolean
-    unidentified?: boolean
-    allergenFree?: boolean
-    isVegan?: boolean
-    hasGlutenFree?: boolean
-    hasWheatFree?: boolean
-    hasDairyFree?: boolean
-    hasShellfishFree?: boolean
   }
 
-  export type DishOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "businessID" | "allergens" | "unidentified" | "allergenFree" | "isVegan" | "hasGlutenFree" | "hasWheatFree" | "hasDairyFree" | "hasShellfishFree", ExtArgs["result"]["dish"]>
+  export type DishOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "businessID", ExtArgs["result"]["dish"]>
   export type DishInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    dishRestrictionReviews?: boolean | Dish$dishRestrictionReviewsArgs<ExtArgs>
+    _count?: boolean | DishCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DishIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     business?: boolean | BusinessDefaultArgs<ExtArgs>
@@ -4804,18 +5981,12 @@ export namespace Prisma {
     name: "Dish"
     objects: {
       business: Prisma.$BusinessPayload<ExtArgs>
+      dishRestrictionReviews: Prisma.$DishRestrictionReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      name: string
       businessID: number
-      allergens: Prisma.JsonValue
-      unidentified: Prisma.JsonValue
-      allergenFree: Prisma.JsonValue
-      isVegan: boolean
-      hasGlutenFree: boolean
-      hasWheatFree: boolean
-      hasDairyFree: boolean
-      hasShellfishFree: boolean
     }, ExtArgs["result"]["dish"]>
     composites: {}
   }
@@ -5211,6 +6382,7 @@ export namespace Prisma {
   export interface Prisma__DishClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     business<T extends BusinessDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BusinessDefaultArgs<ExtArgs>>): Prisma__BusinessClient<$Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dishRestrictionReviews<T extends Dish$dishRestrictionReviewsArgs<ExtArgs> = {}>(args?: Subset<T, Dish$dishRestrictionReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5241,15 +6413,8 @@ export namespace Prisma {
    */
   interface DishFieldRefs {
     readonly id: FieldRef<"Dish", 'Int'>
+    readonly name: FieldRef<"Dish", 'String'>
     readonly businessID: FieldRef<"Dish", 'Int'>
-    readonly allergens: FieldRef<"Dish", 'Json'>
-    readonly unidentified: FieldRef<"Dish", 'Json'>
-    readonly allergenFree: FieldRef<"Dish", 'Json'>
-    readonly isVegan: FieldRef<"Dish", 'Boolean'>
-    readonly hasGlutenFree: FieldRef<"Dish", 'Boolean'>
-    readonly hasWheatFree: FieldRef<"Dish", 'Boolean'>
-    readonly hasDairyFree: FieldRef<"Dish", 'Boolean'>
-    readonly hasShellfishFree: FieldRef<"Dish", 'Boolean'>
   }
     
 
@@ -5644,6 +6809,30 @@ export namespace Prisma {
   }
 
   /**
+   * Dish.dishRestrictionReviews
+   */
+  export type Dish$dishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    where?: DishRestrictionReviewWhereInput
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
+  }
+
+  /**
    * Dish without action
    */
   export type DishDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5659,6 +6848,1099 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DishInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DishRestrictionReview
+   */
+
+  export type AggregateDishRestrictionReview = {
+    _count: DishRestrictionReviewCountAggregateOutputType | null
+    _avg: DishRestrictionReviewAvgAggregateOutputType | null
+    _sum: DishRestrictionReviewSumAggregateOutputType | null
+    _min: DishRestrictionReviewMinAggregateOutputType | null
+    _max: DishRestrictionReviewMaxAggregateOutputType | null
+  }
+
+  export type DishRestrictionReviewAvgAggregateOutputType = {
+    id: number | null
+    userID: number | null
+    dishID: number | null
+  }
+
+  export type DishRestrictionReviewSumAggregateOutputType = {
+    id: number | null
+    userID: number | null
+    dishID: number | null
+  }
+
+  export type DishRestrictionReviewMinAggregateOutputType = {
+    id: number | null
+    userID: number | null
+    dishID: number | null
+    dishSatisfiesRestriction: boolean | null
+  }
+
+  export type DishRestrictionReviewMaxAggregateOutputType = {
+    id: number | null
+    userID: number | null
+    dishID: number | null
+    dishSatisfiesRestriction: boolean | null
+  }
+
+  export type DishRestrictionReviewCountAggregateOutputType = {
+    id: number
+    userID: number
+    dishID: number
+    dishSatisfiesRestriction: number
+    _all: number
+  }
+
+
+  export type DishRestrictionReviewAvgAggregateInputType = {
+    id?: true
+    userID?: true
+    dishID?: true
+  }
+
+  export type DishRestrictionReviewSumAggregateInputType = {
+    id?: true
+    userID?: true
+    dishID?: true
+  }
+
+  export type DishRestrictionReviewMinAggregateInputType = {
+    id?: true
+    userID?: true
+    dishID?: true
+    dishSatisfiesRestriction?: true
+  }
+
+  export type DishRestrictionReviewMaxAggregateInputType = {
+    id?: true
+    userID?: true
+    dishID?: true
+    dishSatisfiesRestriction?: true
+  }
+
+  export type DishRestrictionReviewCountAggregateInputType = {
+    id?: true
+    userID?: true
+    dishID?: true
+    dishSatisfiesRestriction?: true
+    _all?: true
+  }
+
+  export type DishRestrictionReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DishRestrictionReview to aggregate.
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DishRestrictionReviews to fetch.
+     */
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DishRestrictionReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DishRestrictionReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DishRestrictionReviews
+    **/
+    _count?: true | DishRestrictionReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DishRestrictionReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DishRestrictionReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DishRestrictionReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DishRestrictionReviewMaxAggregateInputType
+  }
+
+  export type GetDishRestrictionReviewAggregateType<T extends DishRestrictionReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateDishRestrictionReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDishRestrictionReview[P]>
+      : GetScalarType<T[P], AggregateDishRestrictionReview[P]>
+  }
+
+
+
+
+  export type DishRestrictionReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DishRestrictionReviewWhereInput
+    orderBy?: DishRestrictionReviewOrderByWithAggregationInput | DishRestrictionReviewOrderByWithAggregationInput[]
+    by: DishRestrictionReviewScalarFieldEnum[] | DishRestrictionReviewScalarFieldEnum
+    having?: DishRestrictionReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DishRestrictionReviewCountAggregateInputType | true
+    _avg?: DishRestrictionReviewAvgAggregateInputType
+    _sum?: DishRestrictionReviewSumAggregateInputType
+    _min?: DishRestrictionReviewMinAggregateInputType
+    _max?: DishRestrictionReviewMaxAggregateInputType
+  }
+
+  export type DishRestrictionReviewGroupByOutputType = {
+    id: number
+    userID: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
+    _count: DishRestrictionReviewCountAggregateOutputType | null
+    _avg: DishRestrictionReviewAvgAggregateOutputType | null
+    _sum: DishRestrictionReviewSumAggregateOutputType | null
+    _min: DishRestrictionReviewMinAggregateOutputType | null
+    _max: DishRestrictionReviewMaxAggregateOutputType | null
+  }
+
+  type GetDishRestrictionReviewGroupByPayload<T extends DishRestrictionReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DishRestrictionReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DishRestrictionReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DishRestrictionReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], DishRestrictionReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DishRestrictionReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userID?: boolean
+    dishID?: boolean
+    dishSatisfiesRestriction?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dishRestrictionReview"]>
+
+  export type DishRestrictionReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userID?: boolean
+    dishID?: boolean
+    dishSatisfiesRestriction?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dishRestrictionReview"]>
+
+  export type DishRestrictionReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userID?: boolean
+    dishID?: boolean
+    dishSatisfiesRestriction?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dishRestrictionReview"]>
+
+  export type DishRestrictionReviewSelectScalar = {
+    id?: boolean
+    userID?: boolean
+    dishID?: boolean
+    dishSatisfiesRestriction?: boolean
+  }
+
+  export type DishRestrictionReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userID" | "dishID" | "dishSatisfiesRestriction", ExtArgs["result"]["dishRestrictionReview"]>
+  export type DishRestrictionReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }
+  export type DishRestrictionReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }
+  export type DishRestrictionReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    dish?: boolean | DishDefaultArgs<ExtArgs>
+  }
+
+  export type $DishRestrictionReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DishRestrictionReview"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      dish: Prisma.$DishPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userID: number
+      dishID: number
+      dishSatisfiesRestriction: boolean
+    }, ExtArgs["result"]["dishRestrictionReview"]>
+    composites: {}
+  }
+
+  type DishRestrictionReviewGetPayload<S extends boolean | null | undefined | DishRestrictionReviewDefaultArgs> = $Result.GetResult<Prisma.$DishRestrictionReviewPayload, S>
+
+  type DishRestrictionReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DishRestrictionReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DishRestrictionReviewCountAggregateInputType | true
+    }
+
+  export interface DishRestrictionReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DishRestrictionReview'], meta: { name: 'DishRestrictionReview' } }
+    /**
+     * Find zero or one DishRestrictionReview that matches the filter.
+     * @param {DishRestrictionReviewFindUniqueArgs} args - Arguments to find a DishRestrictionReview
+     * @example
+     * // Get one DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DishRestrictionReviewFindUniqueArgs>(args: SelectSubset<T, DishRestrictionReviewFindUniqueArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DishRestrictionReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DishRestrictionReviewFindUniqueOrThrowArgs} args - Arguments to find a DishRestrictionReview
+     * @example
+     * // Get one DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DishRestrictionReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, DishRestrictionReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DishRestrictionReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewFindFirstArgs} args - Arguments to find a DishRestrictionReview
+     * @example
+     * // Get one DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DishRestrictionReviewFindFirstArgs>(args?: SelectSubset<T, DishRestrictionReviewFindFirstArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DishRestrictionReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewFindFirstOrThrowArgs} args - Arguments to find a DishRestrictionReview
+     * @example
+     * // Get one DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DishRestrictionReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, DishRestrictionReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DishRestrictionReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DishRestrictionReviews
+     * const dishRestrictionReviews = await prisma.dishRestrictionReview.findMany()
+     * 
+     * // Get first 10 DishRestrictionReviews
+     * const dishRestrictionReviews = await prisma.dishRestrictionReview.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dishRestrictionReviewWithIdOnly = await prisma.dishRestrictionReview.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DishRestrictionReviewFindManyArgs>(args?: SelectSubset<T, DishRestrictionReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DishRestrictionReview.
+     * @param {DishRestrictionReviewCreateArgs} args - Arguments to create a DishRestrictionReview.
+     * @example
+     * // Create one DishRestrictionReview
+     * const DishRestrictionReview = await prisma.dishRestrictionReview.create({
+     *   data: {
+     *     // ... data to create a DishRestrictionReview
+     *   }
+     * })
+     * 
+     */
+    create<T extends DishRestrictionReviewCreateArgs>(args: SelectSubset<T, DishRestrictionReviewCreateArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DishRestrictionReviews.
+     * @param {DishRestrictionReviewCreateManyArgs} args - Arguments to create many DishRestrictionReviews.
+     * @example
+     * // Create many DishRestrictionReviews
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DishRestrictionReviewCreateManyArgs>(args?: SelectSubset<T, DishRestrictionReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DishRestrictionReviews and returns the data saved in the database.
+     * @param {DishRestrictionReviewCreateManyAndReturnArgs} args - Arguments to create many DishRestrictionReviews.
+     * @example
+     * // Create many DishRestrictionReviews
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DishRestrictionReviews and only return the `id`
+     * const dishRestrictionReviewWithIdOnly = await prisma.dishRestrictionReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DishRestrictionReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, DishRestrictionReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DishRestrictionReview.
+     * @param {DishRestrictionReviewDeleteArgs} args - Arguments to delete one DishRestrictionReview.
+     * @example
+     * // Delete one DishRestrictionReview
+     * const DishRestrictionReview = await prisma.dishRestrictionReview.delete({
+     *   where: {
+     *     // ... filter to delete one DishRestrictionReview
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DishRestrictionReviewDeleteArgs>(args: SelectSubset<T, DishRestrictionReviewDeleteArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DishRestrictionReview.
+     * @param {DishRestrictionReviewUpdateArgs} args - Arguments to update one DishRestrictionReview.
+     * @example
+     * // Update one DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DishRestrictionReviewUpdateArgs>(args: SelectSubset<T, DishRestrictionReviewUpdateArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DishRestrictionReviews.
+     * @param {DishRestrictionReviewDeleteManyArgs} args - Arguments to filter DishRestrictionReviews to delete.
+     * @example
+     * // Delete a few DishRestrictionReviews
+     * const { count } = await prisma.dishRestrictionReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DishRestrictionReviewDeleteManyArgs>(args?: SelectSubset<T, DishRestrictionReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DishRestrictionReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DishRestrictionReviews
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DishRestrictionReviewUpdateManyArgs>(args: SelectSubset<T, DishRestrictionReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DishRestrictionReviews and returns the data updated in the database.
+     * @param {DishRestrictionReviewUpdateManyAndReturnArgs} args - Arguments to update many DishRestrictionReviews.
+     * @example
+     * // Update many DishRestrictionReviews
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DishRestrictionReviews and only return the `id`
+     * const dishRestrictionReviewWithIdOnly = await prisma.dishRestrictionReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DishRestrictionReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, DishRestrictionReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DishRestrictionReview.
+     * @param {DishRestrictionReviewUpsertArgs} args - Arguments to update or create a DishRestrictionReview.
+     * @example
+     * // Update or create a DishRestrictionReview
+     * const dishRestrictionReview = await prisma.dishRestrictionReview.upsert({
+     *   create: {
+     *     // ... data to create a DishRestrictionReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DishRestrictionReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DishRestrictionReviewUpsertArgs>(args: SelectSubset<T, DishRestrictionReviewUpsertArgs<ExtArgs>>): Prisma__DishRestrictionReviewClient<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DishRestrictionReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewCountArgs} args - Arguments to filter DishRestrictionReviews to count.
+     * @example
+     * // Count the number of DishRestrictionReviews
+     * const count = await prisma.dishRestrictionReview.count({
+     *   where: {
+     *     // ... the filter for the DishRestrictionReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends DishRestrictionReviewCountArgs>(
+      args?: Subset<T, DishRestrictionReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DishRestrictionReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DishRestrictionReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DishRestrictionReviewAggregateArgs>(args: Subset<T, DishRestrictionReviewAggregateArgs>): Prisma.PrismaPromise<GetDishRestrictionReviewAggregateType<T>>
+
+    /**
+     * Group by DishRestrictionReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DishRestrictionReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DishRestrictionReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DishRestrictionReviewGroupByArgs['orderBy'] }
+        : { orderBy?: DishRestrictionReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DishRestrictionReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDishRestrictionReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DishRestrictionReview model
+   */
+  readonly fields: DishRestrictionReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DishRestrictionReview.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DishRestrictionReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dish<T extends DishDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DishDefaultArgs<ExtArgs>>): Prisma__DishClient<$Result.GetResult<Prisma.$DishPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DishRestrictionReview model
+   */
+  interface DishRestrictionReviewFieldRefs {
+    readonly id: FieldRef<"DishRestrictionReview", 'Int'>
+    readonly userID: FieldRef<"DishRestrictionReview", 'Int'>
+    readonly dishID: FieldRef<"DishRestrictionReview", 'Int'>
+    readonly dishSatisfiesRestriction: FieldRef<"DishRestrictionReview", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DishRestrictionReview findUnique
+   */
+  export type DishRestrictionReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which DishRestrictionReview to fetch.
+     */
+    where: DishRestrictionReviewWhereUniqueInput
+  }
+
+  /**
+   * DishRestrictionReview findUniqueOrThrow
+   */
+  export type DishRestrictionReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which DishRestrictionReview to fetch.
+     */
+    where: DishRestrictionReviewWhereUniqueInput
+  }
+
+  /**
+   * DishRestrictionReview findFirst
+   */
+  export type DishRestrictionReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which DishRestrictionReview to fetch.
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DishRestrictionReviews to fetch.
+     */
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DishRestrictionReviews.
+     */
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DishRestrictionReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DishRestrictionReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DishRestrictionReviews.
+     */
+    distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
+  }
+
+  /**
+   * DishRestrictionReview findFirstOrThrow
+   */
+  export type DishRestrictionReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which DishRestrictionReview to fetch.
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DishRestrictionReviews to fetch.
+     */
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DishRestrictionReviews.
+     */
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DishRestrictionReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DishRestrictionReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DishRestrictionReviews.
+     */
+    distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
+  }
+
+  /**
+   * DishRestrictionReview findMany
+   */
+  export type DishRestrictionReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which DishRestrictionReviews to fetch.
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DishRestrictionReviews to fetch.
+     */
+    orderBy?: DishRestrictionReviewOrderByWithRelationInput | DishRestrictionReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DishRestrictionReviews.
+     */
+    cursor?: DishRestrictionReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DishRestrictionReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DishRestrictionReviews.
+     */
+    skip?: number
+    distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
+  }
+
+  /**
+   * DishRestrictionReview create
+   */
+  export type DishRestrictionReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DishRestrictionReview.
+     */
+    data: XOR<DishRestrictionReviewCreateInput, DishRestrictionReviewUncheckedCreateInput>
+  }
+
+  /**
+   * DishRestrictionReview createMany
+   */
+  export type DishRestrictionReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DishRestrictionReviews.
+     */
+    data: DishRestrictionReviewCreateManyInput | DishRestrictionReviewCreateManyInput[]
+  }
+
+  /**
+   * DishRestrictionReview createManyAndReturn
+   */
+  export type DishRestrictionReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many DishRestrictionReviews.
+     */
+    data: DishRestrictionReviewCreateManyInput | DishRestrictionReviewCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DishRestrictionReview update
+   */
+  export type DishRestrictionReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DishRestrictionReview.
+     */
+    data: XOR<DishRestrictionReviewUpdateInput, DishRestrictionReviewUncheckedUpdateInput>
+    /**
+     * Choose, which DishRestrictionReview to update.
+     */
+    where: DishRestrictionReviewWhereUniqueInput
+  }
+
+  /**
+   * DishRestrictionReview updateMany
+   */
+  export type DishRestrictionReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DishRestrictionReviews.
+     */
+    data: XOR<DishRestrictionReviewUpdateManyMutationInput, DishRestrictionReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which DishRestrictionReviews to update
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * Limit how many DishRestrictionReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DishRestrictionReview updateManyAndReturn
+   */
+  export type DishRestrictionReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * The data used to update DishRestrictionReviews.
+     */
+    data: XOR<DishRestrictionReviewUpdateManyMutationInput, DishRestrictionReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which DishRestrictionReviews to update
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * Limit how many DishRestrictionReviews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DishRestrictionReview upsert
+   */
+  export type DishRestrictionReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DishRestrictionReview to update in case it exists.
+     */
+    where: DishRestrictionReviewWhereUniqueInput
+    /**
+     * In case the DishRestrictionReview found by the `where` argument doesn't exist, create a new DishRestrictionReview with this data.
+     */
+    create: XOR<DishRestrictionReviewCreateInput, DishRestrictionReviewUncheckedCreateInput>
+    /**
+     * In case the DishRestrictionReview was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DishRestrictionReviewUpdateInput, DishRestrictionReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * DishRestrictionReview delete
+   */
+  export type DishRestrictionReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
+    /**
+     * Filter which DishRestrictionReview to delete.
+     */
+    where: DishRestrictionReviewWhereUniqueInput
+  }
+
+  /**
+   * DishRestrictionReview deleteMany
+   */
+  export type DishRestrictionReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DishRestrictionReviews to delete
+     */
+    where?: DishRestrictionReviewWhereInput
+    /**
+     * Limit how many DishRestrictionReviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DishRestrictionReview without action
+   */
+  export type DishRestrictionReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DishRestrictionReview
+     */
+    select?: DishRestrictionReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DishRestrictionReview
+     */
+    omit?: DishRestrictionReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DishRestrictionReviewInclude<ExtArgs> | null
   }
 
 
@@ -5703,20 +7985,31 @@ export namespace Prisma {
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
+  export const DietaryRestrictionScalarFieldEnum: {
+    id: 'id',
+    name: 'name'
+  };
+
+  export type DietaryRestrictionScalarFieldEnum = (typeof DietaryRestrictionScalarFieldEnum)[keyof typeof DietaryRestrictionScalarFieldEnum]
+
+
   export const DishScalarFieldEnum: {
     id: 'id',
-    businessID: 'businessID',
-    allergens: 'allergens',
-    unidentified: 'unidentified',
-    allergenFree: 'allergenFree',
-    isVegan: 'isVegan',
-    hasGlutenFree: 'hasGlutenFree',
-    hasWheatFree: 'hasWheatFree',
-    hasDairyFree: 'hasDairyFree',
-    hasShellfishFree: 'hasShellfishFree'
+    name: 'name',
+    businessID: 'businessID'
   };
 
   export type DishScalarFieldEnum = (typeof DishScalarFieldEnum)[keyof typeof DishScalarFieldEnum]
+
+
+  export const DishRestrictionReviewScalarFieldEnum: {
+    id: 'id',
+    userID: 'userID',
+    dishID: 'dishID',
+    dishSatisfiesRestriction: 'dishSatisfiesRestriction'
+  };
+
+  export type DishRestrictionReviewScalarFieldEnum = (typeof DishRestrictionReviewScalarFieldEnum)[keyof typeof DishRestrictionReviewScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5725,30 +8018,6 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
-  export const JsonNullValueFilter: {
-    DbNull: typeof DbNull,
-    JsonNull: typeof JsonNull,
-    AnyNull: typeof AnyNull
-  };
-
-  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-  export const QueryMode: {
-    default: 'default',
-    insensitive: 'insensitive'
-  };
-
-  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   /**
@@ -5767,20 +8036,6 @@ export namespace Prisma {
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -5855,6 +8110,7 @@ export namespace Prisma {
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     reviews?: ReviewListRelationFilter
+    dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5863,6 +8119,7 @@ export namespace Prisma {
     username?: SortOrder
     password?: SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
+    dishRestrictionReviews?: DishRestrictionReviewOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5874,6 +8131,7 @@ export namespace Prisma {
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     reviews?: ReviewListRelationFilter
+    dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -5963,35 +8221,62 @@ export namespace Prisma {
     numStars?: IntWithAggregatesFilter<"Review"> | number
   }
 
+  export type DietaryRestrictionWhereInput = {
+    AND?: DietaryRestrictionWhereInput | DietaryRestrictionWhereInput[]
+    OR?: DietaryRestrictionWhereInput[]
+    NOT?: DietaryRestrictionWhereInput | DietaryRestrictionWhereInput[]
+    id?: IntFilter<"DietaryRestriction"> | number
+    name?: StringFilter<"DietaryRestriction"> | string
+  }
+
+  export type DietaryRestrictionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DietaryRestrictionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: DietaryRestrictionWhereInput | DietaryRestrictionWhereInput[]
+    OR?: DietaryRestrictionWhereInput[]
+    NOT?: DietaryRestrictionWhereInput | DietaryRestrictionWhereInput[]
+  }, "id" | "name">
+
+  export type DietaryRestrictionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    _count?: DietaryRestrictionCountOrderByAggregateInput
+    _avg?: DietaryRestrictionAvgOrderByAggregateInput
+    _max?: DietaryRestrictionMaxOrderByAggregateInput
+    _min?: DietaryRestrictionMinOrderByAggregateInput
+    _sum?: DietaryRestrictionSumOrderByAggregateInput
+  }
+
+  export type DietaryRestrictionScalarWhereWithAggregatesInput = {
+    AND?: DietaryRestrictionScalarWhereWithAggregatesInput | DietaryRestrictionScalarWhereWithAggregatesInput[]
+    OR?: DietaryRestrictionScalarWhereWithAggregatesInput[]
+    NOT?: DietaryRestrictionScalarWhereWithAggregatesInput | DietaryRestrictionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DietaryRestriction"> | number
+    name?: StringWithAggregatesFilter<"DietaryRestriction"> | string
+  }
+
   export type DishWhereInput = {
     AND?: DishWhereInput | DishWhereInput[]
     OR?: DishWhereInput[]
     NOT?: DishWhereInput | DishWhereInput[]
     id?: IntFilter<"Dish"> | number
+    name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
-    allergens?: JsonFilter<"Dish">
-    unidentified?: JsonFilter<"Dish">
-    allergenFree?: JsonFilter<"Dish">
-    isVegan?: BoolFilter<"Dish"> | boolean
-    hasGlutenFree?: BoolFilter<"Dish"> | boolean
-    hasWheatFree?: BoolFilter<"Dish"> | boolean
-    hasDairyFree?: BoolFilter<"Dish"> | boolean
-    hasShellfishFree?: BoolFilter<"Dish"> | boolean
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
+    dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }
 
   export type DishOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrder
     businessID?: SortOrder
-    allergens?: SortOrder
-    unidentified?: SortOrder
-    allergenFree?: SortOrder
-    isVegan?: SortOrder
-    hasGlutenFree?: SortOrder
-    hasWheatFree?: SortOrder
-    hasDairyFree?: SortOrder
-    hasShellfishFree?: SortOrder
     business?: BusinessOrderByWithRelationInput
+    dishRestrictionReviews?: DishRestrictionReviewOrderByRelationAggregateInput
   }
 
   export type DishWhereUniqueInput = Prisma.AtLeast<{
@@ -5999,29 +8284,16 @@ export namespace Prisma {
     AND?: DishWhereInput | DishWhereInput[]
     OR?: DishWhereInput[]
     NOT?: DishWhereInput | DishWhereInput[]
+    name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
-    allergens?: JsonFilter<"Dish">
-    unidentified?: JsonFilter<"Dish">
-    allergenFree?: JsonFilter<"Dish">
-    isVegan?: BoolFilter<"Dish"> | boolean
-    hasGlutenFree?: BoolFilter<"Dish"> | boolean
-    hasWheatFree?: BoolFilter<"Dish"> | boolean
-    hasDairyFree?: BoolFilter<"Dish"> | boolean
-    hasShellfishFree?: BoolFilter<"Dish"> | boolean
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
+    dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }, "id">
 
   export type DishOrderByWithAggregationInput = {
     id?: SortOrder
+    name?: SortOrder
     businessID?: SortOrder
-    allergens?: SortOrder
-    unidentified?: SortOrder
-    allergenFree?: SortOrder
-    isVegan?: SortOrder
-    hasGlutenFree?: SortOrder
-    hasWheatFree?: SortOrder
-    hasDairyFree?: SortOrder
-    hasShellfishFree?: SortOrder
     _count?: DishCountOrderByAggregateInput
     _avg?: DishAvgOrderByAggregateInput
     _max?: DishMaxOrderByAggregateInput
@@ -6034,15 +8306,64 @@ export namespace Prisma {
     OR?: DishScalarWhereWithAggregatesInput[]
     NOT?: DishScalarWhereWithAggregatesInput | DishScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Dish"> | number
+    name?: StringWithAggregatesFilter<"Dish"> | string
     businessID?: IntWithAggregatesFilter<"Dish"> | number
-    allergens?: JsonWithAggregatesFilter<"Dish">
-    unidentified?: JsonWithAggregatesFilter<"Dish">
-    allergenFree?: JsonWithAggregatesFilter<"Dish">
-    isVegan?: BoolWithAggregatesFilter<"Dish"> | boolean
-    hasGlutenFree?: BoolWithAggregatesFilter<"Dish"> | boolean
-    hasWheatFree?: BoolWithAggregatesFilter<"Dish"> | boolean
-    hasDairyFree?: BoolWithAggregatesFilter<"Dish"> | boolean
-    hasShellfishFree?: BoolWithAggregatesFilter<"Dish"> | boolean
+  }
+
+  export type DishRestrictionReviewWhereInput = {
+    AND?: DishRestrictionReviewWhereInput | DishRestrictionReviewWhereInput[]
+    OR?: DishRestrictionReviewWhereInput[]
+    NOT?: DishRestrictionReviewWhereInput | DishRestrictionReviewWhereInput[]
+    id?: IntFilter<"DishRestrictionReview"> | number
+    userID?: IntFilter<"DishRestrictionReview"> | number
+    dishID?: IntFilter<"DishRestrictionReview"> | number
+    dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    dish?: XOR<DishScalarRelationFilter, DishWhereInput>
+  }
+
+  export type DishRestrictionReviewOrderByWithRelationInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+    dishSatisfiesRestriction?: SortOrder
+    user?: UserOrderByWithRelationInput
+    dish?: DishOrderByWithRelationInput
+  }
+
+  export type DishRestrictionReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userID_dishID?: DishRestrictionReviewUserIDDishIDCompoundUniqueInput
+    AND?: DishRestrictionReviewWhereInput | DishRestrictionReviewWhereInput[]
+    OR?: DishRestrictionReviewWhereInput[]
+    NOT?: DishRestrictionReviewWhereInput | DishRestrictionReviewWhereInput[]
+    userID?: IntFilter<"DishRestrictionReview"> | number
+    dishID?: IntFilter<"DishRestrictionReview"> | number
+    dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    dish?: XOR<DishScalarRelationFilter, DishWhereInput>
+  }, "id" | "userID_dishID">
+
+  export type DishRestrictionReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+    dishSatisfiesRestriction?: SortOrder
+    _count?: DishRestrictionReviewCountOrderByAggregateInput
+    _avg?: DishRestrictionReviewAvgOrderByAggregateInput
+    _max?: DishRestrictionReviewMaxOrderByAggregateInput
+    _min?: DishRestrictionReviewMinOrderByAggregateInput
+    _sum?: DishRestrictionReviewSumOrderByAggregateInput
+  }
+
+  export type DishRestrictionReviewScalarWhereWithAggregatesInput = {
+    AND?: DishRestrictionReviewScalarWhereWithAggregatesInput | DishRestrictionReviewScalarWhereWithAggregatesInput[]
+    OR?: DishRestrictionReviewScalarWhereWithAggregatesInput[]
+    NOT?: DishRestrictionReviewScalarWhereWithAggregatesInput | DishRestrictionReviewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DishRestrictionReview"> | number
+    userID?: IntWithAggregatesFilter<"DishRestrictionReview"> | number
+    dishID?: IntWithAggregatesFilter<"DishRestrictionReview"> | number
+    dishSatisfiesRestriction?: BoolWithAggregatesFilter<"DishRestrictionReview"> | boolean
   }
 
   export type BusinessCreateInput = {
@@ -6090,6 +8411,7 @@ export namespace Prisma {
     username: string
     password: string
     reviews?: ReviewCreateNestedManyWithoutAuthorInput
+    dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6098,6 +8420,7 @@ export namespace Prisma {
     username: string
     password: string
     reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6105,6 +8428,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     reviews?: ReviewUpdateManyWithoutAuthorNestedInput
+    dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6113,6 +8437,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6193,91 +8518,122 @@ export namespace Prisma {
     numStars?: IntFieldUpdateOperationsInput | number
   }
 
+  export type DietaryRestrictionCreateInput = {
+    name: string
+  }
+
+  export type DietaryRestrictionUncheckedCreateInput = {
+    id?: number
+    name: string
+  }
+
+  export type DietaryRestrictionUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DietaryRestrictionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DietaryRestrictionCreateManyInput = {
+    id?: number
+    name: string
+  }
+
+  export type DietaryRestrictionUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DietaryRestrictionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DishCreateInput = {
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
+    name: string
     business: BusinessCreateNestedOneWithoutDishesInput
+    dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutDishInput
   }
 
   export type DishUncheckedCreateInput = {
     id?: number
+    name: string
     businessID: number
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutDishInput
   }
 
   export type DishUpdateInput = {
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
     business?: BusinessUpdateOneRequiredWithoutDishesNestedInput
+    dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutDishNestedInput
   }
 
   export type DishUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
     businessID?: IntFieldUpdateOperationsInput | number
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutDishNestedInput
   }
 
   export type DishCreateManyInput = {
     id?: number
+    name: string
     businessID: number
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
   }
 
   export type DishUpdateManyMutationInput = {
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type DishUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
     businessID?: IntFieldUpdateOperationsInput | number
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewCreateInput = {
+    dishSatisfiesRestriction: boolean
+    user: UserCreateNestedOneWithoutDishRestrictionReviewsInput
+    dish: DishCreateNestedOneWithoutDishRestrictionReviewsInput
+  }
+
+  export type DishRestrictionReviewUncheckedCreateInput = {
+    id?: number
+    userID: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
+  }
+
+  export type DishRestrictionReviewUpdateInput = {
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+    dish?: DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userID?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewCreateManyInput = {
+    id?: number
+    userID: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
+  }
+
+  export type DishRestrictionReviewUpdateManyMutationInput = {
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userID?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -6381,6 +8737,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type DishRestrictionReviewListRelationFilter = {
+    every?: DishRestrictionReviewWhereInput
+    some?: DishRestrictionReviewWhereInput
+    none?: DishRestrictionReviewWhereInput
+  }
+
+  export type DishRestrictionReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -6460,41 +8826,34 @@ export namespace Prisma {
     businessID?: SortOrder
     numStars?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  export type DietaryRestrictionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type DietaryRestrictionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DietaryRestrictionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DietaryRestrictionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+  }
+
+  export type DietaryRestrictionSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type DishCountOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     businessID?: SortOrder
-    allergens?: SortOrder
-    unidentified?: SortOrder
-    allergenFree?: SortOrder
-    isVegan?: SortOrder
-    hasGlutenFree?: SortOrder
-    hasWheatFree?: SortOrder
-    hasDairyFree?: SortOrder
-    hasShellfishFree?: SortOrder
   }
 
   export type DishAvgOrderByAggregateInput = {
@@ -6504,48 +8863,67 @@ export namespace Prisma {
 
   export type DishMaxOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     businessID?: SortOrder
-    isVegan?: SortOrder
-    hasGlutenFree?: SortOrder
-    hasWheatFree?: SortOrder
-    hasDairyFree?: SortOrder
-    hasShellfishFree?: SortOrder
   }
 
   export type DishMinOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     businessID?: SortOrder
-    isVegan?: SortOrder
-    hasGlutenFree?: SortOrder
-    hasWheatFree?: SortOrder
-    hasDairyFree?: SortOrder
-    hasShellfishFree?: SortOrder
   }
 
   export type DishSumOrderByAggregateInput = {
     id?: SortOrder
     businessID?: SortOrder
   }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DishScalarRelationFilter = {
+    is?: DishWhereInput
+    isNot?: DishWhereInput
+  }
+
+  export type DishRestrictionReviewUserIDDishIDCompoundUniqueInput = {
+    userID: number
+    dishID: number
+  }
+
+  export type DishRestrictionReviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+    dishSatisfiesRestriction?: SortOrder
+  }
+
+  export type DishRestrictionReviewAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+  }
+
+  export type DishRestrictionReviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+    dishSatisfiesRestriction?: SortOrder
+  }
+
+  export type DishRestrictionReviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
+    dishSatisfiesRestriction?: SortOrder
+  }
+
+  export type DishRestrictionReviewSumOrderByAggregateInput = {
+    id?: SortOrder
+    userID?: SortOrder
+    dishID?: SortOrder
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -6659,11 +9037,25 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type DishRestrictionReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput> | DishRestrictionReviewCreateWithoutUserInput[] | DishRestrictionReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutUserInput | DishRestrictionReviewCreateOrConnectWithoutUserInput[]
+    createMany?: DishRestrictionReviewCreateManyUserInputEnvelope
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+  }
+
   export type ReviewUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
     createMany?: ReviewCreateManyAuthorInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type DishRestrictionReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput> | DishRestrictionReviewCreateWithoutUserInput[] | DishRestrictionReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutUserInput | DishRestrictionReviewCreateOrConnectWithoutUserInput[]
+    createMany?: DishRestrictionReviewCreateManyUserInputEnvelope
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
   }
 
   export type ReviewUpdateManyWithoutAuthorNestedInput = {
@@ -6680,6 +9072,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type DishRestrictionReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput> | DishRestrictionReviewCreateWithoutUserInput[] | DishRestrictionReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutUserInput | DishRestrictionReviewCreateOrConnectWithoutUserInput[]
+    upsert?: DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput | DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DishRestrictionReviewCreateManyUserInputEnvelope
+    set?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    disconnect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    delete?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    update?: DishRestrictionReviewUpdateWithWhereUniqueWithoutUserInput | DishRestrictionReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DishRestrictionReviewUpdateManyWithWhereWithoutUserInput | DishRestrictionReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
+  }
+
   export type ReviewUncheckedUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
@@ -6692,6 +9098,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutAuthorInput | ReviewUpdateWithWhereUniqueWithoutAuthorInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutAuthorInput | ReviewUpdateManyWithWhereWithoutAuthorInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput> | DishRestrictionReviewCreateWithoutUserInput[] | DishRestrictionReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutUserInput | DishRestrictionReviewCreateOrConnectWithoutUserInput[]
+    upsert?: DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput | DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DishRestrictionReviewCreateManyUserInputEnvelope
+    set?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    disconnect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    delete?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    update?: DishRestrictionReviewUpdateWithWhereUniqueWithoutUserInput | DishRestrictionReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DishRestrictionReviewUpdateManyWithWhereWithoutUserInput | DishRestrictionReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutReviewsInput = {
@@ -6728,8 +9148,18 @@ export namespace Prisma {
     connect?: BusinessWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type DishRestrictionReviewCreateNestedManyWithoutDishInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput> | DishRestrictionReviewCreateWithoutDishInput[] | DishRestrictionReviewUncheckedCreateWithoutDishInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutDishInput | DishRestrictionReviewCreateOrConnectWithoutDishInput[]
+    createMany?: DishRestrictionReviewCreateManyDishInputEnvelope
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+  }
+
+  export type DishRestrictionReviewUncheckedCreateNestedManyWithoutDishInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput> | DishRestrictionReviewCreateWithoutDishInput[] | DishRestrictionReviewUncheckedCreateWithoutDishInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutDishInput | DishRestrictionReviewCreateOrConnectWithoutDishInput[]
+    createMany?: DishRestrictionReviewCreateManyDishInputEnvelope
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
   }
 
   export type BusinessUpdateOneRequiredWithoutDishesNestedInput = {
@@ -6738,6 +9168,66 @@ export namespace Prisma {
     upsert?: BusinessUpsertWithoutDishesInput
     connect?: BusinessWhereUniqueInput
     update?: XOR<XOR<BusinessUpdateToOneWithWhereWithoutDishesInput, BusinessUpdateWithoutDishesInput>, BusinessUncheckedUpdateWithoutDishesInput>
+  }
+
+  export type DishRestrictionReviewUpdateManyWithoutDishNestedInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput> | DishRestrictionReviewCreateWithoutDishInput[] | DishRestrictionReviewUncheckedCreateWithoutDishInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutDishInput | DishRestrictionReviewCreateOrConnectWithoutDishInput[]
+    upsert?: DishRestrictionReviewUpsertWithWhereUniqueWithoutDishInput | DishRestrictionReviewUpsertWithWhereUniqueWithoutDishInput[]
+    createMany?: DishRestrictionReviewCreateManyDishInputEnvelope
+    set?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    disconnect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    delete?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    update?: DishRestrictionReviewUpdateWithWhereUniqueWithoutDishInput | DishRestrictionReviewUpdateWithWhereUniqueWithoutDishInput[]
+    updateMany?: DishRestrictionReviewUpdateManyWithWhereWithoutDishInput | DishRestrictionReviewUpdateManyWithWhereWithoutDishInput[]
+    deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyWithoutDishNestedInput = {
+    create?: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput> | DishRestrictionReviewCreateWithoutDishInput[] | DishRestrictionReviewUncheckedCreateWithoutDishInput[]
+    connectOrCreate?: DishRestrictionReviewCreateOrConnectWithoutDishInput | DishRestrictionReviewCreateOrConnectWithoutDishInput[]
+    upsert?: DishRestrictionReviewUpsertWithWhereUniqueWithoutDishInput | DishRestrictionReviewUpsertWithWhereUniqueWithoutDishInput[]
+    createMany?: DishRestrictionReviewCreateManyDishInputEnvelope
+    set?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    disconnect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    delete?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
+    update?: DishRestrictionReviewUpdateWithWhereUniqueWithoutDishInput | DishRestrictionReviewUpdateWithWhereUniqueWithoutDishInput[]
+    updateMany?: DishRestrictionReviewUpdateManyWithWhereWithoutDishInput | DishRestrictionReviewUpdateManyWithWhereWithoutDishInput[]
+    deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutDishRestrictionReviewsInput = {
+    create?: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDishRestrictionReviewsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DishCreateNestedOneWithoutDishRestrictionReviewsInput = {
+    create?: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
+    connectOrCreate?: DishCreateOrConnectWithoutDishRestrictionReviewsInput
+    connect?: DishWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDishRestrictionReviewsInput
+    upsert?: UserUpsertWithoutDishRestrictionReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput, UserUpdateWithoutDishRestrictionReviewsInput>, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
+    create?: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
+    connectOrCreate?: DishCreateOrConnectWithoutDishRestrictionReviewsInput
+    upsert?: DishUpsertWithoutDishRestrictionReviewsInput
+    connect?: DishWhereUniqueInput
+    update?: XOR<XOR<DishUpdateToOneWithWhereWithoutDishRestrictionReviewsInput, DishUpdateWithoutDishRestrictionReviewsInput>, DishUncheckedUpdateWithoutDishRestrictionReviewsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -6813,24 +9303,6 @@ export namespace Prisma {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
@@ -6865,26 +9337,14 @@ export namespace Prisma {
   }
 
   export type DishCreateWithoutBusinessInput = {
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
+    name: string
+    dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutDishInput
   }
 
   export type DishUncheckedCreateWithoutBusinessInput = {
     id?: number
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
+    name: string
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutDishInput
   }
 
   export type DishCreateOrConnectWithoutBusinessInput = {
@@ -6945,15 +9405,8 @@ export namespace Prisma {
     OR?: DishScalarWhereInput[]
     NOT?: DishScalarWhereInput | DishScalarWhereInput[]
     id?: IntFilter<"Dish"> | number
+    name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
-    allergens?: JsonFilter<"Dish">
-    unidentified?: JsonFilter<"Dish">
-    allergenFree?: JsonFilter<"Dish">
-    isVegan?: BoolFilter<"Dish"> | boolean
-    hasGlutenFree?: BoolFilter<"Dish"> | boolean
-    hasWheatFree?: BoolFilter<"Dish"> | boolean
-    hasDairyFree?: BoolFilter<"Dish"> | boolean
-    hasShellfishFree?: BoolFilter<"Dish"> | boolean
   }
 
   export type ReviewCreateWithoutAuthorInput = {
@@ -6980,6 +9433,26 @@ export namespace Prisma {
     data: ReviewCreateManyAuthorInput | ReviewCreateManyAuthorInput[]
   }
 
+  export type DishRestrictionReviewCreateWithoutUserInput = {
+    dishSatisfiesRestriction: boolean
+    dish: DishCreateNestedOneWithoutDishRestrictionReviewsInput
+  }
+
+  export type DishRestrictionReviewUncheckedCreateWithoutUserInput = {
+    id?: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
+  }
+
+  export type DishRestrictionReviewCreateOrConnectWithoutUserInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    create: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type DishRestrictionReviewCreateManyUserInputEnvelope = {
+    data: DishRestrictionReviewCreateManyUserInput | DishRestrictionReviewCreateManyUserInput[]
+  }
+
   export type ReviewUpsertWithWhereUniqueWithoutAuthorInput = {
     where: ReviewWhereUniqueInput
     update: XOR<ReviewUpdateWithoutAuthorInput, ReviewUncheckedUpdateWithoutAuthorInput>
@@ -6996,10 +9469,37 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutAuthorInput>
   }
 
+  export type DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    update: XOR<DishRestrictionReviewUpdateWithoutUserInput, DishRestrictionReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<DishRestrictionReviewCreateWithoutUserInput, DishRestrictionReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type DishRestrictionReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    data: XOR<DishRestrictionReviewUpdateWithoutUserInput, DishRestrictionReviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DishRestrictionReviewUpdateManyWithWhereWithoutUserInput = {
+    where: DishRestrictionReviewScalarWhereInput
+    data: XOR<DishRestrictionReviewUpdateManyMutationInput, DishRestrictionReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DishRestrictionReviewScalarWhereInput = {
+    AND?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
+    OR?: DishRestrictionReviewScalarWhereInput[]
+    NOT?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
+    id?: IntFilter<"DishRestrictionReview"> | number
+    userID?: IntFilter<"DishRestrictionReview"> | number
+    dishID?: IntFilter<"DishRestrictionReview"> | number
+    dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
+  }
+
   export type UserCreateWithoutReviewsInput = {
     email: string
     username: string
     password: string
+    dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -7007,6 +9507,7 @@ export namespace Prisma {
     email: string
     username: string
     password: string
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -7045,6 +9546,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -7052,6 +9554,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BusinessUpsertWithoutReviewsInput = {
@@ -7092,6 +9595,26 @@ export namespace Prisma {
     create: XOR<BusinessCreateWithoutDishesInput, BusinessUncheckedCreateWithoutDishesInput>
   }
 
+  export type DishRestrictionReviewCreateWithoutDishInput = {
+    dishSatisfiesRestriction: boolean
+    user: UserCreateNestedOneWithoutDishRestrictionReviewsInput
+  }
+
+  export type DishRestrictionReviewUncheckedCreateWithoutDishInput = {
+    id?: number
+    userID: number
+    dishSatisfiesRestriction: boolean
+  }
+
+  export type DishRestrictionReviewCreateOrConnectWithoutDishInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    create: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput>
+  }
+
+  export type DishRestrictionReviewCreateManyDishInputEnvelope = {
+    data: DishRestrictionReviewCreateManyDishInput | DishRestrictionReviewCreateManyDishInput[]
+  }
+
   export type BusinessUpsertWithoutDishesInput = {
     update: XOR<BusinessUpdateWithoutDishesInput, BusinessUncheckedUpdateWithoutDishesInput>
     create: XOR<BusinessCreateWithoutDishesInput, BusinessUncheckedCreateWithoutDishesInput>
@@ -7114,6 +9637,106 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
   }
 
+  export type DishRestrictionReviewUpsertWithWhereUniqueWithoutDishInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    update: XOR<DishRestrictionReviewUpdateWithoutDishInput, DishRestrictionReviewUncheckedUpdateWithoutDishInput>
+    create: XOR<DishRestrictionReviewCreateWithoutDishInput, DishRestrictionReviewUncheckedCreateWithoutDishInput>
+  }
+
+  export type DishRestrictionReviewUpdateWithWhereUniqueWithoutDishInput = {
+    where: DishRestrictionReviewWhereUniqueInput
+    data: XOR<DishRestrictionReviewUpdateWithoutDishInput, DishRestrictionReviewUncheckedUpdateWithoutDishInput>
+  }
+
+  export type DishRestrictionReviewUpdateManyWithWhereWithoutDishInput = {
+    where: DishRestrictionReviewScalarWhereInput
+    data: XOR<DishRestrictionReviewUpdateManyMutationInput, DishRestrictionReviewUncheckedUpdateManyWithoutDishInput>
+  }
+
+  export type UserCreateWithoutDishRestrictionReviewsInput = {
+    email: string
+    username: string
+    password: string
+    reviews?: ReviewCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutDishRestrictionReviewsInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutDishRestrictionReviewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type DishCreateWithoutDishRestrictionReviewsInput = {
+    name: string
+    business: BusinessCreateNestedOneWithoutDishesInput
+  }
+
+  export type DishUncheckedCreateWithoutDishRestrictionReviewsInput = {
+    id?: number
+    name: string
+    businessID: number
+  }
+
+  export type DishCreateOrConnectWithoutDishRestrictionReviewsInput = {
+    where: DishWhereUniqueInput
+    create: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type UserUpsertWithoutDishRestrictionReviewsInput = {
+    update: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+    create: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type UserUpdateWithoutDishRestrictionReviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    reviews?: ReviewUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDishRestrictionReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type DishUpsertWithoutDishRestrictionReviewsInput = {
+    update: XOR<DishUpdateWithoutDishRestrictionReviewsInput, DishUncheckedUpdateWithoutDishRestrictionReviewsInput>
+    create: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
+    where?: DishWhereInput
+  }
+
+  export type DishUpdateToOneWithWhereWithoutDishRestrictionReviewsInput = {
+    where?: DishWhereInput
+    data: XOR<DishUpdateWithoutDishRestrictionReviewsInput, DishUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type DishUpdateWithoutDishRestrictionReviewsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    business?: BusinessUpdateOneRequiredWithoutDishesNestedInput
+  }
+
+  export type DishUncheckedUpdateWithoutDishRestrictionReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    businessID?: IntFieldUpdateOperationsInput | number
+  }
+
   export type ReviewCreateManyBusinessInput = {
     id?: number
     authorID: number
@@ -7124,14 +9747,7 @@ export namespace Prisma {
 
   export type DishCreateManyBusinessInput = {
     id?: number
-    allergens: JsonNullValueInput | InputJsonValue
-    unidentified: JsonNullValueInput | InputJsonValue
-    allergenFree: JsonNullValueInput | InputJsonValue
-    isVegan: boolean
-    hasGlutenFree: boolean
-    hasWheatFree: boolean
-    hasDairyFree: boolean
-    hasShellfishFree: boolean
+    name: string
   }
 
   export type ReviewUpdateWithoutBusinessInput = {
@@ -7158,38 +9774,19 @@ export namespace Prisma {
   }
 
   export type DishUpdateWithoutBusinessInput = {
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutDishNestedInput
   }
 
   export type DishUncheckedUpdateWithoutBusinessInput = {
     id?: IntFieldUpdateOperationsInput | number
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutDishNestedInput
   }
 
   export type DishUncheckedUpdateManyWithoutBusinessInput = {
     id?: IntFieldUpdateOperationsInput | number
-    allergens?: JsonNullValueInput | InputJsonValue
-    unidentified?: JsonNullValueInput | InputJsonValue
-    allergenFree?: JsonNullValueInput | InputJsonValue
-    isVegan?: BoolFieldUpdateOperationsInput | boolean
-    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
-    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
-    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
-    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReviewCreateManyAuthorInput = {
@@ -7198,6 +9795,12 @@ export namespace Prisma {
     title: string
     content: string
     numStars: number
+  }
+
+  export type DishRestrictionReviewCreateManyUserInput = {
+    id?: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
   }
 
   export type ReviewUpdateWithoutAuthorInput = {
@@ -7221,6 +9824,46 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     numStars?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DishRestrictionReviewUpdateWithoutUserInput = {
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+    dish?: DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewCreateManyDishInput = {
+    id?: number
+    userID: number
+    dishSatisfiesRestriction: boolean
+  }
+
+  export type DishRestrictionReviewUpdateWithoutDishInput = {
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateWithoutDishInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyWithoutDishInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

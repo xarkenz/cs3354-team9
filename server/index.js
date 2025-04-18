@@ -1,0 +1,107 @@
+// This and package.json changes based initially on templates in
+// https://expressjs.com/ and
+// https://blog.codeminer42.com/making-a-full-stack-app-with-vue-vite-and-express-that-supports-hot-reload/
+const jsSHA = require("jssha"); //For hashing passwords
+const jsSHA1 = require("jssha/sha1");
+const uuid = require('uuid').v4; //for making unique session tokens
+const sessions = {}; //for storing session tokens
+const express = require('express')
+const app = express()
+app.use(express.json());
+const port = process.env.BACKEND_PORT || 3000
+// import { PrismaClient } from '../prisma/app/generated/prisma/client'
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
+app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.html
+  res.header("Access-Control-Allow-Origin", "*"); // CORS will work from all websites
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+//Created by Isaac Philo on April 18th, 2025
+function getSessionToken(request){ //Extract the session token from among the cookies of the request's header
+  let cookies = request.headers.cookie.split(';');
+  // console.log(cookies);
+  let sessionToken = null;
+  for(let i = 0; i < cookies.length; i++){
+    if(cookies[i].split('=')[0] === 'session'){
+      sessionToken = cookies[i].split('=')[1];
+    }
+  }
+  return sessionToken;
+}
+//Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+app.post("/api/signup", async (req, res) => {
+  const {email, username, password, confirmationPassword} = req.body;
+  if(password !== confirmationPassword){
+    return res.status(401).send('Signup Failed! Password and confirmation password do not match!');
+  }
+  else{
+    const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
+    shaObj.update(`${password}`);
+    const hash = shaObj.getHash("HEX");
+    const prismaResponse = await prisma.user.create({
+      data: {
+        email: email,
+        username: username,
+        password: hash,
+      },
+    });
+    if(!prismaResponse){
+      return res.status(401).send('Signup Failed!');
+    }
+    else{
+      console.log(prismaResponse);
+      const sessionToken = uuid();
+      sessions[sessionToken] = {username, userId: prismaResponse.id};
+      res.set('Set-Cookie', `session=${sessionToken}`);
+      res.send('success');
+    }
+  }
+});
+//Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+app.post("/api/login", async (req, res) => {
+  const usernameEmail = req.body.usernameEmail; //The user can log in with either their username or their password
+  const password = req.body.password;
+  //The following few lines are based on the main npm page for jssha: https://www.npmjs.com/package/jssha/v/3.0.0
+  const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
+  shaObj.update(`${password}`);
+  const hash = shaObj.getHash("HEX");
+  const prismaResponse = await prisma.user.findFirst({
+    where: {
+      OR: [{email: usernameEmail, password: hash}, {username: usernameEmail, password: hash}]
+    },
+  });
+  if(!prismaResponse){
+    return res.status(401).send('Login Failed! User not found.');
+  }
+  if((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)){
+    const sessionToken = uuid();
+    sessions[sessionToken] = {usernameEmail, userId: prismaResponse.id};
+    res.set('Set-Cookie', `session=${sessionToken}`);
+    res.send('success');
+  }
+  else{
+    return res.status(401).send('Login Failed! Incorrect username/email!');
+  }
+});
+//Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+app.get('/api/whoami', (req, res) => {
+  const sessionToken = getSessionToken(req);//Passing the request to this function extracts the session token cookie from the headers of the request
+  if(sessionToken !== null){
+    user = sessions[sessionToken];
+    res.send([{YouAre: user}]);
+  }
+  else{
+    return res.status(400).send('Not logged in!');
+  }
+});
+
+app.get('/api/hello', (req, res) => {
+  res.json('Hello World!')
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
