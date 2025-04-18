@@ -32,6 +32,7 @@ function getSessionToken(request){ //Extract the session token from among the co
   return sessionToken;
 }
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+//Used to sign up for an account with an email, username, password, and confirmation password. Presently, the frontend also checks to see whether the password and confirmation password are the same, but I figured I'd check here as well.
 app.post("/api/signup", async (req, res) => {
   const {email, username, password, confirmationPassword} = req.body;
   if(password !== confirmationPassword){
@@ -54,13 +55,14 @@ app.post("/api/signup", async (req, res) => {
     else{
       console.log(prismaResponse);
       const sessionToken = uuid();
-      sessions[sessionToken] = {username, userId: prismaResponse.id};
+      sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
       res.set('Set-Cookie', `session=${sessionToken}`);
       res.send('success');
     }
   }
 });
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+//Used to log in to an account with an email or username and a password
 app.post("/api/login", async (req, res) => {
   const usernameEmail = req.body.usernameEmail; //The user can log in with either their username or their password
   const password = req.body.password;
@@ -78,7 +80,7 @@ app.post("/api/login", async (req, res) => {
   }
   if((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)){
     const sessionToken = uuid();
-    sessions[sessionToken] = {usernameEmail, userId: prismaResponse.id};
+    sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
     res.set('Set-Cookie', `session=${sessionToken}`);
     res.send('success');
   }
@@ -87,6 +89,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
+//Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
   const sessionToken = getSessionToken(req);//Passing the request to this function extracts the session token cookie from the headers of the request
   if(sessionToken !== null){
@@ -94,7 +97,7 @@ app.get('/api/whoami', (req, res) => {
     res.send([{YouAre: user}]);
   }
   else{
-    return res.status(400).send('Not logged in!');
+    return res.status(400).send([{"Error": "Not logged in!"}]);
   }
 });
 
