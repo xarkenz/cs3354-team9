@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "app/generated/prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  id      Int      @id @default(autoincrement())
+  name    String
+  reviews Review[]
+  dishes  Dish[]
+  //address String //I'm not sure the best way to store locations right now
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  username String
+  password String
+  reviews  Review[]
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  authorID   Int
+  author     User     @relation(fields: [authorID], references: [id])
+  businessID Int
+  business   Business @relation(fields: [businessID], references: [id])
+  title      String
+  content    String
+  numStars   Int
+}
+
+model Dish {
+  id           Int      @id @default(autoincrement())
+  businessID   Int
+  business     Business @relation(fields: [businessID], references: [id])
+  //what we need to add 
+  allergens    Json // Use JSON array like ["Dairy", "Egg"]
+  unidentified Json // Use JSON array like ["Mystery Sauce"]
+  allergenFree Json
+
+  isVegan          Boolean
+  hasGlutenFree    Boolean
+  hasWheatFree     Boolean
+  hasDairyFree     Boolean
+  hasShellfishFree Boolean
+}

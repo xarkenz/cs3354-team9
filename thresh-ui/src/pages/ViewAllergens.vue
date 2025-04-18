@@ -1,5 +1,5 @@
 <script setup>
-import testImage from '@/assets/istockphoto-1457433817-612x612.jpg';
+import testImage from './../assets/istockphoto-1457433817-612x612.jpg'; //Apologies for changing this URL. The @ alias seems to not work as desired.
 </script>
 
 <template>
