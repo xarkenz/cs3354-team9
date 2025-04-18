@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue';
-import logo from '/Users/aaryaamoharir/repos/cs3354-team9/thresh-ui/src/assets/edit-246.png';
+import logo from './../src/assets/edit-246.png';
 
 // Store which dishes are expanded and which are in edit mode
 const expandedDishes = reactive({});
