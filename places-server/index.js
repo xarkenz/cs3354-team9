@@ -58,6 +58,26 @@ app.get('/api/save-restaurants', async (req, res) => {
   }
 });
 
+// GET: Return all restaurants in the DB with name, lat, lng, and placeId
+app.get('/api/restaurant-locations', async (req, res) => {
+  try {
+    const restaurants = await prisma.business.findMany({
+      select: {
+        name: true,
+        lat: true,
+        lng: true,
+        placeId: true,
+      },
+    });
+
+    res.status(200).json({ success: true, data: restaurants });
+  } catch (error) {
+    console.error("Error fetching restaurant locations:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

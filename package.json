@@ -6,7 +6,8 @@
   "scripts": {
     "dev:frontend": "vite",
     "dev:backend": "nodemon server/index.js",
-    "dev": "concurrently 'npm:dev:frontend' 'npm:dev:backend'",
+    "dev:places": "nodemon places-server/index.js",
+    "dev": "concurrently 'npm:dev:frontend' 'npm:dev:backend' 'npm:dev:places'",
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
