@@ -63,11 +63,8 @@ export default {
         console.log("Error! Passwords do not match!");
       }
       else{
-        // let port = 3000; //CAUTION: Currently assuming local deployment
-        // let fetchUrl = `http://localhost:${port}/api/signup`;
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-        // headers.append("Cookie", `session=${session}`);
 
         const raw = JSON.stringify({
           "email": this.email,
@@ -80,7 +77,6 @@ export default {
           method: "POST",
           headers: headers,
           body: raw,
-          // redirect: "follow"
         };
         try{
           let response = await fetch("http://localhost:3000/api/signup", requestOptions);
