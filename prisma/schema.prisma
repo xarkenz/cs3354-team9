@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "app/generated/prisma/client"
@@ -15,66 +9,63 @@ datasource db {
 }
 
 model Business {
-  id        Int      @id @default(autoincrement())
-  name String
+  id      Int      @id @default(autoincrement())
+  name    String
+  placeId String   @unique
+  lat     Float
+  lng     Float
+  dishes  Dish[]
   reviews Review[]
-  dishes Dish[]
-  placeId String @unique
-  lat Float
-  lng Float
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String
-  password String //This will store the hashed password
-  reviews   Review[]
+  id                     Int                     @id @default(autoincrement())
+  email                  String                  @unique
+  username               String
+  password               String
   dishRestrictionReviews DishRestrictionReview[]
+  reviews                Review[]
 }
 
 model Review {
-  id Int @id @default(autoincrement())
-  authorID Int
-  author User @relation(fields:[authorID], references:[id])
+  id         Int      @id @default(autoincrement())
+  authorID   Int
   businessID Int
-  business Business @relation(fields:[businessID], references:[id])
-  title String
-  content String
-  numStars Int
+  title      String
+  content    String
+  numStars   Int
+  business   Business @relation(fields: [businessID], references: [id])
+  author     User     @relation(fields: [authorID], references: [id])
 }
 
-
 model DietaryRestriction {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String @unique
 }
 
-
 model Dish {
-   id Int @id @default(autoincrement())
-   name String
-   businessID Int
-   business Business @relation(fields:[businessID], references:[id])
-   //what we need to add 
-   allergens         Json      // Use JSON array like ["Dairy", "Egg"]
-   unidentified      Json      // Use JSON array like ["Mystery Sauce"]
-   allergenFree      Json 
- 
-   isVegan           Boolean
-   hasGlutenFree     Boolean
-   hasWheatFree      Boolean
-   hasDairyFree      Boolean
-   hasShellfishFree  Boolean
-   dishRestrictionReviews DishRestrictionReview[]
+  id                     Int                     @id @default(autoincrement())
+  name                   String
+  businessID             Int
+  allergens              Json
+  unidentified           Json
+  allergenFree           Json
+  isVegan                Boolean
+  hasGlutenFree          Boolean
+  hasWheatFree           Boolean
+  hasDairyFree           Boolean
+  hasShellfishFree       Boolean
+  business               Business                @relation(fields: [businessID], references: [id])
+  dishRestrictionReviews DishRestrictionReview[]
 }
 
 model DishRestrictionReview {
-  id Int @id @default(autoincrement())
-  userID Int
-  user User @relation(fields: [userID], references: [id])
-  dishID Int
-  dish Dish @relation(fields: [dishID], references: [id])
+  id                       Int     @id @default(autoincrement())
+  userID                   Int
+  dishID                   Int
   dishSatisfiesRestriction Boolean
-  @@unique([userID, dishID]) // each user can only review each dish once (i.e. edit review rather than making new one)
+  dish                     Dish    @relation(fields: [dishID], references: [id])
+  user                     User    @relation(fields: [userID], references: [id])
+
+  @@unique([userID, dishID])
 }

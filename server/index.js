@@ -150,3 +150,39 @@ app.get('/api/dishes', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+//Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
+app.get('/api/business/:businessId/dishes', async (req, res) => {
+  const { businessId } = req.params;
+
+  try {
+    const businessWithDishes = await prisma.business.findUnique({
+      where: {
+        id: parseInt(businessId),
+      },
+      
+      include: {
+        dishes: {
+
+           select: {
+            name: true,
+            dishRestrictionReviews: true,
+            businessID: true, 
+            id: true,
+
+          }
+          
+        }
+      }
+    });
+
+    if (!businessWithDishes) {
+      return res.status(404).json({ error: 'Business not found' });
+    }
+
+    res.json(businessWithDishes.dishes);
+  } catch (error) {
+    console.error('Error fetching business dishes:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});

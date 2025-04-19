@@ -1,3 +1,5 @@
+<!--Created by Aaryaa Moharir  for 2 use cases: Add allergens and view allergens -->
+
 <script setup>
 import { onMounted, ref, reactive } from 'vue';
 import logo from './../assets/edit-246.png';
@@ -8,7 +10,8 @@ const editingDishes = reactive({});
 
 onMounted(async () => {
   try {
-    const response = await fetch('/api/dishes');
+    const businessId = 1;
+    const response = await fetch(`/api/business/${businessId}/dishes`);
     const data = await response.json();
     console.log('Data from backend:', data); 
   } catch (error) {
