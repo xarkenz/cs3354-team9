@@ -12,9 +12,10 @@
         <li><a href="#/filter-search">Filter search</a></li>
         <li><a href="#/view-allergens">View allergens</a></li>
         <li><a href="#/delete-account">Delete account</a></li>
-        <li><a href="#/user-profile">User Profile</a></li>
+        <li><a href="#/ban-user">Ban User</a></li>
         <li><a href="#/save-favorite-restaurant">Save Favorite Restaruant</a></li>
         <li><a href="#/map">Map</a></li>
+        <li><a href="#/profile">Profile</a></li>
       </ul>
     </div>
   </div>

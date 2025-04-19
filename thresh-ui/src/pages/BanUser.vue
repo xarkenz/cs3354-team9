@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'UserProfile',
+    name: 'BanUser',
     data: () => ({
         userId: 'exampleuser',
         userName: 'Example User',

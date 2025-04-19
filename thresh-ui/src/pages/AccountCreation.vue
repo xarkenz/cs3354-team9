@@ -43,10 +43,10 @@
 import { useCookies } from "vue3-cookies";
 
 export default {
-  setup() { //based on https://github.com/KanHarI/vue3-cookies/blob/master/README.md
-    const { cookies } = useCookies();
-    return { cookies };
-  },
+  // setup() { //based on https://github.com/KanHarI/vue3-cookies/blob/master/README.md
+  //   const { cookies } = useCookies();
+  //   return { cookies };
+  // },
   name: 'AccountCreation',
   data() {
     return {
@@ -86,18 +86,16 @@ export default {
           let response = await fetch("http://localhost:3000/api/signup", requestOptions);
           let body = JSON.parse(await response.text());
           console.log(body);
-          this.cookies.set("session", body.sessionToken);
-          console.log(`sessionToken = ${body.sessionToken}`)
-          console.log(`session=${this.cookies.get("session")}`);
+          //The $cookies variable is a global cookies variable defined in main.js from the vue3-cookies import
+          this.$cookies.set("session", body.sessionToken);
+          console.log(`sessionToken = ${body.sessionToken}`);
+          console.log(`session=${this.$cookies.get("session")}`);
+          this.sessionToken = body.sessionToken;
+          console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         }
         catch (error){
           console.log(error);
         }
-        // let response = await fetch(fetchUrl, {
-        //   method: "POST",
-        //   body: { username: this.username, email: this.email, password: this.password, confirmationPassword: this.confirmationPassword },
-        // });
-        // console.log(response);
       }
     }
   }

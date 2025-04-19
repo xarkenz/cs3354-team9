@@ -11,6 +11,11 @@ const port = process.env.BACKEND_PORT || 3000
 // import { PrismaClient } from '../prisma/app/generated/prisma/client'
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
+const cors = require("cors");
+app.use(cors({
+  origin: "*",
+  allowedHeaders: ['Content-Type', 'Authorization', 'mycookies'],
+}));
 
 app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.html
   res.header("Access-Control-Allow-Origin", "*"); // CORS will work from all websites
@@ -20,8 +25,12 @@ app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.ht
 
 //Created by Isaac Philo on April 18th, 2025
 function getSessionToken(request){ //Extract the session token from among the cookies of the request's header
-  let cookies = request.headers.cookie.split(';');
-  // console.log(cookies);
+  // console.log("Attempting to extract session token from cookies = " + request);
+  //NOTE: Since regular cookies are not sent between websites unless some very specific form of authentication is used, I am using a custom header property instead called myCookies
+  // console.log("Properties of request headers: " + Object.getOwnPropertyNames(request.headers));
+  let cookiesUnSplit = request.headers.mycookies;
+  let cookies = cookiesUnSplit.split(";");
+  console.log("cookies = " + cookies);
   let sessionToken = null;
   for(let i = 0; i < cookies.length; i++){
     if(cookies[i].split('=')[0] === 'session'){
@@ -104,9 +113,13 @@ app.post("/api/login", async (req, res) => {
 //Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
   const sessionToken = getSessionToken(req);//Passing the request to this function extracts the session token cookie from the headers of the request
+  console.log("sessionToken = " + sessionToken);
+  console.log("sessions = " + JSON.stringify(sessions));
+  console.log("sessions[sessionToken] = " + sessions[sessionToken]);
   if(sessionToken !== null){
-    user = sessions[sessionToken];
-    res.send([{YouAre: user}]);
+    let user = sessions[sessionToken];
+    console.log("About to respond with " + JSON.stringify(user));
+    res.send([user]);
   }
   else{
     return res.status(400).send([{"Error": "Not logged in!"}]);

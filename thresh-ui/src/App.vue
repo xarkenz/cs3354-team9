@@ -10,9 +10,10 @@ import RateRestaurant from './pages/RateRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
 import DeleteAccount from './pages/DeleteAccount.vue'
-import UserProfile from './pages/UserProfile.vue'
+import BanUser from './pages/BanUser.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
+import Profile from './pages/Profile.vue'
 
 const routes = {
   '/': Home,
@@ -23,9 +24,10 @@ const routes = {
   '/view-allergens': ViewAllergens,
   '/rate-restaurant': RateRestaurant,
   '/delete-account': DeleteAccount,
-  '/user-profile': UserProfile,
+  '/ban-user': BanUser,
   '/save-favorite-restaurant': SaveFavoriteRestaurant,
   '/map': Map,
+  '/profile': Profile,
 }
 
 const currentPath = ref(window.location.hash)
@@ -52,8 +54,28 @@ const currentView = computed(() => {
         </ul>
       </nav>
     </header>
+    <!-- I need to display these two navbars conditionally somehow, upon this condition: v-if='sessionToken.length===0' -->
+    <!-- <header v-else class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300">
+      <nav>
+        <ul class="flex items-center gap-x-5 mx-5">
+          <li><a href="#/" class="flex items-center gap-x-3 mr-auto"><img class="size-18" src="./assets/Thresh circular logo.png"><img src="./assets/THRESH textual logo.png"></a></li>
+          <li><a href="#/profile"><img class = "ml-auto flex items-center size-18" src="./assets/profile.png"></a></li>
+        </ul>
+      </nav>
+    </header> -->
     <main class="w-full">
       <component :is="currentView" />
     </main>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  // data() {
+  //   return {
+  //     sessionToken: this.$cookies.get("session"),
+  //   };
+  // }
+}
+</script>
