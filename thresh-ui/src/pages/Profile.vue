@@ -1,7 +1,9 @@
+<!-- Made by Isaac Philo. This is a simple user profile. -->
+
 <template>
-  <div class="text-center">
+  <div class="flex flex-col justify-center items-center">
     <div class="text-xl py-30 block mb-5 underline">Welcome, {{username}}!</div>
-    
+    <div><img class="size-40" src = "./../assets/profile.png"></div>
   </div>
 </template>
 
