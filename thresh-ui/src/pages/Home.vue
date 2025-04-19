@@ -5,8 +5,8 @@
       <p>View the pages we have created:</p>
       <ul>
         <li><a href="#/">Homepage</a></li>
+        <li><a href="#/create-account">Sign up</a></li>
         <li><a href="#/sign-in">Sign in</a></li>
-        <li><a href="#/create-account">Create an account</a></li>
         <li><a href="#/rate-restaurant">Rate Restaurant</a></li>
         <li><a href="#/remove-restaurant">Remove a restaurant</a></li>
         <li><a href="#/filter-search">Filter search</a></li>

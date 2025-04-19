@@ -63,6 +63,7 @@ export default {
         console.log(`local session cookie =${this.$cookies.get("session")}`);
         this.sessionToken = body.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
+        alert(`Login successful! Welcome ${this.usernameEmail}!`);
       }
       catch (error){
         console.log(error);

@@ -88,6 +88,7 @@ export default {
           console.log(`session=${this.$cookies.get("session")}`);
           this.sessionToken = body.sessionToken;
           console.log(`global variable this.sessionToken = ${this.sessionToken}`);
+          alert("Account created!");
         }
         catch (error){
           console.log(error);
