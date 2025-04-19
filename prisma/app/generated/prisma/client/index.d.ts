@@ -5826,18 +5826,36 @@ export namespace Prisma {
     id: number | null
     name: string | null
     businessID: number | null
+    isVegan: boolean | null
+    hasGlutenFree: boolean | null
+    hasWheatFree: boolean | null
+    hasDairyFree: boolean | null
+    hasShellfishFree: boolean | null
   }
 
   export type DishMaxAggregateOutputType = {
     id: number | null
     name: string | null
     businessID: number | null
+    isVegan: boolean | null
+    hasGlutenFree: boolean | null
+    hasWheatFree: boolean | null
+    hasDairyFree: boolean | null
+    hasShellfishFree: boolean | null
   }
 
   export type DishCountAggregateOutputType = {
     id: number
     name: number
     businessID: number
+    allergens: number
+    unidentified: number
+    allergenFree: number
+    isVegan: number
+    hasGlutenFree: number
+    hasWheatFree: number
+    hasDairyFree: number
+    hasShellfishFree: number
     _all: number
   }
 
@@ -5856,18 +5874,36 @@ export namespace Prisma {
     id?: true
     name?: true
     businessID?: true
+    isVegan?: true
+    hasGlutenFree?: true
+    hasWheatFree?: true
+    hasDairyFree?: true
+    hasShellfishFree?: true
   }
 
   export type DishMaxAggregateInputType = {
     id?: true
     name?: true
     businessID?: true
+    isVegan?: true
+    hasGlutenFree?: true
+    hasWheatFree?: true
+    hasDairyFree?: true
+    hasShellfishFree?: true
   }
 
   export type DishCountAggregateInputType = {
     id?: true
     name?: true
     businessID?: true
+    allergens?: true
+    unidentified?: true
+    allergenFree?: true
+    isVegan?: true
+    hasGlutenFree?: true
+    hasWheatFree?: true
+    hasDairyFree?: true
+    hasShellfishFree?: true
     _all?: true
   }
 
@@ -5961,6 +5997,14 @@ export namespace Prisma {
     id: number
     name: string
     businessID: number
+    allergens: JsonValue
+    unidentified: JsonValue
+    allergenFree: JsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     _count: DishCountAggregateOutputType | null
     _avg: DishAvgAggregateOutputType | null
     _sum: DishSumAggregateOutputType | null
@@ -5986,6 +6030,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     businessID?: boolean
+    allergens?: boolean
+    unidentified?: boolean
+    allergenFree?: boolean
+    isVegan?: boolean
+    hasGlutenFree?: boolean
+    hasWheatFree?: boolean
+    hasDairyFree?: boolean
+    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
     dishRestrictionReviews?: boolean | Dish$dishRestrictionReviewsArgs<ExtArgs>
     _count?: boolean | DishCountOutputTypeDefaultArgs<ExtArgs>
@@ -5995,6 +6047,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     businessID?: boolean
+    allergens?: boolean
+    unidentified?: boolean
+    allergenFree?: boolean
+    isVegan?: boolean
+    hasGlutenFree?: boolean
+    hasWheatFree?: boolean
+    hasDairyFree?: boolean
+    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dish"]>
 
@@ -6002,6 +6062,14 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     businessID?: boolean
+    allergens?: boolean
+    unidentified?: boolean
+    allergenFree?: boolean
+    isVegan?: boolean
+    hasGlutenFree?: boolean
+    hasWheatFree?: boolean
+    hasDairyFree?: boolean
+    hasShellfishFree?: boolean
     business?: boolean | BusinessDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dish"]>
 
@@ -6009,9 +6077,17 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     businessID?: boolean
+    allergens?: boolean
+    unidentified?: boolean
+    allergenFree?: boolean
+    isVegan?: boolean
+    hasGlutenFree?: boolean
+    hasWheatFree?: boolean
+    hasDairyFree?: boolean
+    hasShellfishFree?: boolean
   }
 
-  export type DishOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "businessID", ExtArgs["result"]["dish"]>
+  export type DishOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "businessID" | "allergens" | "unidentified" | "allergenFree" | "isVegan" | "hasGlutenFree" | "hasWheatFree" | "hasDairyFree" | "hasShellfishFree", ExtArgs["result"]["dish"]>
   export type DishInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     business?: boolean | BusinessDefaultArgs<ExtArgs>
     dishRestrictionReviews?: boolean | Dish$dishRestrictionReviewsArgs<ExtArgs>
@@ -6034,6 +6110,14 @@ export namespace Prisma {
       id: number
       name: string
       businessID: number
+      allergens: Prisma.JsonValue
+      unidentified: Prisma.JsonValue
+      allergenFree: Prisma.JsonValue
+      isVegan: boolean
+      hasGlutenFree: boolean
+      hasWheatFree: boolean
+      hasDairyFree: boolean
+      hasShellfishFree: boolean
     }, ExtArgs["result"]["dish"]>
     composites: {}
   }
@@ -6462,6 +6546,14 @@ export namespace Prisma {
     readonly id: FieldRef<"Dish", 'Int'>
     readonly name: FieldRef<"Dish", 'String'>
     readonly businessID: FieldRef<"Dish", 'Int'>
+    readonly allergens: FieldRef<"Dish", 'Json'>
+    readonly unidentified: FieldRef<"Dish", 'Json'>
+    readonly allergenFree: FieldRef<"Dish", 'Json'>
+    readonly isVegan: FieldRef<"Dish", 'Boolean'>
+    readonly hasGlutenFree: FieldRef<"Dish", 'Boolean'>
+    readonly hasWheatFree: FieldRef<"Dish", 'Boolean'>
+    readonly hasDairyFree: FieldRef<"Dish", 'Boolean'>
+    readonly hasShellfishFree: FieldRef<"Dish", 'Boolean'>
   }
     
 
@@ -8046,7 +8138,15 @@ export namespace Prisma {
   export const DishScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    businessID: 'businessID'
+    businessID: 'businessID',
+    allergens: 'allergens',
+    unidentified: 'unidentified',
+    allergenFree: 'allergenFree',
+    isVegan: 'isVegan',
+    hasGlutenFree: 'hasGlutenFree',
+    hasWheatFree: 'hasWheatFree',
+    hasDairyFree: 'hasDairyFree',
+    hasShellfishFree: 'hasShellfishFree'
   };
 
   export type DishScalarFieldEnum = (typeof DishScalarFieldEnum)[keyof typeof DishScalarFieldEnum]
@@ -8068,6 +8168,30 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   /**
@@ -8093,6 +8217,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -8332,6 +8470,14 @@ export namespace Prisma {
     id?: IntFilter<"Dish"> | number
     name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
+    allergens?: JsonFilter<"Dish">
+    unidentified?: JsonFilter<"Dish">
+    allergenFree?: JsonFilter<"Dish">
+    isVegan?: BoolFilter<"Dish"> | boolean
+    hasGlutenFree?: BoolFilter<"Dish"> | boolean
+    hasWheatFree?: BoolFilter<"Dish"> | boolean
+    hasDairyFree?: BoolFilter<"Dish"> | boolean
+    hasShellfishFree?: BoolFilter<"Dish"> | boolean
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
     dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }
@@ -8340,6 +8486,14 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     businessID?: SortOrder
+    allergens?: SortOrder
+    unidentified?: SortOrder
+    allergenFree?: SortOrder
+    isVegan?: SortOrder
+    hasGlutenFree?: SortOrder
+    hasWheatFree?: SortOrder
+    hasDairyFree?: SortOrder
+    hasShellfishFree?: SortOrder
     business?: BusinessOrderByWithRelationInput
     dishRestrictionReviews?: DishRestrictionReviewOrderByRelationAggregateInput
   }
@@ -8351,6 +8505,14 @@ export namespace Prisma {
     NOT?: DishWhereInput | DishWhereInput[]
     name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
+    allergens?: JsonFilter<"Dish">
+    unidentified?: JsonFilter<"Dish">
+    allergenFree?: JsonFilter<"Dish">
+    isVegan?: BoolFilter<"Dish"> | boolean
+    hasGlutenFree?: BoolFilter<"Dish"> | boolean
+    hasWheatFree?: BoolFilter<"Dish"> | boolean
+    hasDairyFree?: BoolFilter<"Dish"> | boolean
+    hasShellfishFree?: BoolFilter<"Dish"> | boolean
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
     dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
   }, "id">
@@ -8359,6 +8521,14 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     businessID?: SortOrder
+    allergens?: SortOrder
+    unidentified?: SortOrder
+    allergenFree?: SortOrder
+    isVegan?: SortOrder
+    hasGlutenFree?: SortOrder
+    hasWheatFree?: SortOrder
+    hasDairyFree?: SortOrder
+    hasShellfishFree?: SortOrder
     _count?: DishCountOrderByAggregateInput
     _avg?: DishAvgOrderByAggregateInput
     _max?: DishMaxOrderByAggregateInput
@@ -8373,6 +8543,14 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Dish"> | number
     name?: StringWithAggregatesFilter<"Dish"> | string
     businessID?: IntWithAggregatesFilter<"Dish"> | number
+    allergens?: JsonWithAggregatesFilter<"Dish">
+    unidentified?: JsonWithAggregatesFilter<"Dish">
+    allergenFree?: JsonWithAggregatesFilter<"Dish">
+    isVegan?: BoolWithAggregatesFilter<"Dish"> | boolean
+    hasGlutenFree?: BoolWithAggregatesFilter<"Dish"> | boolean
+    hasWheatFree?: BoolWithAggregatesFilter<"Dish"> | boolean
+    hasDairyFree?: BoolWithAggregatesFilter<"Dish"> | boolean
+    hasShellfishFree?: BoolWithAggregatesFilter<"Dish"> | boolean
   }
 
   export type DishRestrictionReviewWhereInput = {
@@ -8638,6 +8816,14 @@ export namespace Prisma {
 
   export type DishCreateInput = {
     name: string
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     business: BusinessCreateNestedOneWithoutDishesInput
     dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutDishInput
   }
@@ -8646,11 +8832,27 @@ export namespace Prisma {
     id?: number
     name: string
     businessID: number
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutDishInput
   }
 
   export type DishUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
     business?: BusinessUpdateOneRequiredWithoutDishesNestedInput
     dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutDishNestedInput
   }
@@ -8659,6 +8861,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     businessID?: IntFieldUpdateOperationsInput | number
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
     dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutDishNestedInput
   }
 
@@ -8666,16 +8876,40 @@ export namespace Prisma {
     id?: number
     name: string
     businessID: number
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
   }
 
   export type DishUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DishUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     businessID?: IntFieldUpdateOperationsInput | number
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DishRestrictionReviewCreateInput = {
@@ -8975,11 +9209,42 @@ export namespace Prisma {
   export type DietaryRestrictionSumOrderByAggregateInput = {
     id?: SortOrder
   }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
 
   export type DishCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     businessID?: SortOrder
+    allergens?: SortOrder
+    unidentified?: SortOrder
+    allergenFree?: SortOrder
+    isVegan?: SortOrder
+    hasGlutenFree?: SortOrder
+    hasWheatFree?: SortOrder
+    hasDairyFree?: SortOrder
+    hasShellfishFree?: SortOrder
   }
 
   export type DishAvgOrderByAggregateInput = {
@@ -8991,22 +9256,56 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     businessID?: SortOrder
+    isVegan?: SortOrder
+    hasGlutenFree?: SortOrder
+    hasWheatFree?: SortOrder
+    hasDairyFree?: SortOrder
+    hasShellfishFree?: SortOrder
   }
 
   export type DishMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     businessID?: SortOrder
+    isVegan?: SortOrder
+    hasGlutenFree?: SortOrder
+    hasWheatFree?: SortOrder
+    hasDairyFree?: SortOrder
+    hasShellfishFree?: SortOrder
   }
 
   export type DishSumOrderByAggregateInput = {
     id?: SortOrder
     businessID?: SortOrder
   }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
 
-  export type BoolFilter<$PrismaModel = never> = {
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DishScalarRelationFilter = {
@@ -9050,14 +9349,6 @@ export namespace Prisma {
     id?: SortOrder
     userID?: SortOrder
     dishID?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ReviewCreateNestedManyWithoutBusinessInput = {
@@ -9296,6 +9587,10 @@ export namespace Prisma {
     connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type BusinessUpdateOneRequiredWithoutDishesNestedInput = {
     create?: XOR<BusinessCreateWithoutDishesInput, BusinessUncheckedCreateWithoutDishesInput>
     connectOrCreate?: BusinessCreateOrConnectWithoutDishesInput
@@ -9342,10 +9637,6 @@ export namespace Prisma {
     create?: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
     connectOrCreate?: DishCreateOrConnectWithoutDishRestrictionReviewsInput
     connect?: DishWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
@@ -9453,6 +9744,24 @@ export namespace Prisma {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
@@ -9488,12 +9797,28 @@ export namespace Prisma {
 
   export type DishCreateWithoutBusinessInput = {
     name: string
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutDishInput
   }
 
   export type DishUncheckedCreateWithoutBusinessInput = {
     id?: number
     name: string
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutDishInput
   }
 
@@ -9557,6 +9882,14 @@ export namespace Prisma {
     id?: IntFilter<"Dish"> | number
     name?: StringFilter<"Dish"> | string
     businessID?: IntFilter<"Dish"> | number
+    allergens?: JsonFilter<"Dish">
+    unidentified?: JsonFilter<"Dish">
+    allergenFree?: JsonFilter<"Dish">
+    isVegan?: BoolFilter<"Dish"> | boolean
+    hasGlutenFree?: BoolFilter<"Dish"> | boolean
+    hasWheatFree?: BoolFilter<"Dish"> | boolean
+    hasDairyFree?: BoolFilter<"Dish"> | boolean
+    hasShellfishFree?: BoolFilter<"Dish"> | boolean
   }
 
   export type ReviewCreateWithoutAuthorInput = {
@@ -9849,6 +10182,14 @@ export namespace Prisma {
 
   export type DishCreateWithoutDishRestrictionReviewsInput = {
     name: string
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
     business: BusinessCreateNestedOneWithoutDishesInput
   }
 
@@ -9856,6 +10197,14 @@ export namespace Prisma {
     id?: number
     name: string
     businessID: number
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
   }
 
   export type DishCreateOrConnectWithoutDishRestrictionReviewsInput = {
@@ -9902,6 +10251,14 @@ export namespace Prisma {
 
   export type DishUpdateWithoutDishRestrictionReviewsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
     business?: BusinessUpdateOneRequiredWithoutDishesNestedInput
   }
 
@@ -9909,6 +10266,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     businessID?: IntFieldUpdateOperationsInput | number
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewCreateManyBusinessInput = {
@@ -9922,6 +10287,14 @@ export namespace Prisma {
   export type DishCreateManyBusinessInput = {
     id?: number
     name: string
+    allergens: JsonNullValueInput | InputJsonValue
+    unidentified: JsonNullValueInput | InputJsonValue
+    allergenFree: JsonNullValueInput | InputJsonValue
+    isVegan: boolean
+    hasGlutenFree: boolean
+    hasWheatFree: boolean
+    hasDairyFree: boolean
+    hasShellfishFree: boolean
   }
 
   export type ReviewUpdateWithoutBusinessInput = {
@@ -9949,18 +10322,42 @@ export namespace Prisma {
 
   export type DishUpdateWithoutBusinessInput = {
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
     dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutDishNestedInput
   }
 
   export type DishUncheckedUpdateWithoutBusinessInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
     dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutDishNestedInput
   }
 
   export type DishUncheckedUpdateManyWithoutBusinessInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    allergens?: JsonNullValueInput | InputJsonValue
+    unidentified?: JsonNullValueInput | InputJsonValue
+    allergenFree?: JsonNullValueInput | InputJsonValue
+    isVegan?: BoolFieldUpdateOperationsInput | boolean
+    hasGlutenFree?: BoolFieldUpdateOperationsInput | boolean
+    hasWheatFree?: BoolFieldUpdateOperationsInput | boolean
+    hasDairyFree?: BoolFieldUpdateOperationsInput | boolean
+    hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewCreateManyAuthorInput = {

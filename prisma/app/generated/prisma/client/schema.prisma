@@ -50,10 +50,20 @@ model DietaryRestriction {
 }
 
 model Dish {
-  id                     Int                     @id @default(autoincrement())
-  name                   String
-  businessID             Int
-  business               Business                @relation(fields: [businessID], references: [id])
+  id           Int      @id @default(autoincrement())
+  name         String
+  businessID   Int
+  business     Business @relation(fields: [businessID], references: [id])
+  //what we need to add 
+  allergens    Json // Use JSON array like ["Dairy", "Egg"]
+  unidentified Json // Use JSON array like ["Mystery Sauce"]
+  allergenFree Json
+
+  isVegan                Boolean
+  hasGlutenFree          Boolean
+  hasWheatFree           Boolean
+  hasDairyFree           Boolean
+  hasShellfishFree       Boolean
   dishRestrictionReviews DishRestrictionReview[]
 }
 
