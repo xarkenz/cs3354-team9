@@ -1,6 +1,7 @@
 <!--Created by Isaac Philo for UC16: Log into account-->
 <!-- This page allows any user to log into their account, given either their username or email and their password -->
 <!-- When the user clicks sign -->
+
 <template>
 <body>
 <div class="rounded outline-1 h-min w-full justify-center align-center text-center">  
@@ -38,6 +39,15 @@ export default {
   methods: {
     //Send the login request to the backend.
     async login(){
+      //Check for exceptional inputs
+      if(this.password.length === 0){
+        alert("Please enter a password.");
+        return;
+      }
+      if(this.usernameEmail.length == 0){
+        alert("Please enter a username.");
+        return;
+      }
       //Construct the request
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
@@ -64,10 +74,11 @@ export default {
         console.log(`local session cookie =${this.$cookies.get("session")}`);
         this.sessionToken = body.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
-        alert(`Login successful! Welcome ${this.usernameEmail}!`);
+        alert(`Welcome, ${this.usernameEmail}!`);
       }
       catch (error){
         console.log(error);
+        alert("Login failed.");
       }
     }
   }

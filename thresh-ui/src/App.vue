@@ -50,6 +50,7 @@ const currentView = computed(() => {
           <li class="ml-auto flex items-center gap-x-5">
             <a href="#/create-account" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">Sign Up</a>
             <a href="#/sign-in" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">Sign In</a>
+            <a href="#/profile"><img class = "ml-auto flex items-center size-18" src="./assets/profile.png"></a>
           </li>
         </ul>
       </nav>

@@ -53,10 +53,29 @@ export default {
   methods: {
     //This method uses the v-model variables to create an account in the database
     //and stores the cookies for the created account in the browser.
-    async createAccount(){
+    async createAccount(event){
       event.preventDefault();
+      //Check exceptional inputs
+      if(this.email.length === 0){
+        alert("Please enter an email.");
+        return;
+      }
+      if(this.username.length === 0){
+        alert("Please enter a username.");
+        return;
+      }
+      if(this.password.length === 0){
+        alert("Please enter a password.");
+        return;
+      }
+      if(this.confirmationPassword.length === 0){
+        alert("Please enter a confirmation password.");
+        return;
+      }
+      //Check an invalid input
       if(this.password !== this.confirmationPassword){
-        console.log("Error! Passwords do not match!");
+        alert("Password and confirmation password do not match.");
+        return;
       }
       else{
         //Construct a request
