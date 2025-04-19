@@ -1,5 +1,6 @@
 <!--Created by Isaac Philo for UC16: Log into account-->
-
+<!-- This page allows any user to log into their account, given either their username or email and their password -->
+<!-- When the user clicks sign -->
 <template>
 <body>
 <div class="rounded outline-1 h-min w-full justify-center align-center text-center">  
@@ -15,12 +16,8 @@
     <input for="password" id = "passwordInput" type="password" class="outline-1 mb-3" v-model = "password">
   </div>
   </div>
-  <div class="mt-2">
+  <div class="mt-2 mb-2">
     <button id = "signIn" class="my-2 py-0.5 px-2 rounded outline-2" @click = "login"> Sign in </button>
-  </div>
-
-  <div class="mb-2">
-    <button id = "signInGoogle" class="my-2 py-0.5 px-2 rounded outline-2">Sign in with Google</button>
   </div>
 </div>
 </body>
@@ -39,7 +36,9 @@ export default {
     };
   },
   methods: {
+    //Send the login request to the backend.
     async login(){
+      //Construct the request
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
 
@@ -53,8 +52,10 @@ export default {
         headers: headers,
         body: raw,
       };
+      //Send the request
       try{
         let response = await fetch("http://localhost:3000/api/login", requestOptions);
+        //Attempt to store the returned session cookie
         let body = JSON.parse(await response.text());
         console.log(body);
         this.$cookies.set("session", body.sessionToken);

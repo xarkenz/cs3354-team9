@@ -1,8 +1,13 @@
 <!--Created by Isaac Philo for UC01: Make an account.-->
+<!--Given an email, username, password, and confirmation password,
+    this page allows the user to create an account which is
+    registered with the database on the backend.
+ -->
 
 <template>
 <body>
-<div class="rounded outline-1 h-min w-full justify-center align-center text-center">  
+<div class="rounded outline-1 h-min w-full justify-center align-center text-center">
+  <!-- The form for entering account creation information -->
   <form @submit.stop.prevent="createAccount">
     <div><h1 class = "text-xl py-2 font-semibold">Sign Up</h1></div>
     <div class="outline-1">
@@ -26,10 +31,6 @@
     <div class="mt-2">
       <button id = "register" class="my-2 py-0.5 px-2 rounded outline-2" type="submit"> Register </button> 
     </div>
-
-    <div class="mb-2">
-      <button id = "registerGoogle" class="my-2 py-0.5 px-2 rounded outline-2">Sign up with Google</button>
-    </div>
   </form>
 </div>
 </body>
@@ -39,14 +40,7 @@
 // Author: Isaac Philo
 // This code is for UC01: Make an account.
 // It allows a user to create an account with an email and password.
-
-import { useCookies } from "vue3-cookies";
-
 export default {
-  // setup() { //based on https://github.com/KanHarI/vue3-cookies/blob/master/README.md
-  //   const { cookies } = useCookies();
-  //   return { cookies };
-  // },
   name: 'AccountCreation',
   data() {
     return {
@@ -57,12 +51,15 @@ export default {
     };
   },
   methods: {
+    //This method uses the v-model variables to create an account in the database
+    //and stores the cookies for the created account in the browser.
     async createAccount(){
       event.preventDefault();
       if(this.password !== this.confirmationPassword){
         console.log("Error! Passwords do not match!");
       }
       else{
+        //Construct a request
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
@@ -78,11 +75,13 @@ export default {
           headers: headers,
           body: raw,
         };
+        //Send the request
         try{
           let response = await fetch("http://localhost:3000/api/signup", requestOptions);
           let body = JSON.parse(await response.text());
           console.log(body);
           //The $cookies variable is a global cookies variable defined in main.js from the vue3-cookies import
+          //Store the cookies
           this.$cookies.set("session", body.sessionToken);
           console.log(`sessionToken = ${body.sessionToken}`);
           console.log(`session=${this.$cookies.get("session")}`);
