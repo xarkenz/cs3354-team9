@@ -154,7 +154,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\saj\\Desktop\\Thresh\\cs3354-team9\\prisma\\app\\generated\\prisma\\client",
+      "value": "/Users/aaryaamoharir/repos/cs3354-team9/prisma/app/generated/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -163,17 +163,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\saj\\Desktop\\Thresh\\cs3354-team9\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/aaryaamoharir/repos/cs3354-team9/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../../../.env"
+    "schemaEnvPath": "../../../../../.env"
   },
   "relativePath": "../../../..",
   "clientVersion": "6.6.0",
@@ -182,11 +182,12 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "file:./ThreshDb.db"
+        "value": null
       }
     }
   },
@@ -200,8 +201,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
+    "prisma/app/generated/prisma/client",
     "app/generated/prisma/client",
-    "generated/prisma/client",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -230,8 +231,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "app/generated/prisma/client/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "prisma/app/generated/prisma/client/libquery_engine-darwin-arm64.dylib.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "app/generated/prisma/client/schema.prisma")
+path.join(process.cwd(), "prisma/app/generated/prisma/client/schema.prisma")
