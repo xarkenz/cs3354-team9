@@ -1448,50 +1448,76 @@ export namespace Prisma {
 
   export type BusinessAvgAggregateOutputType = {
     id: number | null
+    lat: number | null
+    lng: number | null
   }
 
   export type BusinessSumAggregateOutputType = {
     id: number | null
+    lat: number | null
+    lng: number | null
   }
 
   export type BusinessMinAggregateOutputType = {
     id: number | null
     name: string | null
+    placeId: string | null
+    lat: number | null
+    lng: number | null
   }
 
   export type BusinessMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    placeId: string | null
+    lat: number | null
+    lng: number | null
   }
 
   export type BusinessCountAggregateOutputType = {
     id: number
     name: number
+    placeId: number
+    lat: number
+    lng: number
     _all: number
   }
 
 
   export type BusinessAvgAggregateInputType = {
     id?: true
+    lat?: true
+    lng?: true
   }
 
   export type BusinessSumAggregateInputType = {
     id?: true
+    lat?: true
+    lng?: true
   }
 
   export type BusinessMinAggregateInputType = {
     id?: true
     name?: true
+    placeId?: true
+    lat?: true
+    lng?: true
   }
 
   export type BusinessMaxAggregateInputType = {
     id?: true
     name?: true
+    placeId?: true
+    lat?: true
+    lng?: true
   }
 
   export type BusinessCountAggregateInputType = {
     id?: true
     name?: true
+    placeId?: true
+    lat?: true
+    lng?: true
     _all?: true
   }
 
@@ -1584,6 +1610,9 @@ export namespace Prisma {
   export type BusinessGroupByOutputType = {
     id: number
     name: string
+    placeId: string
+    lat: number
+    lng: number
     _count: BusinessCountAggregateOutputType | null
     _avg: BusinessAvgAggregateOutputType | null
     _sum: BusinessSumAggregateOutputType | null
@@ -1608,6 +1637,9 @@ export namespace Prisma {
   export type BusinessSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    placeId?: boolean
+    lat?: boolean
+    lng?: boolean
     reviews?: boolean | Business$reviewsArgs<ExtArgs>
     dishes?: boolean | Business$dishesArgs<ExtArgs>
     _count?: boolean | BusinessCountOutputTypeDefaultArgs<ExtArgs>
@@ -1616,19 +1648,28 @@ export namespace Prisma {
   export type BusinessSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    placeId?: boolean
+    lat?: boolean
+    lng?: boolean
   }, ExtArgs["result"]["business"]>
 
   export type BusinessSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    placeId?: boolean
+    lat?: boolean
+    lng?: boolean
   }, ExtArgs["result"]["business"]>
 
   export type BusinessSelectScalar = {
     id?: boolean
     name?: boolean
+    placeId?: boolean
+    lat?: boolean
+    lng?: boolean
   }
 
-  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["business"]>
+  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "placeId" | "lat" | "lng", ExtArgs["result"]["business"]>
   export type BusinessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviews?: boolean | Business$reviewsArgs<ExtArgs>
     dishes?: boolean | Business$dishesArgs<ExtArgs>
@@ -1646,6 +1687,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      placeId: string
+      lat: number
+      lng: number
     }, ExtArgs["result"]["business"]>
     composites: {}
   }
@@ -2073,6 +2117,9 @@ export namespace Prisma {
   interface BusinessFieldRefs {
     readonly id: FieldRef<"Business", 'Int'>
     readonly name: FieldRef<"Business", 'String'>
+    readonly placeId: FieldRef<"Business", 'String'>
+    readonly lat: FieldRef<"Business", 'Float'>
+    readonly lng: FieldRef<"Business", 'Float'>
   }
     
 
@@ -7957,7 +8004,10 @@ export namespace Prisma {
 
   export const BusinessScalarFieldEnum: {
     id: 'id',
-    name: 'name'
+    name: 'name',
+    placeId: 'placeId',
+    lat: 'lat',
+    lng: 'lng'
   };
 
   export type BusinessScalarFieldEnum = (typeof BusinessScalarFieldEnum)[keyof typeof BusinessScalarFieldEnum]
@@ -8040,16 +8090,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'Float'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Boolean'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
   /**
    * Deep Input Types
@@ -8062,6 +8112,9 @@ export namespace Prisma {
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     id?: IntFilter<"Business"> | number
     name?: StringFilter<"Business"> | string
+    placeId?: StringFilter<"Business"> | string
+    lat?: FloatFilter<"Business"> | number
+    lng?: FloatFilter<"Business"> | number
     reviews?: ReviewListRelationFilter
     dishes?: DishListRelationFilter
   }
@@ -8069,23 +8122,32 @@ export namespace Prisma {
   export type BusinessOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    placeId?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
     reviews?: ReviewOrderByRelationAggregateInput
     dishes?: DishOrderByRelationAggregateInput
   }
 
   export type BusinessWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    placeId?: string
     AND?: BusinessWhereInput | BusinessWhereInput[]
     OR?: BusinessWhereInput[]
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     name?: StringFilter<"Business"> | string
+    lat?: FloatFilter<"Business"> | number
+    lng?: FloatFilter<"Business"> | number
     reviews?: ReviewListRelationFilter
     dishes?: DishListRelationFilter
-  }, "id">
+  }, "id" | "placeId">
 
   export type BusinessOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    placeId?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
     _count?: BusinessCountOrderByAggregateInput
     _avg?: BusinessAvgOrderByAggregateInput
     _max?: BusinessMaxOrderByAggregateInput
@@ -8099,6 +8161,9 @@ export namespace Prisma {
     NOT?: BusinessScalarWhereWithAggregatesInput | BusinessScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Business"> | number
     name?: StringWithAggregatesFilter<"Business"> | string
+    placeId?: StringWithAggregatesFilter<"Business"> | string
+    lat?: FloatWithAggregatesFilter<"Business"> | number
+    lng?: FloatWithAggregatesFilter<"Business"> | number
   }
 
   export type UserWhereInput = {
@@ -8368,6 +8433,9 @@ export namespace Prisma {
 
   export type BusinessCreateInput = {
     name: string
+    placeId: string
+    lat: number
+    lng: number
     reviews?: ReviewCreateNestedManyWithoutBusinessInput
     dishes?: DishCreateNestedManyWithoutBusinessInput
   }
@@ -8375,12 +8443,18 @@ export namespace Prisma {
   export type BusinessUncheckedCreateInput = {
     id?: number
     name: string
+    placeId: string
+    lat: number
+    lng: number
     reviews?: ReviewUncheckedCreateNestedManyWithoutBusinessInput
     dishes?: DishUncheckedCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     reviews?: ReviewUpdateManyWithoutBusinessNestedInput
     dishes?: DishUpdateManyWithoutBusinessNestedInput
   }
@@ -8388,6 +8462,9 @@ export namespace Prisma {
   export type BusinessUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
     dishes?: DishUncheckedUpdateManyWithoutBusinessNestedInput
   }
@@ -8395,15 +8472,24 @@ export namespace Prisma {
   export type BusinessCreateManyInput = {
     id?: number
     name: string
+    placeId: string
+    lat: number
+    lng: number
   }
 
   export type BusinessUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
   }
 
   export type BusinessUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
   }
 
   export type UserCreateInput = {
@@ -8661,6 +8747,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type ReviewListRelationFilter = {
     every?: ReviewWhereInput
     some?: ReviewWhereInput
@@ -8684,24 +8781,37 @@ export namespace Prisma {
   export type BusinessCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    placeId?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
   }
 
   export type BusinessAvgOrderByAggregateInput = {
     id?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
   }
 
   export type BusinessMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    placeId?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
   }
 
   export type BusinessMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    placeId?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
   }
 
   export type BusinessSumOrderByAggregateInput = {
     id?: SortOrder
+    lat?: SortOrder
+    lng?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8735,6 +8845,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type DishRestrictionReviewListRelationFilter = {
@@ -8964,6 +9090,14 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ReviewUpdateManyWithoutBusinessNestedInput = {
@@ -9255,6 +9389,17 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -9269,17 +9414,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9297,6 +9431,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -9517,12 +9667,18 @@ export namespace Prisma {
 
   export type BusinessCreateWithoutReviewsInput = {
     name: string
+    placeId: string
+    lat: number
+    lng: number
     dishes?: DishCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUncheckedCreateWithoutReviewsInput = {
     id?: number
     name: string
+    placeId: string
+    lat: number
+    lng: number
     dishes?: DishUncheckedCreateNestedManyWithoutBusinessInput
   }
 
@@ -9570,23 +9726,35 @@ export namespace Prisma {
 
   export type BusinessUpdateWithoutReviewsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     dishes?: DishUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     dishes?: DishUncheckedUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessCreateWithoutDishesInput = {
     name: string
+    placeId: string
+    lat: number
+    lng: number
     reviews?: ReviewCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUncheckedCreateWithoutDishesInput = {
     id?: number
     name: string
+    placeId: string
+    lat: number
+    lng: number
     reviews?: ReviewUncheckedCreateNestedManyWithoutBusinessInput
   }
 
@@ -9628,12 +9796,18 @@ export namespace Prisma {
 
   export type BusinessUpdateWithoutDishesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     reviews?: ReviewUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessUncheckedUpdateWithoutDishesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    placeId?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
     reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
   }
 

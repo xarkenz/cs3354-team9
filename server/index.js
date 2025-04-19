@@ -16,6 +16,7 @@ app.use(cors({
   origin: "*",
   allowedHeaders: ['Content-Type', 'Authorization', 'mycookies'],
 }));
+require('dotenv').config();
 
 app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.html
   res.header("Access-Control-Allow-Origin", "*"); // CORS will work from all websites
@@ -132,4 +133,18 @@ app.get('/api/hello', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
+});
+
+app.get('/api/dishes', async (req, res) => {
+  try {
+    const dishes = await prisma.dish.findMany({
+      include: {
+        dishRestrictionReviews: true 
+      }
+    });
+    res.json(dishes);
+  } catch (error) {
+    console.error('Error fetching dishes:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });

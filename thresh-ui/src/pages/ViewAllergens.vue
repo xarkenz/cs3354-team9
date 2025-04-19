@@ -1,12 +1,22 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { onMounted, ref, reactive } from 'vue';
 import logo from './../assets/edit-246.png';
 
-// Store which dishes are expanded and which are in edit mode
+// stores dishes in edit more and expanded state
 const expandedDishes = reactive({});
 const editingDishes = reactive({});
 
-// Sample dishes data - replace with your actual data source
+onMounted(async () => {
+  try {
+    const response = await fetch('/api/dishes');
+    const data = await response.json();
+    console.log('Data from backend:', data); 
+  } catch (error) {
+    console.error('API fetch failed:', error);
+  }
+});
+
+// allergens we're keeping track of 
 const dishes = ref([
   {
     id: 1,
@@ -67,7 +77,7 @@ const dishes = ref([
   }
 ]);
 
-// Function to toggle the expanded state of a dish
+// toggle the expanded state of a dish
 const toggleDish = (dishId) => {
   expandedDishes[dishId] = !expandedDishes[dishId];
   // If we're collapsing the dish, also exit edit mode
@@ -76,7 +86,7 @@ const toggleDish = (dishId) => {
   }
 };
 
-// Function to toggle edit mode for a dish
+// toggle the edit mode for the fish 
 const toggleEditMode = (dishId) => {
   editingDishes[dishId] = !editingDishes[dishId];
   // If we're entering edit mode, make sure the dish is expanded
@@ -85,7 +95,7 @@ const toggleEditMode = (dishId) => {
   }
 };
 
-// Function to toggle an allergen for a dish
+// toggle an allergen 
 const toggleAllergen = (dishId, allergen) => {
   if (editingDishes[dishId]) {
     const dish = dishes.value.find(d => d.id === dishId);
@@ -95,13 +105,13 @@ const toggleAllergen = (dishId, allergen) => {
   }
 };
 
-// Allergen headers for the table
+// allergen header
 const allergenHeaders = [
   "Milk", "Soy", "Egg", "Wheat", "Peanuts", "Tree Nuts", "Fish", 
   "Shellfish", "Sesame", "Gluten", "Mustard", "Gelatin", "Artificial Colors"
 ];
 
-// Map of allergen properties to their display names
+// map of the properties 
 const allergenMap = {
   milk: "Milk",
   soy: "Soy",
@@ -117,7 +127,6 @@ const allergenMap = {
   gelatin: "Gelatin",
   artificialColors: "Artificial Colors"
 };
-import testImage from './../assets/istockphoto-1457433817-612x612.jpg'; //Apologies for changing this URL. The @ alias seems to not work as desired.
 </script>
 
 <template>
@@ -197,7 +206,7 @@ table td {
   cursor: pointer;
 }
 
-/* Animation for expand/collapse */
+/* animation for the collapse  */
 .dishes-enter-active,
 .dishes-leave-active {
   transition: all 0.3s ease;

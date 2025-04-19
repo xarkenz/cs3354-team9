@@ -47,5 +47,9 @@
     "vite": "^6.2.5",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitest": "^3.0.8"
-  }
+  },
+  "description": "To run the Thresh web application locally, follow these steps:",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
