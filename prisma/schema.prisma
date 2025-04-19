@@ -19,7 +19,9 @@ model Business {
   name String
   reviews Review[]
   dishes Dish[]
-  //address String //I'm not sure the best way to store locations right now
+  placeId String @unique
+  lat Float
+  lng Float
 }
 
 model User {
