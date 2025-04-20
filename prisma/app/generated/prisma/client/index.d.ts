@@ -1461,6 +1461,7 @@ export namespace Prisma {
   export type BusinessMinAggregateOutputType = {
     id: number | null
     name: string | null
+    icon: string | null
     lat: number | null
     lng: number | null
     imageUrl: string | null
@@ -1470,6 +1471,7 @@ export namespace Prisma {
   export type BusinessMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    icon: string | null
     lat: number | null
     lng: number | null
     imageUrl: string | null
@@ -1479,6 +1481,7 @@ export namespace Prisma {
   export type BusinessCountAggregateOutputType = {
     id: number
     name: number
+    icon: number
     lat: number
     lng: number
     imageUrl: number
@@ -1502,6 +1505,7 @@ export namespace Prisma {
   export type BusinessMinAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
     lat?: true
     lng?: true
     imageUrl?: true
@@ -1511,6 +1515,7 @@ export namespace Prisma {
   export type BusinessMaxAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
     lat?: true
     lng?: true
     imageUrl?: true
@@ -1520,6 +1525,7 @@ export namespace Prisma {
   export type BusinessCountAggregateInputType = {
     id?: true
     name?: true
+    icon?: true
     lat?: true
     lng?: true
     imageUrl?: true
@@ -1616,6 +1622,7 @@ export namespace Prisma {
   export type BusinessGroupByOutputType = {
     id: number
     name: string
+    icon: string | null
     lat: number
     lng: number
     imageUrl: string | null
@@ -1644,6 +1651,7 @@ export namespace Prisma {
   export type BusinessSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    icon?: boolean
     lat?: boolean
     lng?: boolean
     imageUrl?: boolean
@@ -1656,6 +1664,7 @@ export namespace Prisma {
   export type BusinessSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    icon?: boolean
     lat?: boolean
     lng?: boolean
     imageUrl?: boolean
@@ -1665,6 +1674,7 @@ export namespace Prisma {
   export type BusinessSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    icon?: boolean
     lat?: boolean
     lng?: boolean
     imageUrl?: boolean
@@ -1674,13 +1684,14 @@ export namespace Prisma {
   export type BusinessSelectScalar = {
     id?: boolean
     name?: boolean
+    icon?: boolean
     lat?: boolean
     lng?: boolean
     imageUrl?: boolean
     priceRange?: boolean
   }
 
-  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "lat" | "lng" | "imageUrl" | "priceRange", ExtArgs["result"]["business"]>
+  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "icon" | "lat" | "lng" | "imageUrl" | "priceRange", ExtArgs["result"]["business"]>
   export type BusinessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dishes?: boolean | Business$dishesArgs<ExtArgs>
     reviews?: boolean | Business$reviewsArgs<ExtArgs>
@@ -1698,6 +1709,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      icon: string | null
       lat: number
       lng: number
       imageUrl: string | null
@@ -2129,6 +2141,7 @@ export namespace Prisma {
   interface BusinessFieldRefs {
     readonly id: FieldRef<"Business", 'Int'>
     readonly name: FieldRef<"Business", 'String'>
+    readonly icon: FieldRef<"Business", 'String'>
     readonly lat: FieldRef<"Business", 'Float'>
     readonly lng: FieldRef<"Business", 'Float'>
     readonly imageUrl: FieldRef<"Business", 'String'>
@@ -8110,6 +8123,7 @@ export namespace Prisma {
   export const BusinessScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    icon: 'icon',
     lat: 'lat',
     lng: 'lng',
     imageUrl: 'imageUrl',
@@ -8272,6 +8286,7 @@ export namespace Prisma {
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     id?: IntFilter<"Business"> | number
     name?: StringFilter<"Business"> | string
+    icon?: StringNullableFilter<"Business"> | string | null
     lat?: FloatFilter<"Business"> | number
     lng?: FloatFilter<"Business"> | number
     imageUrl?: StringNullableFilter<"Business"> | string | null
@@ -8283,6 +8298,7 @@ export namespace Prisma {
   export type BusinessOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrderInput | SortOrder
     lat?: SortOrder
     lng?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
@@ -8297,6 +8313,7 @@ export namespace Prisma {
     OR?: BusinessWhereInput[]
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     name?: StringFilter<"Business"> | string
+    icon?: StringNullableFilter<"Business"> | string | null
     lat?: FloatFilter<"Business"> | number
     lng?: FloatFilter<"Business"> | number
     imageUrl?: StringNullableFilter<"Business"> | string | null
@@ -8308,6 +8325,7 @@ export namespace Prisma {
   export type BusinessOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrderInput | SortOrder
     lat?: SortOrder
     lng?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
@@ -8325,6 +8343,7 @@ export namespace Prisma {
     NOT?: BusinessScalarWhereWithAggregatesInput | BusinessScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Business"> | number
     name?: StringWithAggregatesFilter<"Business"> | string
+    icon?: StringNullableWithAggregatesFilter<"Business"> | string | null
     lat?: FloatWithAggregatesFilter<"Business"> | number
     lng?: FloatWithAggregatesFilter<"Business"> | number
     imageUrl?: StringNullableWithAggregatesFilter<"Business"> | string | null
@@ -8638,6 +8657,7 @@ export namespace Prisma {
 
   export type BusinessCreateInput = {
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -8649,6 +8669,7 @@ export namespace Prisma {
   export type BusinessUncheckedCreateInput = {
     id?: number
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -8659,6 +8680,7 @@ export namespace Prisma {
 
   export type BusinessUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8670,6 +8692,7 @@ export namespace Prisma {
   export type BusinessUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8681,6 +8704,7 @@ export namespace Prisma {
   export type BusinessCreateManyInput = {
     id?: number
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -8689,6 +8713,7 @@ export namespace Prisma {
 
   export type BusinessUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8698,6 +8723,7 @@ export namespace Prisma {
   export type BusinessUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9015,17 +9041,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -9038,6 +9053,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type DishListRelationFilter = {
@@ -9068,6 +9094,7 @@ export namespace Prisma {
   export type BusinessCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
     imageUrl?: SortOrder
@@ -9083,6 +9110,7 @@ export namespace Prisma {
   export type BusinessMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
     imageUrl?: SortOrder
@@ -9092,6 +9120,7 @@ export namespace Prisma {
   export type BusinessMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    icon?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
     imageUrl?: SortOrder
@@ -9137,22 +9166,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -9168,6 +9181,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type DishRestrictionReviewListRelationFilter = {
@@ -9456,16 +9485,16 @@ export namespace Prisma {
     set?: string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type DishUpdateManyWithoutBusinessNestedInput = {
@@ -9757,17 +9786,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -9780,6 +9798,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -9815,22 +9844,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -9857,6 +9870,22 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -10099,6 +10128,7 @@ export namespace Prisma {
 
   export type BusinessCreateWithoutReviewsInput = {
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -10109,6 +10139,7 @@ export namespace Prisma {
   export type BusinessUncheckedCreateWithoutReviewsInput = {
     id?: number
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -10154,6 +10185,7 @@ export namespace Prisma {
 
   export type BusinessUpdateWithoutReviewsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10164,6 +10196,7 @@ export namespace Prisma {
   export type BusinessUncheckedUpdateWithoutReviewsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10199,6 +10232,7 @@ export namespace Prisma {
 
   export type BusinessCreateWithoutDishesInput = {
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -10209,6 +10243,7 @@ export namespace Prisma {
   export type BusinessUncheckedCreateWithoutDishesInput = {
     id?: number
     name: string
+    icon?: string | null
     lat: number
     lng: number
     imageUrl?: string | null
@@ -10254,6 +10289,7 @@ export namespace Prisma {
 
   export type BusinessUpdateWithoutDishesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10264,6 +10300,7 @@ export namespace Prisma {
   export type BusinessUncheckedUpdateWithoutDishesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
