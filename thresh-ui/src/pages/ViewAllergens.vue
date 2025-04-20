@@ -23,62 +23,81 @@ onMounted(async () => {
 const dishes = ref([
   {
     id: 1,
-    name: "Red Ice, Original Flavors",
+    name: "Pho",
     allergens: {
-      milk: true,
-      soy: "unidentified",
+      milk: false,
+      soy: true,
       egg: false,
       wheat: "unidentified",
       peanuts: false,
       treeNuts: false,
-      fish: false,
+      fish: "unidentified",
       shellfish: false,
-      sesame: false,
-      gluten: false,
-      mustard: false,
-      gelatin: false,
-      artificialColors: false
+      sesame: "unidentified",
+      gluten: true,
+      mustard: "unidentified",
+      gelatin: "unidentified",
+      artificialColors: "unidentified"
     }
   },
   {
     id: 2,
-    name: "Chocolate Cake",
+    name: "Tofu Spring Rolls",
     allergens: {
-      milk: true,
+      milk: false,
       soy: true,
-      egg: true,
-      wheat: true,
-      peanuts: false,
-      treeNuts: true,
-      fish: false,
+      egg: false,
+      wheat: false,
+      peanuts: true,
+      treeNuts: "unidentified",
+      fish: "unidentified",
       shellfish: false,
-      sesame: false,
-      gluten: true,
-      mustard: false,
-      gelatin: false,
-      artificialColors: false
+      sesame: "unidentified",
+      gluten: false,
+      mustard: "unidentified",
+      gelatin: "unidentified",
+      artificialColors: "unidentified"
     }
   },
   {
     id: 3,
-    name: "Caesar Salad",
+    name: "Shrimp Fried Rice",
     allergens: {
       milk: false,
-      soy: false,
+      soy: true,
       egg: true,
       wheat: false,
       peanuts: false,
       treeNuts: false,
-      fish: true,
-      shellfish: false,
-      sesame: false,
+      fish: "unidentified",
+      shellfish: true,
+      sesame: "unidentified",
       gluten: false,
-      mustard: false,
-      gelatin: false,
-      artificialColors: false
+      mustard: "unidentified",
+      gelatin: "unidentified",
+      artificialColors: "unidentified"
+    }
+  },
+  {
+    id: 4,
+    name: "Vegan Coconut Soup",
+    allergens: {
+      milk: false,
+      soy: false,
+      egg: false,
+      wheat: false,
+      peanuts: false,
+      treeNuts: true,
+      fish: "unidentified",
+      shellfish: false,
+      sesame: "unidentified",
+      gluten: false,
+      mustard: "unidentified",
+      gelatin: "unidentified",
+      artificialColors: "unidentified"
     }
   }
-]);
+]); 
 
 // toggle the expanded state of a dish
 const toggleDish = (dishId) => {
