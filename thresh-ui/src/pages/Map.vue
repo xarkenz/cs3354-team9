@@ -1,6 +1,3 @@
-<!--
-Created by Sarah Jacob for UC12: Scroll and Zoom Map View
--->
 <script setup>
 import { ref, onMounted } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
@@ -11,7 +8,8 @@ const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const center = ref({ lat: 32.9599, lng: -96.7718 }); // Richardson
 const places = ref([]);
 const selectedPlace = ref(null);
-const mapRef = ref(null);
+const mapRef = ref(null); // Will hold the raw Google Map instance
+const mapComponentRef = ref(null); // Optional, in case you need the Vue component
 const mapOptions = {
   styles: [
     { featureType: "poi", elementType: "labels.icon", stylers: [{ visibility: "off" }] },
@@ -38,24 +36,32 @@ async function fetchRestaurants() {
   }
 }
 
+function handleMapLoad(map) {
+  console.log("Map loaded:", map);
+  mapRef.value = map; // Save raw Google Maps instance
+}
+
 onMounted(fetchRestaurants);
 
 function handleMarkerClick(place) {
   selectedPlace.value = place;
   center.value = { lat: place.lat, lng: place.lng };
 
-  if (mapRef.value) {
+  if (mapRef.value && typeof mapRef.value.panTo === 'function') {
     mapRef.value.panTo({ lat: place.lat, lng: place.lng });
+  } else {
+    console.warn("Map instance not ready or panTo not found");
   }
 }
 </script>
 
 <template>
   <div class="w-screen h-screen flex flex-row-reverse">
-    <!-- Displays the Map using the Google Maps JavaScript API -->
+    <!-- Map -->
     <div class="flex-1 relative">
       <GoogleMap
-        ref="mapRef"
+        ref="mapComponentRef"
+        @load="handleMapLoad"
         :api-key="apiKey"
         :center="center"
         :zoom="12"
@@ -73,30 +79,29 @@ function handleMarkerClick(place) {
               scaledSize: { width: 40, height: 40 }
             }
           }"
-          @click="handleMarkerClick(place)"
+          @click="() => handleMarkerClick(place)"
         />
       </GoogleMap>
     </div>
 
-    <!-- PANEL ON LEFT -->
+    <!-- Side Panel -->
     <transition
-  enter-active-class="transition transform duration-300"
-  enter-from-class="-translate-x-full"
-  enter-to-class="translate-x-0"
-  leave-active-class="transition transform duration-300"
-  leave-from-class="translate-x-0"
-  leave-to-class="-translate-x-full"
->
-  <div
-    v-if="selectedPlace"
-    class="w-[400px] h-full border-r shadow-lg bg-white z-10"
-  >
-    <RestaurantPanel
-      :place="selectedPlace"
-      @close="selectedPlace = null"
-    />
-  </div>
-</transition>
-
+      enter-active-class="transition transform duration-300"
+      enter-from-class="-translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition transform duration-300"
+      leave-from-class="translate-x-0"
+      leave-to-class="-translate-x-full"
+    >
+      <div
+        v-if="selectedPlace !== null && selectedPlace.id"
+        class="w-[400px] h-full border-r shadow-lg bg-white z-10"
+      >
+        <RestaurantPanel
+          :place="selectedPlace"
+          @close="selectedPlace = null"
+        />
+      </div>
+    </transition>
   </div>
 </template>

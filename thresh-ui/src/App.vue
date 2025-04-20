@@ -37,8 +37,21 @@ window.addEventListener('hashchange', () => {
 })
 
 const currentView = computed(() => {
-  return routes[currentPath.value.slice(1) || '/'] || NotFound
-})
+  const path = currentPath.value.slice(1) || '/';
+
+  // Support dynamic route: /rate-restaurant/:id
+  if (path.startsWith('rate-restaurant/')) {
+    return RateRestaurant;
+  }
+
+  // Support dynamic route: /view-allergens/:id
+  if (path.startsWith('view-allergens/')) {
+    return ViewAllergens;
+  }
+
+  return routes[path] || NotFound;
+});
+
 </script>
 
 <template>
