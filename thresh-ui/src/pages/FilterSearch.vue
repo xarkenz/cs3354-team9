@@ -1,3 +1,10 @@
+
+ <!-- 
+ Author: Neel Suresh
+ UC03: Filter Search Results
+ UC04: Search for restaurant
+ -->
+ 
 <template>
   <div class="filter-search-page">
     <div class="container">
