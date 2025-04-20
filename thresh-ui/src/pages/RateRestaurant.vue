@@ -1,5 +1,6 @@
 <!--
 Created by Sarah Jacob for UC08: Rate a Restaurant
+This page allows the user to view reviews (even if they are not logged into their account). If the user is logged into their account, they can add a review for the restaurant. This writes the review to the database and stores it corresponding to the restuarant and the user.
 -->
 
 <template>

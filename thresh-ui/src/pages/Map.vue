@@ -1,3 +1,9 @@
+<!--
+Created by Sarah Jacob for UC12: Scroll and Zoom Map View
+This page allows the user to scroll and zoom on the map. The map is implemented using the Google Maps JavaScript API. The markers are custom based on the list of restaurants in the database. Clicking on the marker opens a panel on the left side displaying information about the restuarant, including a list of allergens and reviews.
+-->
+
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
