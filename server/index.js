@@ -9,6 +9,7 @@ const app = express()
 app.use(express.json());
 const port = process.env.BACKEND_PORT || 3000
 // import { PrismaClient } from '../prisma/app/generated/prisma/client'
+const reviewRoutes = require('./review'); // Used to get reviews for each business
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const cors = require("cors");
@@ -132,6 +133,8 @@ app.get('/api/whoami', (req, res) => {
 app.get('/api/hello', (req, res) => {
   res.json('Hello World!')
 });
+
+app.use('/api/reviews', reviewRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
