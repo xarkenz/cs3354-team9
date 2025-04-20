@@ -1,9 +1,17 @@
 <!-- Made by Isaac Philo. This is a simple user profile. -->
+import { useNavigate } from 'react-router-dom';
 
 <template>
   <div class="flex flex-col justify-center items-center">
     <div class="text-xl py-30 block mb-5 underline">Welcome, {{username}}!</div>
     <div><img class="size-40" src = "./../assets/profile.png"></div>
+    <button
+      @click="goToFavorite"
+      class="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+    >
+      Go to Favorite Page
+      navigate('/filter-search');
+    </button>
   </div>
 </template>
 
