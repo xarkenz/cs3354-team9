@@ -1,6 +1,7 @@
 <!--Created by Isaac Philo for UC16: Log into account-->
 <!-- This page allows any user to log into their account, given either their username or email and their password -->
 <!-- When the user clicks sign -->
+import { useNavigate } from 'react-router-dom';
 
 <template>
 <body>
@@ -75,6 +76,8 @@ export default {
         this.sessionToken = body.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
+        navigate('/filter-search');
+        
       }
       catch (error){
         console.log(error);
