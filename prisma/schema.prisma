@@ -11,9 +11,10 @@ datasource db {
 model Business {
   id      Int      @id @default(autoincrement())
   name    String
-  placeId String   @unique
   lat     Float
   lng     Float
+  imageUrl String?
+  priceRange String?
   dishes  Dish[]
   reviews Review[]
 }
