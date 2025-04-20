@@ -8,6 +8,16 @@ This page allows the user to scroll and zoom on the map. The map is implemented 
 import { ref, onMounted } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
 import veganPinUrl from '../assets/markers/Vegan-pin.svg';
+import veggiePinUrl from '../assets/markers/Vegetarian-pin.svg';
+import dairyPinUrl from '../assets/markers/Dairy-pin.svg';
+import eggPinUrl from '../assets/markers/Egg-pin.svg';
+import halalPinUrl from '../assets/markers/Halal-pin.svg';
+import lactosePinUrl from '../assets/markers/Lactose-free-pin.svg';
+import nutsPinUrl from '../assets/markers/Nuts-pin.svg';
+import pescatarianPinUrl from '../assets/markers/Pescatarian-pin.svg';
+import shellfishPinUrl from '../assets/markers/Shellfish-pin.svg';
+import soyPinUrl from '../assets/markers/Soy-pin.svg';
+import wheatPinUrl from '../assets/markers/Wheat-pin.svg';
 import RestaurantPanel from './RestaurantPanel.vue';
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -81,7 +91,7 @@ function handleMarkerClick(place) {
             position: { lat: place.lat, lng: place.lng },
             title: place.name,
             icon: {
-              url: veganPinUrl,
+              url: place.icon || veggiePinUrl,
               scaledSize: { width: 40, height: 40 }
             }
           }"

@@ -11,6 +11,7 @@ datasource db {
 model Business {
   id         Int      @id @default(autoincrement())
   name       String
+  icon       String?
   lat        Float
   lng        Float
   imageUrl   String?

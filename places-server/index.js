@@ -67,13 +67,14 @@ app.get('/api/restaurant-locations', async (req, res) => {
         name: true,
         lat: true,
         lng: true,
-        priceRange: true
+        priceRange: true,
+        icon: true
       }
     });
 
     res.status(200).json({ success: true, data: restaurants });
   } catch (error) {
-    // 🔧 ADD THIS FOR DEBUGGING
+    // DEBUGGGGGG
     console.error('Error fetching restaurants:', error);
     res.status(500).json({ success: false, error: error.message });
   }
