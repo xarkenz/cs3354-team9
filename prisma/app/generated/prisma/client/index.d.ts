@@ -1324,13 +1324,13 @@ export namespace Prisma {
    */
 
   export type BusinessCountOutputType = {
-    reviews: number
     dishes: number
+    reviews: number
   }
 
   export type BusinessCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | BusinessCountOutputTypeCountReviewsArgs
     dishes?: boolean | BusinessCountOutputTypeCountDishesArgs
+    reviews?: boolean | BusinessCountOutputTypeCountReviewsArgs
   }
 
   // Custom InputTypes
@@ -1347,15 +1347,15 @@ export namespace Prisma {
   /**
    * BusinessCountOutputType without action
    */
-  export type BusinessCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
+  export type BusinessCountOutputTypeCountDishesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DishWhereInput
   }
 
   /**
    * BusinessCountOutputType without action
    */
-  export type BusinessCountOutputTypeCountDishesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DishWhereInput
+  export type BusinessCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
   }
 
 
@@ -1364,13 +1364,13 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    reviews: number
     dishRestrictionReviews: number
+    reviews: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
     dishRestrictionReviews?: boolean | UserCountOutputTypeCountDishRestrictionReviewsArgs
+    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   }
 
   // Custom InputTypes
@@ -1387,15 +1387,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
+  export type UserCountOutputTypeCountDishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DishRestrictionReviewWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountDishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DishRestrictionReviewWhereInput
+  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
   }
 
 
@@ -1461,25 +1461,28 @@ export namespace Prisma {
   export type BusinessMinAggregateOutputType = {
     id: number | null
     name: string | null
-    placeId: string | null
     lat: number | null
     lng: number | null
+    imageUrl: string | null
+    priceRange: string | null
   }
 
   export type BusinessMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    placeId: string | null
     lat: number | null
     lng: number | null
+    imageUrl: string | null
+    priceRange: string | null
   }
 
   export type BusinessCountAggregateOutputType = {
     id: number
     name: number
-    placeId: number
     lat: number
     lng: number
+    imageUrl: number
+    priceRange: number
     _all: number
   }
 
@@ -1499,25 +1502,28 @@ export namespace Prisma {
   export type BusinessMinAggregateInputType = {
     id?: true
     name?: true
-    placeId?: true
     lat?: true
     lng?: true
+    imageUrl?: true
+    priceRange?: true
   }
 
   export type BusinessMaxAggregateInputType = {
     id?: true
     name?: true
-    placeId?: true
     lat?: true
     lng?: true
+    imageUrl?: true
+    priceRange?: true
   }
 
   export type BusinessCountAggregateInputType = {
     id?: true
     name?: true
-    placeId?: true
     lat?: true
     lng?: true
+    imageUrl?: true
+    priceRange?: true
     _all?: true
   }
 
@@ -1610,9 +1616,10 @@ export namespace Prisma {
   export type BusinessGroupByOutputType = {
     id: number
     name: string
-    placeId: string
     lat: number
     lng: number
+    imageUrl: string | null
+    priceRange: string | null
     _count: BusinessCountAggregateOutputType | null
     _avg: BusinessAvgAggregateOutputType | null
     _sum: BusinessSumAggregateOutputType | null
@@ -1637,42 +1644,46 @@ export namespace Prisma {
   export type BusinessSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    placeId?: boolean
     lat?: boolean
     lng?: boolean
-    reviews?: boolean | Business$reviewsArgs<ExtArgs>
+    imageUrl?: boolean
+    priceRange?: boolean
     dishes?: boolean | Business$dishesArgs<ExtArgs>
+    reviews?: boolean | Business$reviewsArgs<ExtArgs>
     _count?: boolean | BusinessCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["business"]>
 
   export type BusinessSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    placeId?: boolean
     lat?: boolean
     lng?: boolean
+    imageUrl?: boolean
+    priceRange?: boolean
   }, ExtArgs["result"]["business"]>
 
   export type BusinessSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    placeId?: boolean
     lat?: boolean
     lng?: boolean
+    imageUrl?: boolean
+    priceRange?: boolean
   }, ExtArgs["result"]["business"]>
 
   export type BusinessSelectScalar = {
     id?: boolean
     name?: boolean
-    placeId?: boolean
     lat?: boolean
     lng?: boolean
+    imageUrl?: boolean
+    priceRange?: boolean
   }
 
-  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "placeId" | "lat" | "lng", ExtArgs["result"]["business"]>
+  export type BusinessOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "lat" | "lng" | "imageUrl" | "priceRange", ExtArgs["result"]["business"]>
   export type BusinessInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | Business$reviewsArgs<ExtArgs>
     dishes?: boolean | Business$dishesArgs<ExtArgs>
+    reviews?: boolean | Business$reviewsArgs<ExtArgs>
     _count?: boolean | BusinessCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BusinessIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1681,15 +1692,16 @@ export namespace Prisma {
   export type $BusinessPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Business"
     objects: {
-      reviews: Prisma.$ReviewPayload<ExtArgs>[]
       dishes: Prisma.$DishPayload<ExtArgs>[]
+      reviews: Prisma.$ReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      placeId: string
       lat: number
       lng: number
+      imageUrl: string | null
+      priceRange: string | null
     }, ExtArgs["result"]["business"]>
     composites: {}
   }
@@ -2084,8 +2096,8 @@ export namespace Prisma {
    */
   export interface Prisma__BusinessClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    reviews<T extends Business$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Business$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dishes<T extends Business$dishesArgs<ExtArgs> = {}>(args?: Subset<T, Business$dishesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends Business$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Business$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2117,9 +2129,10 @@ export namespace Prisma {
   interface BusinessFieldRefs {
     readonly id: FieldRef<"Business", 'Int'>
     readonly name: FieldRef<"Business", 'String'>
-    readonly placeId: FieldRef<"Business", 'String'>
     readonly lat: FieldRef<"Business", 'Float'>
     readonly lng: FieldRef<"Business", 'Float'>
+    readonly imageUrl: FieldRef<"Business", 'String'>
+    readonly priceRange: FieldRef<"Business", 'String'>
   }
     
 
@@ -2506,30 +2519,6 @@ export namespace Prisma {
   }
 
   /**
-   * Business.reviews
-   */
-  export type Business$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    cursor?: ReviewWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
    * Business.dishes
    */
   export type Business$dishesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2551,6 +2540,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DishScalarFieldEnum | DishScalarFieldEnum[]
+  }
+
+  /**
+   * Business.reviews
+   */
+  export type Business$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
@@ -2762,8 +2775,8 @@ export namespace Prisma {
     email?: boolean
     username?: boolean
     password?: boolean
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
     dishRestrictionReviews?: boolean | User$dishRestrictionReviewsArgs<ExtArgs>
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2790,8 +2803,8 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
     dishRestrictionReviews?: boolean | User$dishRestrictionReviewsArgs<ExtArgs>
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2800,8 +2813,8 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      reviews: Prisma.$ReviewPayload<ExtArgs>[]
       dishRestrictionReviews: Prisma.$DishRestrictionReviewPayload<ExtArgs>[]
+      reviews: Prisma.$ReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3202,8 +3215,8 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dishRestrictionReviews<T extends User$dishRestrictionReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$dishRestrictionReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DishRestrictionReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3623,30 +3636,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.reviews
-   */
-  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    cursor?: ReviewWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
    * User.dishRestrictionReviews
    */
   export type User$dishRestrictionReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3668,6 +3657,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DishRestrictionReviewScalarFieldEnum | DishRestrictionReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviews
+   */
+  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
@@ -3907,8 +3920,8 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     numStars?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3918,8 +3931,8 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     numStars?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3929,8 +3942,8 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     numStars?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["review"]>
 
   export type ReviewSelectScalar = {
@@ -3944,23 +3957,23 @@ export namespace Prisma {
 
   export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorID" | "businessID" | "title" | "content" | "numStars", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
     business?: boolean | BusinessDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Review"
     objects: {
-      author: Prisma.$UserPayload<ExtArgs>
       business: Prisma.$BusinessPayload<ExtArgs>
+      author: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4363,8 +4376,8 @@ export namespace Prisma {
    */
   export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     business<T extends BusinessDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BusinessDefaultArgs<ExtArgs>>): Prisma__BusinessClient<$Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7188,8 +7201,8 @@ export namespace Prisma {
     userID?: boolean
     dishID?: boolean
     dishSatisfiesRestriction?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dishRestrictionReview"]>
 
   export type DishRestrictionReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7197,8 +7210,8 @@ export namespace Prisma {
     userID?: boolean
     dishID?: boolean
     dishSatisfiesRestriction?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dishRestrictionReview"]>
 
   export type DishRestrictionReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7206,8 +7219,8 @@ export namespace Prisma {
     userID?: boolean
     dishID?: boolean
     dishSatisfiesRestriction?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dishRestrictionReview"]>
 
   export type DishRestrictionReviewSelectScalar = {
@@ -7219,23 +7232,23 @@ export namespace Prisma {
 
   export type DishRestrictionReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userID" | "dishID" | "dishSatisfiesRestriction", ExtArgs["result"]["dishRestrictionReview"]>
   export type DishRestrictionReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type DishRestrictionReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type DishRestrictionReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     dish?: boolean | DishDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $DishRestrictionReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DishRestrictionReview"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       dish: Prisma.$DishPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7636,8 +7649,8 @@ export namespace Prisma {
    */
   export interface Prisma__DishRestrictionReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     dish<T extends DishDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DishDefaultArgs<ExtArgs>>): Prisma__DishClient<$Result.GetResult<Prisma.$DishPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8097,9 +8110,10 @@ export namespace Prisma {
   export const BusinessScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    placeId: 'placeId',
     lat: 'lat',
-    lng: 'lng'
+    lng: 'lng',
+    imageUrl: 'imageUrl',
+    priceRange: 'priceRange'
   };
 
   export type BusinessScalarFieldEnum = (typeof BusinessScalarFieldEnum)[keyof typeof BusinessScalarFieldEnum]
@@ -8177,6 +8191,14 @@ export namespace Prisma {
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -8250,42 +8272,46 @@ export namespace Prisma {
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     id?: IntFilter<"Business"> | number
     name?: StringFilter<"Business"> | string
-    placeId?: StringFilter<"Business"> | string
     lat?: FloatFilter<"Business"> | number
     lng?: FloatFilter<"Business"> | number
-    reviews?: ReviewListRelationFilter
+    imageUrl?: StringNullableFilter<"Business"> | string | null
+    priceRange?: StringNullableFilter<"Business"> | string | null
     dishes?: DishListRelationFilter
+    reviews?: ReviewListRelationFilter
   }
 
   export type BusinessOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    placeId?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
-    reviews?: ReviewOrderByRelationAggregateInput
+    imageUrl?: SortOrderInput | SortOrder
+    priceRange?: SortOrderInput | SortOrder
     dishes?: DishOrderByRelationAggregateInput
+    reviews?: ReviewOrderByRelationAggregateInput
   }
 
   export type BusinessWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    placeId?: string
     AND?: BusinessWhereInput | BusinessWhereInput[]
     OR?: BusinessWhereInput[]
     NOT?: BusinessWhereInput | BusinessWhereInput[]
     name?: StringFilter<"Business"> | string
     lat?: FloatFilter<"Business"> | number
     lng?: FloatFilter<"Business"> | number
-    reviews?: ReviewListRelationFilter
+    imageUrl?: StringNullableFilter<"Business"> | string | null
+    priceRange?: StringNullableFilter<"Business"> | string | null
     dishes?: DishListRelationFilter
-  }, "id" | "placeId">
+    reviews?: ReviewListRelationFilter
+  }, "id">
 
   export type BusinessOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    placeId?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    priceRange?: SortOrderInput | SortOrder
     _count?: BusinessCountOrderByAggregateInput
     _avg?: BusinessAvgOrderByAggregateInput
     _max?: BusinessMaxOrderByAggregateInput
@@ -8299,9 +8325,10 @@ export namespace Prisma {
     NOT?: BusinessScalarWhereWithAggregatesInput | BusinessScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Business"> | number
     name?: StringWithAggregatesFilter<"Business"> | string
-    placeId?: StringWithAggregatesFilter<"Business"> | string
     lat?: FloatWithAggregatesFilter<"Business"> | number
     lng?: FloatWithAggregatesFilter<"Business"> | number
+    imageUrl?: StringNullableWithAggregatesFilter<"Business"> | string | null
+    priceRange?: StringNullableWithAggregatesFilter<"Business"> | string | null
   }
 
   export type UserWhereInput = {
@@ -8312,8 +8339,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    reviews?: ReviewListRelationFilter
     dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
+    reviews?: ReviewListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8321,8 +8348,8 @@ export namespace Prisma {
     email?: SortOrder
     username?: SortOrder
     password?: SortOrder
-    reviews?: ReviewOrderByRelationAggregateInput
     dishRestrictionReviews?: DishRestrictionReviewOrderByRelationAggregateInput
+    reviews?: ReviewOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8333,8 +8360,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    reviews?: ReviewListRelationFilter
     dishRestrictionReviews?: DishRestrictionReviewListRelationFilter
+    reviews?: ReviewListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8369,8 +8396,8 @@ export namespace Prisma {
     title?: StringFilter<"Review"> | string
     content?: StringFilter<"Review"> | string
     numStars?: IntFilter<"Review"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ReviewOrderByWithRelationInput = {
@@ -8380,8 +8407,8 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     numStars?: SortOrder
-    author?: UserOrderByWithRelationInput
     business?: BusinessOrderByWithRelationInput
+    author?: UserOrderByWithRelationInput
   }
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -8394,8 +8421,8 @@ export namespace Prisma {
     title?: StringFilter<"Review"> | string
     content?: StringFilter<"Review"> | string
     numStars?: IntFilter<"Review"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
     business?: XOR<BusinessScalarRelationFilter, BusinessWhereInput>
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type ReviewOrderByWithAggregationInput = {
@@ -8561,8 +8588,8 @@ export namespace Prisma {
     userID?: IntFilter<"DishRestrictionReview"> | number
     dishID?: IntFilter<"DishRestrictionReview"> | number
     dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     dish?: XOR<DishScalarRelationFilter, DishWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type DishRestrictionReviewOrderByWithRelationInput = {
@@ -8570,8 +8597,8 @@ export namespace Prisma {
     userID?: SortOrder
     dishID?: SortOrder
     dishSatisfiesRestriction?: SortOrder
-    user?: UserOrderByWithRelationInput
     dish?: DishOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type DishRestrictionReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -8583,8 +8610,8 @@ export namespace Prisma {
     userID?: IntFilter<"DishRestrictionReview"> | number
     dishID?: IntFilter<"DishRestrictionReview"> | number
     dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     dish?: XOR<DishScalarRelationFilter, DishWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userID_dishID">
 
   export type DishRestrictionReviewOrderByWithAggregationInput = {
@@ -8611,71 +8638,78 @@ export namespace Prisma {
 
   export type BusinessCreateInput = {
     name: string
-    placeId: string
     lat: number
     lng: number
-    reviews?: ReviewCreateNestedManyWithoutBusinessInput
+    imageUrl?: string | null
+    priceRange?: string | null
     dishes?: DishCreateNestedManyWithoutBusinessInput
+    reviews?: ReviewCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUncheckedCreateInput = {
     id?: number
     name: string
-    placeId: string
     lat: number
     lng: number
-    reviews?: ReviewUncheckedCreateNestedManyWithoutBusinessInput
+    imageUrl?: string | null
+    priceRange?: string | null
     dishes?: DishUncheckedCreateNestedManyWithoutBusinessInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
-    reviews?: ReviewUpdateManyWithoutBusinessNestedInput
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
     dishes?: DishUpdateManyWithoutBusinessNestedInput
+    reviews?: ReviewUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
-    reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
     dishes?: DishUncheckedUpdateManyWithoutBusinessNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessCreateManyInput = {
     id?: number
     name: string
-    placeId: string
     lat: number
     lng: number
+    imageUrl?: string | null
+    priceRange?: string | null
   }
 
   export type BusinessUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BusinessUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateInput = {
     email: string
     username: string
     password: string
-    reviews?: ReviewCreateNestedManyWithoutAuthorInput
     dishRestrictionReviews?: DishRestrictionReviewCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8683,16 +8717,16 @@ export namespace Prisma {
     email: string
     username: string
     password: string
-    reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
     dishRestrictionReviews?: DishRestrictionReviewUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    reviews?: ReviewUpdateManyWithoutAuthorNestedInput
     dishRestrictionReviews?: DishRestrictionReviewUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8700,8 +8734,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
     dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8728,8 +8762,8 @@ export namespace Prisma {
     title: string
     content: string
     numStars: number
-    author: UserCreateNestedOneWithoutReviewsInput
     business: BusinessCreateNestedOneWithoutReviewsInput
+    author: UserCreateNestedOneWithoutReviewsInput
   }
 
   export type ReviewUncheckedCreateInput = {
@@ -8745,8 +8779,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     numStars?: IntFieldUpdateOperationsInput | number
-    author?: UserUpdateOneRequiredWithoutReviewsNestedInput
     business?: BusinessUpdateOneRequiredWithoutReviewsNestedInput
+    author?: UserUpdateOneRequiredWithoutReviewsNestedInput
   }
 
   export type ReviewUncheckedUpdateInput = {
@@ -8914,8 +8948,8 @@ export namespace Prisma {
 
   export type DishRestrictionReviewCreateInput = {
     dishSatisfiesRestriction: boolean
-    user: UserCreateNestedOneWithoutDishRestrictionReviewsInput
     dish: DishCreateNestedOneWithoutDishRestrictionReviewsInput
+    user: UserCreateNestedOneWithoutDishRestrictionReviewsInput
   }
 
   export type DishRestrictionReviewUncheckedCreateInput = {
@@ -8927,8 +8961,8 @@ export namespace Prisma {
 
   export type DishRestrictionReviewUpdateInput = {
     dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
-    user?: UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
     dish?: DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+    user?: UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
   }
 
   export type DishRestrictionReviewUncheckedUpdateInput = {
@@ -8992,10 +9026,18 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type ReviewListRelationFilter = {
-    every?: ReviewWhereInput
-    some?: ReviewWhereInput
-    none?: ReviewWhereInput
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type DishListRelationFilter = {
@@ -9004,20 +9046,32 @@ export namespace Prisma {
     none?: DishWhereInput
   }
 
-  export type ReviewOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type ReviewListRelationFilter = {
+    every?: ReviewWhereInput
+    some?: ReviewWhereInput
+    none?: ReviewWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type DishOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
+  export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type BusinessCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    placeId?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
+    imageUrl?: SortOrder
+    priceRange?: SortOrder
   }
 
   export type BusinessAvgOrderByAggregateInput = {
@@ -9029,17 +9083,19 @@ export namespace Prisma {
   export type BusinessMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    placeId?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
+    imageUrl?: SortOrder
+    priceRange?: SortOrder
   }
 
   export type BusinessMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    placeId?: SortOrder
     lat?: SortOrder
     lng?: SortOrder
+    imageUrl?: SortOrder
+    priceRange?: SortOrder
   }
 
   export type BusinessSumOrderByAggregateInput = {
@@ -9097,6 +9153,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DishRestrictionReviewListRelationFilter = {
     every?: DishRestrictionReviewWhereInput
     some?: DishRestrictionReviewWhereInput
@@ -9136,14 +9209,14 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type BusinessScalarRelationFilter = {
     is?: BusinessWhereInput
     isNot?: BusinessWhereInput
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type ReviewCountOrderByAggregateInput = {
@@ -9351,13 +9424,6 @@ export namespace Prisma {
     dishID?: SortOrder
   }
 
-  export type ReviewCreateNestedManyWithoutBusinessInput = {
-    create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
-    createMany?: ReviewCreateManyBusinessInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-  }
-
   export type DishCreateNestedManyWithoutBusinessInput = {
     create?: XOR<DishCreateWithoutBusinessInput, DishUncheckedCreateWithoutBusinessInput> | DishCreateWithoutBusinessInput[] | DishUncheckedCreateWithoutBusinessInput[]
     connectOrCreate?: DishCreateOrConnectWithoutBusinessInput | DishCreateOrConnectWithoutBusinessInput[]
@@ -9365,7 +9431,7 @@ export namespace Prisma {
     connect?: DishWhereUniqueInput | DishWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedManyWithoutBusinessInput = {
+  export type ReviewCreateNestedManyWithoutBusinessInput = {
     create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
     createMany?: ReviewCreateManyBusinessInputEnvelope
@@ -9377,6 +9443,13 @@ export namespace Prisma {
     connectOrCreate?: DishCreateOrConnectWithoutBusinessInput | DishCreateOrConnectWithoutBusinessInput[]
     createMany?: DishCreateManyBusinessInputEnvelope
     connect?: DishWhereUniqueInput | DishWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutBusinessInput = {
+    create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
+    createMany?: ReviewCreateManyBusinessInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -9391,18 +9464,8 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ReviewUpdateManyWithoutBusinessNestedInput = {
-    create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutBusinessInput | ReviewUpsertWithWhereUniqueWithoutBusinessInput[]
-    createMany?: ReviewCreateManyBusinessInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutBusinessInput | ReviewUpdateWithWhereUniqueWithoutBusinessInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutBusinessInput | ReviewUpdateManyWithWhereWithoutBusinessInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DishUpdateManyWithoutBusinessNestedInput = {
@@ -9419,15 +9482,7 @@ export namespace Prisma {
     deleteMany?: DishScalarWhereInput | DishScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type ReviewUncheckedUpdateManyWithoutBusinessNestedInput = {
+  export type ReviewUpdateManyWithoutBusinessNestedInput = {
     create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
     upsert?: ReviewUpsertWithWhereUniqueWithoutBusinessInput | ReviewUpsertWithWhereUniqueWithoutBusinessInput[]
@@ -9439,6 +9494,14 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutBusinessInput | ReviewUpdateWithWhereUniqueWithoutBusinessInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutBusinessInput | ReviewUpdateManyWithWhereWithoutBusinessInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type DishUncheckedUpdateManyWithoutBusinessNestedInput = {
@@ -9455,11 +9518,18 @@ export namespace Prisma {
     deleteMany?: DishScalarWhereInput | DishScalarWhereInput[]
   }
 
-  export type ReviewCreateNestedManyWithoutAuthorInput = {
-    create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
-    createMany?: ReviewCreateManyAuthorInputEnvelope
+  export type ReviewUncheckedUpdateManyWithoutBusinessNestedInput = {
+    create?: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput> | ReviewCreateWithoutBusinessInput[] | ReviewUncheckedCreateWithoutBusinessInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutBusinessInput | ReviewCreateOrConnectWithoutBusinessInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutBusinessInput | ReviewUpsertWithWhereUniqueWithoutBusinessInput[]
+    createMany?: ReviewCreateManyBusinessInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutBusinessInput | ReviewUpdateWithWhereUniqueWithoutBusinessInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutBusinessInput | ReviewUpdateManyWithWhereWithoutBusinessInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type DishRestrictionReviewCreateNestedManyWithoutUserInput = {
@@ -9469,7 +9539,7 @@ export namespace Prisma {
     connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedManyWithoutAuthorInput = {
+  export type ReviewCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
     createMany?: ReviewCreateManyAuthorInputEnvelope
@@ -9483,18 +9553,11 @@ export namespace Prisma {
     connect?: DishRestrictionReviewWhereUniqueInput | DishRestrictionReviewWhereUniqueInput[]
   }
 
-  export type ReviewUpdateManyWithoutAuthorNestedInput = {
+  export type ReviewUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutAuthorInput | ReviewUpsertWithWhereUniqueWithoutAuthorInput[]
     createMany?: ReviewCreateManyAuthorInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutAuthorInput | ReviewUpdateWithWhereUniqueWithoutAuthorInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutAuthorInput | ReviewUpdateManyWithWhereWithoutAuthorInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type DishRestrictionReviewUpdateManyWithoutUserNestedInput = {
@@ -9511,7 +9574,7 @@ export namespace Prisma {
     deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
   }
 
-  export type ReviewUncheckedUpdateManyWithoutAuthorNestedInput = {
+  export type ReviewUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
     upsert?: ReviewUpsertWithWhereUniqueWithoutAuthorInput | ReviewUpsertWithWhereUniqueWithoutAuthorInput[]
@@ -9539,10 +9602,18 @@ export namespace Prisma {
     deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutReviewsInput = {
-    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
-    connect?: UserWhereUniqueInput
+  export type ReviewUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput> | ReviewCreateWithoutAuthorInput[] | ReviewUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutAuthorInput | ReviewCreateOrConnectWithoutAuthorInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutAuthorInput | ReviewUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ReviewCreateManyAuthorInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutAuthorInput | ReviewUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutAuthorInput | ReviewUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type BusinessCreateNestedOneWithoutReviewsInput = {
@@ -9551,12 +9622,10 @@ export namespace Prisma {
     connect?: BusinessWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+  export type UserCreateNestedOneWithoutReviewsInput = {
     create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
     connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
-    upsert?: UserUpsertWithoutReviewsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewsInput, UserUpdateWithoutReviewsInput>, UserUncheckedUpdateWithoutReviewsInput>
   }
 
   export type BusinessUpdateOneRequiredWithoutReviewsNestedInput = {
@@ -9565,6 +9634,14 @@ export namespace Prisma {
     upsert?: BusinessUpsertWithoutReviewsInput
     connect?: BusinessWhereUniqueInput
     update?: XOR<XOR<BusinessUpdateToOneWithWhereWithoutReviewsInput, BusinessUpdateWithoutReviewsInput>, BusinessUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
+    upsert?: UserUpsertWithoutReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewsInput, UserUpdateWithoutReviewsInput>, UserUncheckedUpdateWithoutReviewsInput>
   }
 
   export type BusinessCreateNestedOneWithoutDishesInput = {
@@ -9627,24 +9704,16 @@ export namespace Prisma {
     deleteMany?: DishRestrictionReviewScalarWhereInput | DishRestrictionReviewScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutDishRestrictionReviewsInput = {
-    create?: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutDishRestrictionReviewsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type DishCreateNestedOneWithoutDishRestrictionReviewsInput = {
     create?: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
     connectOrCreate?: DishCreateOrConnectWithoutDishRestrictionReviewsInput
     connect?: DishWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
+  export type UserCreateNestedOneWithoutDishRestrictionReviewsInput = {
     create?: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
     connectOrCreate?: UserCreateOrConnectWithoutDishRestrictionReviewsInput
-    upsert?: UserUpsertWithoutDishRestrictionReviewsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput, UserUpdateWithoutDishRestrictionReviewsInput>, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
   }
 
   export type DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
@@ -9653,6 +9722,14 @@ export namespace Prisma {
     upsert?: DishUpsertWithoutDishRestrictionReviewsInput
     connect?: DishWhereUniqueInput
     update?: XOR<XOR<DishUpdateToOneWithWhereWithoutDishRestrictionReviewsInput, DishUpdateWithoutDishRestrictionReviewsInput>, DishUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDishRestrictionReviewsInput
+    upsert?: UserUpsertWithoutDishRestrictionReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput, UserUpdateWithoutDishRestrictionReviewsInput>, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -9689,6 +9766,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -9740,6 +9831,34 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -9769,30 +9888,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type ReviewCreateWithoutBusinessInput = {
-    title: string
-    content: string
-    numStars: number
-    author: UserCreateNestedOneWithoutReviewsInput
-  }
-
-  export type ReviewUncheckedCreateWithoutBusinessInput = {
-    id?: number
-    authorID: number
-    title: string
-    content: string
-    numStars: number
-  }
-
-  export type ReviewCreateOrConnectWithoutBusinessInput = {
-    where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput>
-  }
-
-  export type ReviewCreateManyBusinessInputEnvelope = {
-    data: ReviewCreateManyBusinessInput | ReviewCreateManyBusinessInput[]
   }
 
   export type DishCreateWithoutBusinessInput = {
@@ -9831,32 +9926,28 @@ export namespace Prisma {
     data: DishCreateManyBusinessInput | DishCreateManyBusinessInput[]
   }
 
-  export type ReviewUpsertWithWhereUniqueWithoutBusinessInput = {
+  export type ReviewCreateWithoutBusinessInput = {
+    title: string
+    content: string
+    numStars: number
+    author: UserCreateNestedOneWithoutReviewsInput
+  }
+
+  export type ReviewUncheckedCreateWithoutBusinessInput = {
+    id?: number
+    authorID: number
+    title: string
+    content: string
+    numStars: number
+  }
+
+  export type ReviewCreateOrConnectWithoutBusinessInput = {
     where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutBusinessInput, ReviewUncheckedUpdateWithoutBusinessInput>
     create: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput>
   }
 
-  export type ReviewUpdateWithWhereUniqueWithoutBusinessInput = {
-    where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutBusinessInput, ReviewUncheckedUpdateWithoutBusinessInput>
-  }
-
-  export type ReviewUpdateManyWithWhereWithoutBusinessInput = {
-    where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutBusinessInput>
-  }
-
-  export type ReviewScalarWhereInput = {
-    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    OR?: ReviewScalarWhereInput[]
-    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    id?: IntFilter<"Review"> | number
-    authorID?: IntFilter<"Review"> | number
-    businessID?: IntFilter<"Review"> | number
-    title?: StringFilter<"Review"> | string
-    content?: StringFilter<"Review"> | string
-    numStars?: IntFilter<"Review"> | number
+  export type ReviewCreateManyBusinessInputEnvelope = {
+    data: ReviewCreateManyBusinessInput | ReviewCreateManyBusinessInput[]
   }
 
   export type DishUpsertWithWhereUniqueWithoutBusinessInput = {
@@ -9892,28 +9983,32 @@ export namespace Prisma {
     hasShellfishFree?: BoolFilter<"Dish"> | boolean
   }
 
-  export type ReviewCreateWithoutAuthorInput = {
-    title: string
-    content: string
-    numStars: number
-    business: BusinessCreateNestedOneWithoutReviewsInput
-  }
-
-  export type ReviewUncheckedCreateWithoutAuthorInput = {
-    id?: number
-    businessID: number
-    title: string
-    content: string
-    numStars: number
-  }
-
-  export type ReviewCreateOrConnectWithoutAuthorInput = {
+  export type ReviewUpsertWithWhereUniqueWithoutBusinessInput = {
     where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput>
+    update: XOR<ReviewUpdateWithoutBusinessInput, ReviewUncheckedUpdateWithoutBusinessInput>
+    create: XOR<ReviewCreateWithoutBusinessInput, ReviewUncheckedCreateWithoutBusinessInput>
   }
 
-  export type ReviewCreateManyAuthorInputEnvelope = {
-    data: ReviewCreateManyAuthorInput | ReviewCreateManyAuthorInput[]
+  export type ReviewUpdateWithWhereUniqueWithoutBusinessInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutBusinessInput, ReviewUncheckedUpdateWithoutBusinessInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutBusinessInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutBusinessInput>
+  }
+
+  export type ReviewScalarWhereInput = {
+    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    OR?: ReviewScalarWhereInput[]
+    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    id?: IntFilter<"Review"> | number
+    authorID?: IntFilter<"Review"> | number
+    businessID?: IntFilter<"Review"> | number
+    title?: StringFilter<"Review"> | string
+    content?: StringFilter<"Review"> | string
+    numStars?: IntFilter<"Review"> | number
   }
 
   export type DishRestrictionReviewCreateWithoutUserInput = {
@@ -9936,20 +10031,28 @@ export namespace Prisma {
     data: DishRestrictionReviewCreateManyUserInput | DishRestrictionReviewCreateManyUserInput[]
   }
 
-  export type ReviewUpsertWithWhereUniqueWithoutAuthorInput = {
+  export type ReviewCreateWithoutAuthorInput = {
+    title: string
+    content: string
+    numStars: number
+    business: BusinessCreateNestedOneWithoutReviewsInput
+  }
+
+  export type ReviewUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    businessID: number
+    title: string
+    content: string
+    numStars: number
+  }
+
+  export type ReviewCreateOrConnectWithoutAuthorInput = {
     where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutAuthorInput, ReviewUncheckedUpdateWithoutAuthorInput>
     create: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput>
   }
 
-  export type ReviewUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutAuthorInput, ReviewUncheckedUpdateWithoutAuthorInput>
-  }
-
-  export type ReviewUpdateManyWithWhereWithoutAuthorInput = {
-    where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutAuthorInput>
+  export type ReviewCreateManyAuthorInputEnvelope = {
+    data: ReviewCreateManyAuthorInput | ReviewCreateManyAuthorInput[]
   }
 
   export type DishRestrictionReviewUpsertWithWhereUniqueWithoutUserInput = {
@@ -9978,6 +10081,46 @@ export namespace Prisma {
     dishSatisfiesRestriction?: BoolFilter<"DishRestrictionReview"> | boolean
   }
 
+  export type ReviewUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutAuthorInput, ReviewUncheckedUpdateWithoutAuthorInput>
+    create: XOR<ReviewCreateWithoutAuthorInput, ReviewUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutAuthorInput, ReviewUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutAuthorInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type BusinessCreateWithoutReviewsInput = {
+    name: string
+    lat: number
+    lng: number
+    imageUrl?: string | null
+    priceRange?: string | null
+    dishes?: DishCreateNestedManyWithoutBusinessInput
+  }
+
+  export type BusinessUncheckedCreateWithoutReviewsInput = {
+    id?: number
+    name: string
+    lat: number
+    lng: number
+    imageUrl?: string | null
+    priceRange?: string | null
+    dishes?: DishUncheckedCreateNestedManyWithoutBusinessInput
+  }
+
+  export type BusinessCreateOrConnectWithoutReviewsInput = {
+    where: BusinessWhereUniqueInput
+    create: XOR<BusinessCreateWithoutReviewsInput, BusinessUncheckedCreateWithoutReviewsInput>
+  }
+
   export type UserCreateWithoutReviewsInput = {
     email: string
     username: string
@@ -9998,26 +10141,34 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
   }
 
-  export type BusinessCreateWithoutReviewsInput = {
-    name: string
-    placeId: string
-    lat: number
-    lng: number
-    dishes?: DishCreateNestedManyWithoutBusinessInput
-  }
-
-  export type BusinessUncheckedCreateWithoutReviewsInput = {
-    id?: number
-    name: string
-    placeId: string
-    lat: number
-    lng: number
-    dishes?: DishUncheckedCreateNestedManyWithoutBusinessInput
-  }
-
-  export type BusinessCreateOrConnectWithoutReviewsInput = {
-    where: BusinessWhereUniqueInput
+  export type BusinessUpsertWithoutReviewsInput = {
+    update: XOR<BusinessUpdateWithoutReviewsInput, BusinessUncheckedUpdateWithoutReviewsInput>
     create: XOR<BusinessCreateWithoutReviewsInput, BusinessUncheckedCreateWithoutReviewsInput>
+    where?: BusinessWhereInput
+  }
+
+  export type BusinessUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: BusinessWhereInput
+    data: XOR<BusinessUpdateWithoutReviewsInput, BusinessUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type BusinessUpdateWithoutReviewsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
+    dishes?: DishUpdateManyWithoutBusinessNestedInput
+  }
+
+  export type BusinessUncheckedUpdateWithoutReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    lat?: FloatFieldUpdateOperationsInput | number
+    lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
+    dishes?: DishUncheckedUpdateManyWithoutBusinessNestedInput
   }
 
   export type UserUpsertWithoutReviewsInput = {
@@ -10046,48 +10197,22 @@ export namespace Prisma {
     dishRestrictionReviews?: DishRestrictionReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type BusinessUpsertWithoutReviewsInput = {
-    update: XOR<BusinessUpdateWithoutReviewsInput, BusinessUncheckedUpdateWithoutReviewsInput>
-    create: XOR<BusinessCreateWithoutReviewsInput, BusinessUncheckedCreateWithoutReviewsInput>
-    where?: BusinessWhereInput
-  }
-
-  export type BusinessUpdateToOneWithWhereWithoutReviewsInput = {
-    where?: BusinessWhereInput
-    data: XOR<BusinessUpdateWithoutReviewsInput, BusinessUncheckedUpdateWithoutReviewsInput>
-  }
-
-  export type BusinessUpdateWithoutReviewsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
-    lat?: FloatFieldUpdateOperationsInput | number
-    lng?: FloatFieldUpdateOperationsInput | number
-    dishes?: DishUpdateManyWithoutBusinessNestedInput
-  }
-
-  export type BusinessUncheckedUpdateWithoutReviewsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
-    lat?: FloatFieldUpdateOperationsInput | number
-    lng?: FloatFieldUpdateOperationsInput | number
-    dishes?: DishUncheckedUpdateManyWithoutBusinessNestedInput
-  }
-
   export type BusinessCreateWithoutDishesInput = {
     name: string
-    placeId: string
     lat: number
     lng: number
+    imageUrl?: string | null
+    priceRange?: string | null
     reviews?: ReviewCreateNestedManyWithoutBusinessInput
   }
 
   export type BusinessUncheckedCreateWithoutDishesInput = {
     id?: number
     name: string
-    placeId: string
     lat: number
     lng: number
+    imageUrl?: string | null
+    priceRange?: string | null
     reviews?: ReviewUncheckedCreateNestedManyWithoutBusinessInput
   }
 
@@ -10129,18 +10254,20 @@ export namespace Prisma {
 
   export type BusinessUpdateWithoutDishesInput = {
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUpdateManyWithoutBusinessNestedInput
   }
 
   export type BusinessUncheckedUpdateWithoutDishesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    placeId?: StringFieldUpdateOperationsInput | string
     lat?: FloatFieldUpdateOperationsInput | number
     lng?: FloatFieldUpdateOperationsInput | number
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    priceRange?: NullableStringFieldUpdateOperationsInput | string | null
     reviews?: ReviewUncheckedUpdateManyWithoutBusinessNestedInput
   }
 
@@ -10158,26 +10285,6 @@ export namespace Prisma {
   export type DishRestrictionReviewUpdateManyWithWhereWithoutDishInput = {
     where: DishRestrictionReviewScalarWhereInput
     data: XOR<DishRestrictionReviewUpdateManyMutationInput, DishRestrictionReviewUncheckedUpdateManyWithoutDishInput>
-  }
-
-  export type UserCreateWithoutDishRestrictionReviewsInput = {
-    email: string
-    username: string
-    password: string
-    reviews?: ReviewCreateNestedManyWithoutAuthorInput
-  }
-
-  export type UserUncheckedCreateWithoutDishRestrictionReviewsInput = {
-    id?: number
-    email: string
-    username: string
-    password: string
-    reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
-  }
-
-  export type UserCreateOrConnectWithoutDishRestrictionReviewsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
   }
 
   export type DishCreateWithoutDishRestrictionReviewsInput = {
@@ -10212,30 +10319,24 @@ export namespace Prisma {
     create: XOR<DishCreateWithoutDishRestrictionReviewsInput, DishUncheckedCreateWithoutDishRestrictionReviewsInput>
   }
 
-  export type UserUpsertWithoutDishRestrictionReviewsInput = {
-    update: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  export type UserCreateWithoutDishRestrictionReviewsInput = {
+    email: string
+    username: string
+    password: string
+    reviews?: ReviewCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutDishRestrictionReviewsInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    reviews?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutDishRestrictionReviewsInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
-  }
-
-  export type UserUpdateWithoutDishRestrictionReviewsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    reviews?: ReviewUpdateManyWithoutAuthorNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutDishRestrictionReviewsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type DishUpsertWithoutDishRestrictionReviewsInput = {
@@ -10276,12 +10377,30 @@ export namespace Prisma {
     hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type ReviewCreateManyBusinessInput = {
-    id?: number
-    authorID: number
-    title: string
-    content: string
-    numStars: number
+  export type UserUpsertWithoutDishRestrictionReviewsInput = {
+    update: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+    create: XOR<UserCreateWithoutDishRestrictionReviewsInput, UserUncheckedCreateWithoutDishRestrictionReviewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDishRestrictionReviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDishRestrictionReviewsInput, UserUncheckedUpdateWithoutDishRestrictionReviewsInput>
+  }
+
+  export type UserUpdateWithoutDishRestrictionReviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    reviews?: ReviewUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDishRestrictionReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    reviews?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type DishCreateManyBusinessInput = {
@@ -10297,27 +10416,12 @@ export namespace Prisma {
     hasShellfishFree: boolean
   }
 
-  export type ReviewUpdateWithoutBusinessInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    numStars?: IntFieldUpdateOperationsInput | number
-    author?: UserUpdateOneRequiredWithoutReviewsNestedInput
-  }
-
-  export type ReviewUncheckedUpdateWithoutBusinessInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    authorID?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    numStars?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ReviewUncheckedUpdateManyWithoutBusinessInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    authorID?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    numStars?: IntFieldUpdateOperationsInput | number
+  export type ReviewCreateManyBusinessInput = {
+    id?: number
+    authorID: number
+    title: string
+    content: string
+    numStars: number
   }
 
   export type DishUpdateWithoutBusinessInput = {
@@ -10360,6 +10464,35 @@ export namespace Prisma {
     hasShellfishFree?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type ReviewUpdateWithoutBusinessInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    numStars?: IntFieldUpdateOperationsInput | number
+    author?: UserUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutBusinessInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    authorID?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    numStars?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutBusinessInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    authorID?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    numStars?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DishRestrictionReviewCreateManyUserInput = {
+    id?: number
+    dishID: number
+    dishSatisfiesRestriction: boolean
+  }
+
   export type ReviewCreateManyAuthorInput = {
     id?: number
     businessID: number
@@ -10368,10 +10501,21 @@ export namespace Prisma {
     numStars: number
   }
 
-  export type DishRestrictionReviewCreateManyUserInput = {
-    id?: number
-    dishID: number
-    dishSatisfiesRestriction: boolean
+  export type DishRestrictionReviewUpdateWithoutUserInput = {
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+    dish?: DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DishRestrictionReviewUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dishID?: IntFieldUpdateOperationsInput | number
+    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ReviewUpdateWithoutAuthorInput = {
@@ -10395,23 +10539,6 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     numStars?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DishRestrictionReviewUpdateWithoutUserInput = {
-    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
-    dish?: DishUpdateOneRequiredWithoutDishRestrictionReviewsNestedInput
-  }
-
-  export type DishRestrictionReviewUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    dishID?: IntFieldUpdateOperationsInput | number
-    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type DishRestrictionReviewUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    dishID?: IntFieldUpdateOperationsInput | number
-    dishSatisfiesRestriction?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DishRestrictionReviewCreateManyDishInput = {

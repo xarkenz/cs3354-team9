@@ -32,14 +32,14 @@ app.get('/api/save-restaurants', async (req, res) => {
     for (const place of data.results) {
       try {
         const existing = await prisma.business.findUnique({
-          where: { placeId: place.place_id }
+          where: { id: place.id }
         });
 
         if (!existing) {
           const newBiz = await prisma.business.create({
             data: {
               name: place.name,
-              placeId: place.place_id,
+              id: place.id,
               lat: place.geometry.location.lat,
               lng: place.geometry.location.lng
             }
@@ -58,24 +58,27 @@ app.get('/api/save-restaurants', async (req, res) => {
   }
 });
 
-// GET: Return all restaurants in the DB with name, lat, lng, and placeId
+// GET: Return all restaurants in the DB with name, lat, lng
 app.get('/api/restaurant-locations', async (req, res) => {
   try {
     const restaurants = await prisma.business.findMany({
       select: {
+        id: true,
         name: true,
         lat: true,
         lng: true,
-        placeId: true,
-      },
+        priceRange: true
+      }
     });
 
     res.status(200).json({ success: true, data: restaurants });
   } catch (error) {
-    console.error("Error fetching restaurant locations:", error);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    // 🔧 ADD THIS FOR DEBUGGING
+    console.error('Error fetching restaurants:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 
 
