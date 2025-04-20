@@ -1,69 +1,59 @@
 <!--
   Created by Syed Hasan for UC11: Remove Inappropriate and/or Fake Restaurants
-  — now with batch‑select checkboxes, Tailwind-based spacing, and a clearer confirm step.
+  Now: per-item Remove button that first opens a proper “Are you sure?” modal,
+  with clearly spaced “Yes, Remove” and “Cancel” buttons.
 -->
 
 <template>
-  <div class="p-8 max-w-3xl mx-auto">
+  <div class="p-8 max-w-2xl mx-auto">
     <h1 class="text-3xl font-bold mb-6">Flagged Restaurants</h1>
 
     <!-- empty state -->
     <div v-if="!restaurants.length" class="text-gray-500">
-      No flagged restaurants to review.
+      No flagged restaurants.
     </div>
 
-    <!-- list with checkboxes -->
+    <!-- list -->
     <ul v-else class="space-y-4">
       <li
         v-for="r in restaurants"
         :key="r.id"
-        class="flex items-start bg-white border rounded-lg p-4 shadow-sm"
+        class="flex justify-between items-start bg-white border rounded-lg p-4 shadow"
       >
-        <input
-          type="checkbox"
-          v-model="selectedIds"
-          :value="r.id"
-          class="mt-1 h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500"
-        />
-        <div class="ml-4 flex-1">
-          <p class="font-medium text-lg">{{ r.name }}</p>
-          <p class="text-sm text-gray-600 mt-1">Reason: {{ r.flagReason }}</p>
+        <div>
+          <p class="font-semibold text-lg">{{ r.name }}</p>
+          <p class="text-gray-600 mt-1">Flagged for {{ r.flagReason }}.</p>
         </div>
+        <button
+          @click="promptRemoval(r)"
+          class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+        >
+          Remove
+        </button>
       </li>
     </ul>
 
-    <!-- remove button -->
-    <div class="mt-6">
-      <button
-        @click="openModal"
-        :disabled="!selectedIds.length"
-        class="bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white font-semibold py-2 px-6 rounded-lg transition"
-      >
-        Remove Selected ({{ selectedIds.length }})
-      </button>
-    </div>
-
-    <!-- confirmation Modal -->
+    <!-- confirmation modal -->
     <div
       v-if="showModal"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40"
+      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center"
     >
-      <div class="bg-white rounded-xl p-6 w-96 space-y-4 shadow-lg">
+      <div class="bg-white rounded-lg p-6 w-80 space-y-4">
         <h2 class="text-xl font-semibold">Confirm Removal</h2>
-        <p>Are you sure you want to permanently remove these restaurant(s)?</p>
-        <ul class="list-disc list-inside text-gray-700 space-y-1">
-          <li v-for="r in toRemove" :key="r.id">{{ r.name }}</li>
-        </ul>
+        <p>
+          Are you sure you want to permanently remove
+          <strong>"{{ selected.name }}"</strong>?
+        </p>
         <div class="mt-4 flex justify-end space-x-4">
           <button
-            @click="confirmRemoval"
-            class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+            @click="removeRestaurant"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
           >
             Yes, Remove
           </button>
           <button
             @click="cancelRemoval"
-            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded"
           >
             Cancel
           </button>
@@ -71,13 +61,9 @@
       </div>
     </div>
 
-    <!-- feedback messages -->
-    <div v-if="successMessage" class="mt-6 text-green-600 font-medium">
-      {{ successMessage }}
-    </div>
-    <div v-if="errorMessage" class="mt-6 text-red-600 font-medium">
-      {{ errorMessage }}
-    </div>
+    <!-- feedback -->
+    <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
+    <p v-if="errorMsg" class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -86,63 +72,45 @@ export default {
   name: 'RemoveRestaurant',
   data() {
     return {
-      restaurants: [],     //all flagged restaurants
-      selectedIds: [],     //ids currently checked
-      showModal: false,    //controls the confirm dialog
-      successMessage: '',  //"removed" feedback
-      errorMessage: ''     //error feedback
+      restaurants: [],
+      showModal: false,
+      selected: null,
+      successMsg: '',
+      errorMsg: ''
     };
   },
-  computed: {
-    //pull the actual restaurant objects for display in the modal
-    toRemove() {
-      return this.restaurants.filter(r => this.selectedIds.includes(r.id));
-    }
-  },
   methods: {
-    //load flagged restaurants from backend
     async fetchFlagged() {
       try {
         const res = await fetch('/api/admin/flagged-restaurants');
         this.restaurants = await res.json();
       } catch {
-        this.errorMessage = 'Failed to load flagged restaurants.';
+        this.errorMsg = 'Could not load flagged restaurants.';
       }
     },
-    //open the modal
-    openModal() {
-      this.successMessage = '';
-      this.errorMessage = '';
+    promptRemoval(r) {
+      this.selected = r;
+      this.successMsg = '';
+      this.errorMsg = '';
       this.showModal = true;
     },
-    // cancel out of the modal
     cancelRemoval() {
       this.showModal = false;
+      this.selected = null;
     },
-    //call delete for each selected ID, update list, show feedback
-    async confirmRemoval() {
+    async removeRestaurant() {
       this.showModal = false;
-      const removedNames = [];
-
-      for (const id of this.selectedIds) {
-        try {
-          const res = await fetch(`/api/admin/restaurants/${id}`, { method: 'DELETE' });
-          if (!res.ok) throw new Error();
-          const idx = this.restaurants.findIndex(r => r.id === id);
-          if (idx !== -1) {
-            removedNames.push(this.restaurants[idx].name);
-            this.restaurants.splice(idx, 1);
-          }
-        } catch {
-          this.errorMessage = 'Some removals failed. Please try again.';
-        }
+      try {
+        const res = await fetch(`/api/admin/restaurants/${this.selected.id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error();
+        // remove locally
+        this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
+        this.successMsg = `"${this.selected.name}" has been removed successfully.`;
+      } catch {
+        this.errorMsg = 'Failed to remove. Try again.';
+      } finally {
+        this.selected = null;
       }
-
-      if (removedNames.length) {
-        this.successMessage = `Removed: ${removedNames.join(', ')}`;
-      }
-      //clear selection
-      this.selectedIds = [];
     }
   },
   mounted() {
@@ -152,5 +120,5 @@ export default {
 </script>
 
 <style scoped>
-/* nothing extra needed—Tailwind classes handle spacing & styling */
+/* Tailwind classes handle spacing—no extra CSS needed here */
 </style>
