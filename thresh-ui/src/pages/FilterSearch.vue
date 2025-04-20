@@ -126,6 +126,11 @@
                 class="view-allergens-button">
                 View Dishes & Allergens
               </button>
+              <button 
+                @click="rateRestaurant(restaurant)" 
+                class="rate-restaurant-button">
+                Rate Restaurant
+              </button>
             </div>
           </div>
         </div>
@@ -293,6 +298,11 @@ export default {
       const encodedName = encodeURIComponent(restaurant.name);
       //window.location.hash = `/view-allergens/${encodedName}`;
       window.location.hash = `/view-allergens`; 
+    },
+    rateRestaurant(restaurant) {
+      const encodedName = encodeURIComponent(restaurant.name);
+      //window.location.hash = `/rate-restaurant/${encodedName}`;
+      window.location.hash = `/rate-restaurant`; 
     }
   }
 };
@@ -483,13 +493,23 @@ export default {
   text-align: center;
 }
 
-.view-allergens-button {
+.rate-restaurant-button {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.rate-restaurant-button:hover {
+  background-color: #4338ca;
+}
+
+.view-allergens-button, .rate-restaurant-button  {
   width: 100%;
   padding: 10px 15px;
   background-color: #914F3B;
   color: white;
   border: none;
   border-radius: 6px;
+  margin-bottom: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
