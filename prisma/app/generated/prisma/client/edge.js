@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\toast\\Desktop\\projects\\Software Engineering\\cs3354-team9\\prisma\\app\\generated\\prisma\\client",
+      "value": "/Users/neelsuresh/Documents/CS3354/cs3354-team9/prisma/app/generated/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -159,17 +159,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\toast\\Desktop\\projects\\Software Engineering\\cs3354-team9\\prisma\\schema.prisma",
+    "sourceFilePath": "/Users/neelsuresh/Documents/CS3354/cs3354-team9/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../..",
   "clientVersion": "6.6.0",
@@ -178,7 +177,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -187,8 +186,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"app/generated/prisma/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Business {\n  id      Int      @id @default(autoincrement())\n  name    String\n  reviews Review[]\n  dishes  Dish[]\n  //address String //I'm not sure the best way to store locations right now\n}\n\nmodel User {\n  id                     Int                     @id @default(autoincrement())\n  email                  String                  @unique\n  username               String\n  password               String\n  reviews                Review[]\n  dishRestrictionReviews DishRestrictionReview[]\n}\n\nmodel Review {\n  id         Int      @id @default(autoincrement())\n  authorID   Int\n  author     User     @relation(fields: [authorID], references: [id])\n  businessID Int\n  business   Business @relation(fields: [businessID], references: [id])\n  title      String\n  content    String\n  numStars   Int\n}\n\nmodel DietaryRestriction {\n  id   Int    @id @default(autoincrement())\n  name String @unique\n}\n\nmodel Dish {\n  id                     Int                     @id @default(autoincrement())\n  name                   String\n  businessID             Int\n  business               Business                @relation(fields: [businessID], references: [id])\n  dishRestrictionReviews DishRestrictionReview[]\n}\n\nmodel DishRestrictionReview {\n  id                       Int     @id @default(autoincrement())\n  userID                   Int\n  user                     User    @relation(fields: [userID], references: [id])\n  dishID                   Int\n  dish                     Dish    @relation(fields: [dishID], references: [id])\n  dishSatisfiesRestriction Boolean\n\n  @@unique([userID, dishID]) // each user can only review each dish once (i.e. edit review rather than making new one)\n}\n",
-  "inlineSchemaHash": "215fa827adc7df8a6a904517734e11141906a77292feecde81848b64819c7b3b",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"app/generated/prisma/client\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Business {\n  id      Int      @id @default(autoincrement())\n  name    String\n  reviews Review[]\n  dishes  Dish[]\n  //address String //I'm not sure the best way to store locations right now\n}\n\nmodel User {\n  id                     Int                     @id @default(autoincrement())\n  email                  String                  @unique\n  username               String\n  password               String //This will store the hashed password\n  reviews                Review[]\n  dishRestrictionReviews DishRestrictionReview[]\n}\n\nmodel Review {\n  id         Int      @id @default(autoincrement())\n  authorID   Int\n  author     User     @relation(fields: [authorID], references: [id])\n  businessID Int\n  business   Business @relation(fields: [businessID], references: [id])\n  title      String\n  content    String\n  numStars   Int\n}\n\nmodel DietaryRestriction {\n  id   Int    @id @default(autoincrement())\n  name String @unique\n}\n\nmodel Dish {\n  id                     Int                     @id @default(autoincrement())\n  name                   String\n  businessID             Int\n  business               Business                @relation(fields: [businessID], references: [id])\n  dishRestrictionReviews DishRestrictionReview[]\n}\n\nmodel DishRestrictionReview {\n  id                       Int     @id @default(autoincrement())\n  userID                   Int\n  user                     User    @relation(fields: [userID], references: [id])\n  dishID                   Int\n  dish                     Dish    @relation(fields: [dishID], references: [id])\n  dishSatisfiesRestriction Boolean\n\n  @@unique([userID, dishID]) // each user can only review each dish once (i.e. edit review rather than making new one)\n}\n",
+  "inlineSchemaHash": "7efa1232d8738a79323d111ec35bc367989ec51674a91b0927a57c4426bfaed7",
   "copyEngine": true
 }
 config.dirname = '/'
