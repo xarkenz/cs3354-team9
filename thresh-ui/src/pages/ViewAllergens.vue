@@ -26,9 +26,9 @@ const dishes = ref([
     name: "Red Ice, Original Flavors",
     allergens: {
       milk: true,
-      soy: false,
+      soy: "unidentified",
       egg: false,
-      wheat: false,
+      wheat: "unidentified",
       peanuts: false,
       treeNuts: false,
       fish: false,
@@ -182,7 +182,14 @@ const allergenMap = {
                         class="px-4 py-2 text-center border border-[#914F3B]"
                         :class="{ 'cursor-pointer': editingDishes[dish.id] }"
                         @click="toggleAllergen(dish.id, Object.keys(allergenMap).find(key => allergenMap[key] === header))">
-                      {{ dish.allergens[Object.keys(allergenMap).find(key => allergenMap[key] === header)] ? '✔️' : '' }}
+                        {{
+                        dish.allergens[Object.keys(allergenMap).find(key => allergenMap[key] === header)] === true
+                        ? '✔️'
+                      : dish.allergens[Object.keys(allergenMap).find(key => allergenMap[key] === header)] === 'unidentified'
+                        ? ' '
+                      : 'X'
+  }}
+                      
                     </td>
                   </tr>
                 </tbody>
