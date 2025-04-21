@@ -9,6 +9,7 @@
         <li><a href="#/sign-in">Sign in</a></li>
         <li><a href="#/rate-restaurant">Rate Restaurant</a></li>
         <li><a href="#/remove-restaurant">Remove a restaurant</a></li>
+        <li><a href="#/report-incorrect-allergy">Report Incorrect Allergy</a></li>
         <li><a href="#/filter-search">Filter search</a></li>
         <li><a href="#/view-allergens">View allergens</a></li>
         <li><a href="#/delete-account">Delete account</a></li>
