@@ -1,3 +1,7 @@
+<!-- 
+ Author: Kutsal Aksu
+ UC09: Save Favorite Restaurant
+ -->
 <template>
   <div class="save-favorite-page">
     <h2>Restaurants</h2>
@@ -16,11 +20,6 @@
         <option v-for="cuisine in availableCuisines" :key="cuisine" :value="cuisine">
           {{ cuisine }}
         </option>
-      </select>
-
-      <select v-model="sortBy" class="sort-select">
-        <option value="name">Sort by Name</option>
-        <option value="cuisine">Sort by Cuisine</option>
       </select>
     </div>
 
@@ -90,7 +89,6 @@ export default {
       // New data properties for use cases
       searchQuery: '',
       selectedCuisine: 'all',
-      sortBy: 'name',
       showOnlyFavorites: false,
       errorMessage: '',
       successMessage: ''
@@ -115,13 +113,6 @@ export default {
         result = result.filter(restaurant => 
           restaurant.cuisine.toLowerCase() === this.selectedCuisine.toLowerCase()
         );
-      }
-      
-      // Sort restaurants
-      if (this.sortBy === 'name') {
-        result.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (this.sortBy === 'cuisine') {
-        result.sort((a, b) => a.cuisine.localeCompare(b.cuisine));
       }
       
       return result;
@@ -240,7 +231,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.search-input, .cuisine-select, .sort-select {
+.search-input, .cuisine-select {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
