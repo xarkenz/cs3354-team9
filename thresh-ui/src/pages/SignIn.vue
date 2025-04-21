@@ -65,22 +65,24 @@ export default {
       };
       //Send the request
       try{
-        let response = await fetch("http://localhost:3000/api/login", requestOptions);
+        let response = await fetch("http://localhost:3000/api/login", requestOptions).then(response => response.json());
+        console.log(response);
+        if (!response || response.error) {
+          throw response?.error
+        }
         //Attempt to store the returned session cookie
-        let body = await response.json();
-        console.log(body);
-        this.$cookies.set("session", body.sessionToken);
+        this.$cookies.set("session", response.sessionToken);
         console.log("Successful Login!");
-        console.log(`returned sessionToken = ${body.sessionToken}`);
+        console.log(`returned sessionToken = ${response.sessionToken}`);
         console.log(`local session cookie =${this.$cookies.get("session")}`);
-        this.sessionToken = body.sessionToken;
+        this.sessionToken = response.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
         location.hash = "/filter-search"
       }
       catch (error){
         console.error(error);
-        alert("Login failed.");
+        alert(error || "Login failed.");
       }
     }
   }

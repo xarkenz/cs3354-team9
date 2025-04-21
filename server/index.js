@@ -95,22 +95,20 @@ app.post("/api/login", async (req, res) => {
   const hash = shaObj.getHash("HEX");
   const prismaResponse = await prisma.user.findFirst({
     where: {
-      OR: [{email: usernameEmail, password: hash}, {username: usernameEmail, password: hash}]
+      OR: [{email: usernameEmail}, {username: usernameEmail}]
     },
   });
   if(!prismaResponse){
-    return res.status(401).send('Login Failed! User not found.');
+    return res.status(401).json({ error: 'Login Failed! User not found.' });
   }
-  if((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)){
+  if(((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)) && prismaResponse.password === hash){
     const sessionToken = uuid();
     sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
     res.set('Set-Cookie', `session=${sessionToken}`);
-    res.write(JSON.stringify({"sessionToken": sessionToken}));
-    res.status(200);
-    res.send();
+    res.json({ sessionToken });
   }
   else{
-    return res.status(401).send('Login Failed! Incorrect username/email!');
+    return res.status(401).json({ error: 'Login Failed! Incorrect login or password!' });
   }
 });
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
@@ -129,13 +127,22 @@ app.get('/api/whoami', (req, res) => {
 });
 
 // Created by Sean Clarke on April 20th, 2025
-app.delete('/api/account', (req, res) => {
+app.delete('/api/account', async (req, res) => {
   // Passing the request to this function extracts the session token cookie from the headers of the request
   const sessionToken = getSessionToken(req);
-  if (sessionToken) {
-    let user = sessions[sessionToken];
-    console.log("Responding to DELETE /api/account with " + JSON.stringify(user));
-    res.json({ user });
+  let session;
+  if (sessionToken && (session = sessions[sessionToken])) {
+    const deletedUser = await prisma.user.delete({
+      where: {
+        id: session.userId,
+        email: session.email,
+        username: session.username,
+      }
+    });
+    console.log("Deleted user: " + JSON.stringify(deletedUser));
+    // Invalidate the session
+    delete sessions[sessionToken];
+    res.status(200).json({});
   }
   else {
     return res.status(400).json({ error: "Not logged in!" });
