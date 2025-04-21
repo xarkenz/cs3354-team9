@@ -3,7 +3,6 @@ Created by Sarah Jacob for UC12: Scroll and Zoom Map View
 This page allows the user to scroll and zoom on the map. The map is implemented using the Google Maps JavaScript API. The markers are custom based on the list of restaurants in the database. Clicking on the marker opens a panel on the left side displaying information about the restuarant, including a list of allergens and reviews.
 -->
 
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import { GoogleMap, Marker } from 'vue3-google-map';
@@ -24,8 +23,23 @@ const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const center = ref({ lat: 32.9599, lng: -96.7718 }); // Richardson
 const places = ref([]);
 const selectedPlace = ref(null);
-const mapRef = ref(null); // Will hold the raw Google Map instance
-const mapComponentRef = ref(null); // Optional, in case you need the Vue component
+const mapRef = ref(null);
+const mapComponentRef = ref(null);
+
+const iconMap = {
+  Vegetarian: veggiePinUrl,
+  Vegan: veganPinUrl,
+  Halal: halalPinUrl,
+  Dairy: dairyPinUrl,
+  Egg: eggPinUrl,
+  'Lactose-free': lactosePinUrl,
+  Nuts: nutsPinUrl,
+  Pescatarian: pescatarianPinUrl,
+  Shellfish: shellfishPinUrl,
+  Soy: soyPinUrl,
+  Wheat: wheatPinUrl,
+};
+
 const mapOptions = {
   styles: [
     { featureType: "poi", elementType: "labels.icon", stylers: [{ visibility: "off" }] },
@@ -54,7 +68,7 @@ async function fetchRestaurants() {
 
 function handleMapLoad(map) {
   console.log("Map loaded:", map);
-  mapRef.value = map; // Save raw Google Maps instance
+  mapRef.value = map;
 }
 
 onMounted(fetchRestaurants);
@@ -91,7 +105,7 @@ function handleMarkerClick(place) {
             position: { lat: place.lat, lng: place.lng },
             title: place.name,
             icon: {
-              url: place.icon || veggiePinUrl,
+              url: iconMap[place.icon] || veganPinUrl,
               scaledSize: { width: 40, height: 40 }
             }
           }"

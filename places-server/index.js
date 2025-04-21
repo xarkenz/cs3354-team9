@@ -68,7 +68,21 @@ app.get('/api/restaurant-locations', async (req, res) => {
         lat: true,
         lng: true,
         priceRange: true,
-        icon: true
+        imageUrl: true,
+        icon: true,
+        reviews: {
+          select: {
+            id: true,
+            title: true,
+            content: true,
+            numStars: true,
+            author: {
+              select: {
+                username: true
+              }
+            }
+          }
+        }
       }
     });
 
