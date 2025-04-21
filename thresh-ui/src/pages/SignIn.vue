@@ -1,7 +1,6 @@
 <!--Created by Isaac Philo for UC16: Log into account-->
 <!-- This page allows any user to log into their account, given either their username or email and their password -->
 <!-- When the user clicks sign -->
-import { useNavigate } from 'react-router-dom';
 
 <template>
 <body>
@@ -29,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 // Author: Isaac Philo
 // This code is for UC16: Log into account.
 // It allows a user to log into their account with an email or username paired with a password.
+
 export default {
   name: 'SignIn',
   data() {
@@ -67,7 +67,7 @@ export default {
       try{
         let response = await fetch("http://localhost:3000/api/login", requestOptions);
         //Attempt to store the returned session cookie
-        let body = JSON.parse(await response.text());
+        let body = await response.json();
         console.log(body);
         this.$cookies.set("session", body.sessionToken);
         console.log("Successful Login!");
@@ -76,8 +76,7 @@ export default {
         this.sessionToken = body.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
-        navigate('/filter-search');
-        
+        location.hash = "/filter-search"
       }
       catch (error){
         console.log(error);
