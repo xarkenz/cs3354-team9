@@ -105,9 +105,13 @@ app.post("/api/login", async (req, res) => {
     const sessionToken = uuid();
     sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
     res.set('Set-Cookie', `session=${sessionToken}`);
-    res.write(JSON.stringify({"sessionToken": sessionToken}));
-    res.status(200);
-    res.send();
+    res.status(200).json({
+      sessionToken: sessionToken,
+      user: {
+        id: prismaResponse.id,
+        username: prismaResponse.username
+      }
+    });    
   }
   else{
     return res.status(401).send('Login Failed! Incorrect username/email!');

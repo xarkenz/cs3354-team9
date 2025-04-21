@@ -70,6 +70,11 @@ export default {
         let body = JSON.parse(await response.text());
         console.log(body);
         this.$cookies.set("session", body.sessionToken);
+
+        // Added these two lines to store the username and userID to the local storage.
+        localStorage.setItem('userID', body.user.id);
+        localStorage.setItem('username', body.user.username);
+
         console.log("Successful Login!");
         console.log(`returned sessionToken = ${body.sessionToken}`);
         console.log(`local session cookie =${this.$cookies.get("session")}`);

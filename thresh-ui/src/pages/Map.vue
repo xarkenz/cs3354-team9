@@ -106,7 +106,7 @@ function handleMarkerClick(place) {
             title: place.name,
             icon: {
               url: iconMap[place.icon] || veganPinUrl,
-              scaledSize: { width: 40, height: 40 }
+              scaledSize: { width: 45, height: 45 }
             }
           }"
           @click="() => handleMarkerClick(place)"
