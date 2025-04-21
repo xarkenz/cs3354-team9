@@ -80,12 +80,13 @@ export default {
     };
   },
   methods: {
-    //FOR DEMO USES ONLY: always load mock data
-    async fetchFlagged() {
+    // DEMO ONLY: always load mock data
+    fetchFlagged() {
       this.restaurants = [
         { id: 1, name: 'Fake Restaurant 1',    flagReason: 'inappropriate content' },
         { id: 2, name: 'Inappropriate Eatery', flagReason: 'fake reviews'         }
       ];
+      this.errorMsg = '';
     },
 
     promptRemoval(r) {
@@ -100,18 +101,12 @@ export default {
       this.selected = null;
     },
 
-    async removeRestaurant() {
+    removeRestaurant() {
       this.showModal = false;
-      try {
-        const res = await fetch(`/api/admin/restaurants/${this.selected.id}`, { method: 'DELETE' });
-        if (!res.ok) throw new Error();
-        this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
-        this.successMsg = `"${this.selected.name}" has been removed successfully.`;
-      } catch {
-        this.errorMsg = 'Failed to remove. Try again.';
-      } finally {
-        this.selected = null;
-      }
+      // demo: just remove it locally
+      this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
+      this.successMsg = `"${this.selected.name}" has been removed successfully.`;
+      this.selected = null;
     }
   },
   mounted() {
@@ -119,6 +114,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 /* Tailwind handles styling */
