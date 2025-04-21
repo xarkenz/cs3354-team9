@@ -64,6 +64,10 @@ export default {
         alert("Please enter a username.");
         return;
       }
+      if(this.password.length === 0 && this.confirmationPassword.length === 0){
+        alert("Please enter a password and a confirmation password.");
+        return;
+      }
       if(this.password.length === 0){
         alert("Please enter a password.");
         return;
