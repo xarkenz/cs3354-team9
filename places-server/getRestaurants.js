@@ -22,7 +22,6 @@ app.get('/api/restaurant-locations', async (req, res) => {
         lng: true,
         imageUrl: true,
         priceRange: true,
-        icon: true
       }
     });
     res.json({ data: restaurants });
