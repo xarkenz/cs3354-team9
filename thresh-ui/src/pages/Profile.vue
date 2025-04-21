@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
       @click="goToFavorite"
       class="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
     >
-      Go to Favorite Page
-      navigate('/filter-search');
     </button>
   </div>
 </template>
