@@ -99,6 +99,7 @@ app.post("/api/login", async (req, res) => {
     },
   });
   if(!prismaResponse){
+    console.log('FindFirst: Prisma response null.')
     return res.status(401).send('Login Failed! User not found.');
   }
   if((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)){
@@ -110,6 +111,7 @@ app.post("/api/login", async (req, res) => {
     res.send();
   }
   else{
+    console.log('Generic error.')
     return res.status(401).send('Login Failed! Incorrect username/email!');
   }
 });

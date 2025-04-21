@@ -64,6 +64,10 @@ export default {
         alert("Please enter a username.");
         return;
       }
+      if(this.password.length === 0 && this.confirmationPassword.length === 0){
+        alert("Please enter a password and a confirmation password.");
+        return;
+      }
       if(this.password.length === 0){
         alert("Please enter a password.");
         return;
@@ -97,10 +101,15 @@ export default {
         //Send the request
         try{
           let response = await fetch("http://localhost:3000/api/signup", requestOptions);
-          let body = JSON.parse(await response.text());
+          let responseText = await response.text();
+          let body = JSON.parse(responseText);
           console.log(body);
           //The $cookies variable is a global cookies variable defined in main.js from the vue3-cookies import
           //Store the cookies
+          if(body.sessionToken === undefined){
+            alert("Error: " + JSON.stringify(responseText));
+            return;
+          }
           this.$cookies.set("session", body.sessionToken);
           console.log(`sessionToken = ${body.sessionToken}`);
           console.log(`session=${this.$cookies.get("session")}`);
