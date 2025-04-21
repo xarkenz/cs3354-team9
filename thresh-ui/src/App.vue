@@ -14,12 +14,14 @@ import BanUser from './pages/BanUser.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
 import Profile from './pages/Profile.vue'
+import ReportIncorrectAllergy from './pages/ReportIncorrectAllergy.vue'
 
 const routes = {
   '/': Home,
   '/create-account': AccountCreation,
   '/sign-in': SignIn,
   '/remove-restaurant': RemoveRestaurant,
+  '/report-incorrect-allergy': ReportIncorrectAllergy,
   '/filter-search': FilterSearch,
   '/view-allergens': ViewAllergens,
   '/rate-restaurant': RateRestaurant,
