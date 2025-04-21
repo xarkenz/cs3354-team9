@@ -1,6 +1,6 @@
 <!--
   Created by Syed Hasan for UC11: Report Incorrect Allergy Information
-  UC11: The user flags a menu item whose allergen details are wrong so it can be reviewed 
+  UC11: The user flags a menu item whose allergen details are wrong so it can be reviewed.
 -->
 
 <template>
@@ -41,23 +41,27 @@ export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],  //menu items loaded from backend
-      message: '',    //user feedback
-      success: false  //whether last report succeeded
+      menuItems: [],  // menu items loaded from backend or mock
+      message: '',    // user feedback
+      success: false  // whether last report succeeded
     };
   },
   methods: {
-    //load all menu items
+    // Try real fetch, fallback to mock so you can demo
     async fetchMenu() {
       try {
         const res = await fetch('/api/menu-items');
+        if (!res.ok) throw new Error();
         this.menuItems = await res.json();
       } catch {
-        this.message = 'Could not load menu items.';
-        this.success = false;
+        // MOCK DATA
+        this.menuItems = [
+          { id: 1, name: 'Chocolate Cake',         allergens: ['Milk','Egg','Wheat'] },
+          { id: 2, name: 'Peanut Butter Sandwich', allergens: ['Peanuts','Gluten'] }
+        ];
       }
     },
-    //send a report for incorrect allergy info
+
     async reportItem(id) {
       try {
         const res = await fetch(`/api/reports/allergy/${id}`, { method: 'POST' });
@@ -77,5 +81,5 @@ export default {
 </script>
 
 <style scoped>
-/* additional custom styles can go here */
+/* Tailwind covers spacing and coloring. */
 </style>

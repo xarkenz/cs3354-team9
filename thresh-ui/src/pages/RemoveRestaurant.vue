@@ -36,7 +36,7 @@
     <!-- confirmation modal -->
     <div
       v-if="showModal"
-      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+      class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
     >
       <div class="bg-white rounded-lg p-6 w-80 space-y-4">
         <h2 class="text-xl font-semibold">Confirm Removal</h2>
@@ -63,7 +63,7 @@
 
     <!-- feedback -->
     <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
-    <p v-if="errorMsg" class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
+    <p v-if="errorMsg"   class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -80,30 +80,38 @@ export default {
     };
   },
   methods: {
+    // Try to load flagged from backend; if that fails, use mock data so you can demo
     async fetchFlagged() {
       try {
         const res = await fetch('/api/admin/flagged-restaurants');
+        if (!res.ok) throw new Error();
         this.restaurants = await res.json();
       } catch {
-        this.errorMsg = 'Could not load flagged restaurants.';
+        // MOCK DATA for demo purposes
+        this.restaurants = [
+          { id: 1, name: 'Fake Restaurant 1',       flagReason: 'inappropriate content' },
+          { id: 2, name: 'Inappropriate Eatery',    flagReason: 'fake reviews'         }
+        ];
       }
     },
+
     promptRemoval(r) {
       this.selected = r;
       this.successMsg = '';
       this.errorMsg = '';
       this.showModal = true;
     },
+
     cancelRemoval() {
       this.showModal = false;
       this.selected = null;
     },
+
     async removeRestaurant() {
       this.showModal = false;
       try {
         const res = await fetch(`/api/admin/restaurants/${this.selected.id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error();
-        // remove locally
         this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
         this.successMsg = `"${this.selected.name}" has been removed successfully.`;
       } catch {
@@ -120,5 +128,5 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind classes handle spacing—no extra CSS needed here */
-</style>
+/* Tailwind
+
