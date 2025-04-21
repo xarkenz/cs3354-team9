@@ -118,19 +118,31 @@ app.post("/api/login", async (req, res) => {
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
-  const sessionToken = getSessionToken(req);//Passing the request to this function extracts the session token cookie from the headers of the request
-  console.log("sessionToken = " + sessionToken);
-  console.log("sessions = " + JSON.stringify(sessions));
-  console.log("sessions[sessionToken] = " + sessions[sessionToken]);
-  if(sessionToken !== null){
+  // Passing the request to this function extracts the session token cookie from the headers of the request
+  const sessionToken = getSessionToken(req);
+  if (sessionToken) {
     let user = sessions[sessionToken];
-    console.log("About to respond with " + JSON.stringify(user));
-    res.send([user]);
+    console.log("Responding to GET /api/whoami with " + JSON.stringify(user));
+    res.json({ user });
   }
-  else{
-    return res.status(400).send([{"Error": "Not logged in!"}]);
+  else {
+    return res.status(400).json({ error: "Not logged in!" });
   }
 });
+
+// Created by Sean Clarke on April 20th, 2025
+app.delete('/api/account', (req, res) => {
+  // Passing the request to this function extracts the session token cookie from the headers of the request
+  const sessionToken = getSessionToken(req);
+  if (sessionToken) {
+    let user = sessions[sessionToken];
+    console.log("Responding to DELETE /api/account with " + JSON.stringify(user));
+    res.json({ user });
+  }
+  else {
+    return res.status(400).json({ error: "Not logged in!" });
+  }
+})
 
 app.get('/api/hello', (req, res) => {
   res.json('Hello World!')
