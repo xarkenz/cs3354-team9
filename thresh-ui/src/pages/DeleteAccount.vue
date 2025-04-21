@@ -29,6 +29,9 @@ Created by Sean Clarke for UC17: Delete Own Account
     </div>
     <div v-if="showFinishMessage" class="text-center">
       <p class="text-lg">Your account is being deleted. Thank you for using Thresh!</p>
+      <p class="text-lg">
+        <a href="#/" class="underline">Return to homepage</a>
+      </p>
     </div>
   </div>
 </template>

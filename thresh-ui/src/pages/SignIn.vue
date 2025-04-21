@@ -79,7 +79,7 @@ export default {
         location.hash = "/filter-search"
       }
       catch (error){
-        console.log(error);
+        console.error(error);
         alert("Login failed.");
       }
     }
