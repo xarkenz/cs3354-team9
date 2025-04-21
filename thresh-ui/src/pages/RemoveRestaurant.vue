@@ -80,19 +80,12 @@ export default {
     };
   },
   methods: {
-    // Try to load flagged from backend; if that fails, use mock data so you can demo
+    //FOR DEMO USES ONLY: always load mock data
     async fetchFlagged() {
-      try {
-        const res = await fetch('/api/admin/flagged-restaurants');
-        if (!res.ok) throw new Error();
-        this.restaurants = await res.json();
-      } catch {
-        // MOCK DATA for demo purposes
-        this.restaurants = [
-          { id: 1, name: 'Fake Restaurant 1',       flagReason: 'inappropriate content' },
-          { id: 2, name: 'Inappropriate Eatery',    flagReason: 'fake reviews'         }
-        ];
-      }
+      this.restaurants = [
+        { id: 1, name: 'Fake Restaurant 1',    flagReason: 'inappropriate content' },
+        { id: 2, name: 'Inappropriate Eatery', flagReason: 'fake reviews'         }
+      ];
     },
 
     promptRemoval(r) {
@@ -128,5 +121,5 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind
-
+/* Tailwind handles styling */
+</style>
