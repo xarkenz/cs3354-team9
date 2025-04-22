@@ -19,6 +19,8 @@ import veganIcon from '../assets/icons/Vegan-Icon.svg';
 import vegetarianIcon from '../assets/icons/Vegetarian-Icon.svg';
 import wheatIcon from '../assets/icons/Wheat-Icon.svg';
 
+import { HeartIcon as HeartOutlineIcon } from '@heroicons/vue/24/outline';
+
 
 const props = defineProps({
   place: {
@@ -113,12 +115,21 @@ function getAverageStars(reviews) {
       &times;
     </button>
 
-    <img
-      :src="imageSrc"
-      @error="handleImageError"
-      alt="Restaurant Image"
-      class="w-full h-48 object-cover rounded mb-2 mt-10"
-    />
+    <div class="relative w-full h-48 mt-10 mb-2">
+  <img
+    :src="imageSrc"
+    @error="handleImageError"
+    alt="Restaurant Image"
+    class="w-full h-full object-cover rounded"
+  />
+  <button
+    class="absolute top-2 right-2 bg-white bg-opacity-80 p-2 rounded-full shadow hover:bg-opacity-100 transition"
+    aria-label="Save to favorites"
+  >
+    <HeartOutlineIcon class="w-6 h-6 text-green-900" />
+  </button>
+</div>
+
 
     <!-- Restaurant Info -->
     <div class="px-4">
