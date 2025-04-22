@@ -94,6 +94,30 @@ app.get('/api/restaurant-locations', async (req, res) => {
   }
 });
 
+app.post('/api/reviews', async (req, res) => {
+  const { businessID, authorID, title, content, numStars } = req.body;
+
+  if (!businessID || !authorID || !title || !content || !numStars) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const newReview = await prisma.review.create({
+      data: {
+        businessID: parseInt(businessID),
+        authorID: parseInt(authorID),
+        title,
+        content,
+        numStars,
+      },
+    });
+
+    res.status(201).json({ success: true, data: newReview });
+  } catch (err) {
+    console.error('Failed to submit review:', err);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
 
 
 

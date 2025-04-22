@@ -1,63 +1,81 @@
-<!--
-Created by Sarah Jacob for UC08: Rate a Restaurant
-This page allows the user to view reviews (even if they are not logged into their account). If the user is logged into their account, they can add a review for the restaurant. This writes the review to the database and stores it corresponding to the restuarant and the user.
--->
-
 <template>
-  <div class="max-w-xl mx-auto my-8 p-6 rounded-xl shadow-lg bg-white border border-gray-200">
-    <h2 class="text-2xl font-bold mb-4">Rate this Restaurant</h2>
-
-    <!-- Title input -->
-    <div class="mb-4">
-      <label for="title" class="block mb-1 font-medium">Review Title:</label>
-      <input
-        id="title"
-        v-model="title"
-        class="w-full p-2 border rounded-lg"
-        placeholder="e.g. Amazing vegan options!"
-      />
-    </div>
-
-    <!-- Star rating -->
-    <div class="mb-4">
-      <label class="block mb-1 font-medium">Your Rating:</label>
-      <div class="flex items-center space-x-2">
-        <span
-          v-for="star in 5"
-          :key="star"
-          class="text-3xl cursor-pointer"
-          @click="rating = star"
-          :class="{'text-yellow-400': star <= rating, 'text-gray-300': star > rating}"
-        >★</span>
-      </div>
-    </div>
-
-    <!-- Review textarea -->
-    <div class="mb-4">
-      <label for="review" class="block mb-1 font-medium">Your Review:</label>
-      <textarea
-        id="review"
-        v-model="review"
-        class="w-full p-2 border rounded-lg"
-        rows="4"
-        placeholder="Share your thoughts about the restaurant..."
-      ></textarea>
-    </div>
-
-    <!-- Submit button -->
-    <div v-if="!submitted">
+  <!-- Dark overlay -->
+  <div
+    class="fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-center items-center"
+    @click.self="$emit('close')"
+  >
+    <!-- Modal container -->
+    <div class="bg-white w-[95%] max-w-xl rounded-xl shadow-lg p-6 relative">
+      <!-- Close button -->
       <button
-        @click="submitReview"
-        :disabled="rating === 0 || title.trim() === '' || review.trim() === ''"
-        class="bg-green-600 text-white px-6 py-2 rounded-lg disabled:bg-gray-300"
+        class="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl font-bold"
+        @click="$emit('close')"
+        aria-label="Close"
       >
-        Submit Review
+        &times;
       </button>
-    </div>
 
-    <!-- Success message -->
-    <div v-if="submitted" class="mt-4 text-green-700 font-medium">
-      Thank you! Your review has been submitted.
+      <!-- Title -->
+      <h2 class="text-2xl font-bold mb-4 text-center text-green-900">Rate this Restaurant</h2>
+
+      <!-- Review Title input -->
+      <div class="mb-4">
+        <label for="title" class="block mb-1 font-medium">Review Title:</label>
+        <input
+          id="title"
+          v-model="title"
+          class="w-full p-2 border rounded-lg"
+          placeholder="e.g. Amazing vegan options!"
+        />
+      </div>
+
+      <!-- Star rating -->
+      <div class="mb-4">
+        <label class="block mb-1 font-medium">Your Rating:</label>
+        <div class="flex items-center space-x-2">
+          <span
+            v-for="star in 5"
+            :key="star"
+            class="text-3xl cursor-pointer"
+            @click="rating = star"
+            :class="{
+              'text-yellow-400': star <= rating,
+              'text-gray-300': star > rating
+            }"
+          >★</span>
+        </div>
+      </div>
+
+      <!-- Review textarea -->
+      <div class="mb-4">
+        <label for="review" class="block mb-1 font-medium">Your Review:</label>
+        <textarea
+          id="review"
+          v-model="review"
+          class="w-full p-2 border rounded-lg"
+          rows="4"
+          placeholder="Share your thoughts about the restaurant..."
+        ></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <div v-if="!submitted">
+        <button
+          @click="submitReview"
+          :disabled="rating === 0 || title.trim() === '' || review.trim() === ''"
+          class="bg-green-600 text-white px-6 py-2 rounded-lg w-full disabled:bg-gray-300"
+        >
+          Submit Review
+        </button>
+      </div>
+
+      <!-- Success Toast -->
+      <div
+        v-if="submitted"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50"
+      >
+        Thank you! Your review has been submitted!
+      </div>
     </div>
   </div>
 </template>
@@ -65,26 +83,32 @@ This page allows the user to view reviews (even if they are not logged into thei
 <script>
 export default {
   name: 'RateRestaurant',
+  props: {
+    place: {
+      type: Object,
+      required: true
+    }
+  },
+  emits: ['close', 'submitted'],
   data() {
     return {
       rating: 0,
       title: '',
       review: '',
       submitted: false,
-      businessID: null,
-      authorID: 1, // DUMMY USER
+      authorID: 1,
     };
   },
-  created() {
-  const hash = window.location.hash; // e.g., "#/rate-restaurant/3"
-  const segments = hash.split('/');
-  if (segments.length >= 3 && segments[1] === 'rate-restaurant') {
-    this.businessID = parseInt(segments[2]);
-  } else {
-    console.error('Invalid hash format. Could not extract businessID.');
-  }
-  this.authorID = 1; // Dummy user
-},
+  mounted() {
+    const userId = localStorage.getItem('userID');
+    if (!userId) {
+      alert('You must be logged in to rate a restaurant.');
+      this.$emit('close'); // Close just the modal
+      return;
+    }
+
+    this.authorID = parseInt(userId);
+  },
   methods: {
     async submitReview() {
       if (!this.rating || !this.review.trim() || !this.title.trim()) return;
@@ -92,11 +116,9 @@ export default {
       try {
         const response = await fetch('http://localhost:3000/api/reviews', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            businessID: this.businessID,
+            businessID: this.place.id,
             authorID: this.authorID,
             title: this.title.trim(),
             content: this.review.trim(),
@@ -110,6 +132,13 @@ export default {
         this.rating = 0;
         this.title = '';
         this.review = '';
+
+        // Longer timeout to show the toast before closing the modal
+        setTimeout(() => {
+          this.submitted = false;
+          this.$emit('close');     // Close the modal
+          this.$emit('submitted'); // (Optional) Let parent know a review was submitted
+        }, 4000);
       } catch (err) {
         console.error(err);
         alert('Failed to submit review.');
@@ -119,8 +148,11 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
-textarea:focus {
+textarea:focus,
+input:focus {
   outline: none;
   border-color: #4ade80; /* Tailwind green-400 */
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.3);

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
-// import { PencilSquare } from '@heroicons/vue/20/solid'
+import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/vue/24/solid';
+import RateRestaurant from './RateRestaurant.vue';
+import defaultImage from '../assets/default.jpg'; // your fallback image
 
 const props = defineProps({
   place: {
@@ -9,26 +11,37 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['close']);
+const showRatingModal = ref(false);
 
 const reviews = ref([]);
+const imageSrc = ref(props.place.imageUrl || defaultImage);
 
-// When the selected place changes, fetch reviews
-watch(() => props.place, async (newPlace) => {
+// Watch for changes to the place and its image
+watch(() => props.place, (newPlace) => {
+  imageSrc.value = newPlace?.imageUrl || defaultImage;
+
   if (newPlace && newPlace.id) {
-    try {
-      const res = await fetch(`http://localhost:3000/api/reviews?restaurantId=${newPlace.id}`);
-      const result = await res.json();
-      reviews.value = result.data || []; // fallback to empty array
-    } catch (err) {
-      console.error('Failed to load reviews:', err);
-      reviews.value = [];
-    }
+    fetchReviews(newPlace.id);
   } else {
     reviews.value = [];
   }
 });
 
-// Star Rating function (computes the average of all the reviews)
+async function fetchReviews(restaurantId) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/reviews?restaurantId=${restaurantId}`);
+    const result = await res.json();
+    reviews.value = result.data || [];
+  } catch (err) {
+    console.error('Failed to load reviews:', err);
+    reviews.value = [];
+  }
+}
+
+function handleImageError() {
+  imageSrc.value = defaultImage;
+}
+
 function getAverageStars(reviews) {
   if (!reviews || reviews.length === 0) return 0;
   const total = reviews.reduce((sum, r) => sum + r.numStars, 0);
@@ -48,8 +61,8 @@ function getAverageStars(reviews) {
     </button>
 
     <img
-      v-if="place.imageUrl"
-      :src="place.imageUrl"
+      :src="imageSrc"
+      @error="handleImageError"
       alt="Restaurant Image"
       class="w-full h-48 object-cover rounded mb-2 mt-10"
     />
@@ -83,21 +96,32 @@ function getAverageStars(reviews) {
         </p>
       </div>
 
-      <div class="flex grid-rows-2  gap-4">
+      <div class="flex flex-col gap-4 mt-4">
+        <!-- View Allergen List Button -->
         <a
-        :href="`/view-allergens/${place.id}`"
-        class="bg-amber-700 text-white px-3 py-2 mt-4 rounded"
-      >
-        View Allergen List
-      </a>
-
-      <a
-        :href="`#/rate-restaurant/${place.id}`"
-        class="bg-lime-600 text-green-950 px-3 py-2 mt-4 rounded"
-      >
-        Rate This Restaurant
+          :href="`/view-allergens/${place.id}`"
+          class="bg-amber-700 text-white px-3 py-2 rounded flex items-center gap-2"
+        >
+          <DocumentTextIcon class="w-5 h-5 text-white" />
+          View Allergen List
         </a>
+
+        <!-- Rate This Restaurant Button -->
+        <button
+          @click="showRatingModal = true"
+          class="bg-lime-600 text-green-950 px-3 py-2 rounded flex items-center gap-2"
+        >
+          <PencilSquareIcon class="w-5 h-5 text-green-950" />
+          Rate This Restaurant
+        </button>
       </div>
+
+      <!-- Modal for rating -->
+      <RateRestaurant
+        v-if="showRatingModal"
+        :place="place"
+        @close="showRatingModal = false"
+      />
 
       <!-- Reviews Section -->
       <div class="mt-6">
