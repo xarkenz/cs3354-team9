@@ -2,7 +2,23 @@
 import { ref, watch } from 'vue';
 import { DocumentTextIcon, PencilSquareIcon } from '@heroicons/vue/24/solid';
 import RateRestaurant from './RateRestaurant.vue';
-import defaultImage from '../assets/default.jpg'; // your fallback image
+import defaultImage from '../assets/default.jpg'; // Default Image
+import dairyIcon from '../assets/icons/Dairy-Icon.svg';
+import eggIcon from '../assets/icons/Egg-Icon.svg';
+import fishIcon from '../assets/icons/Fish-Icon.svg';
+import glutenFreeIcon from '../assets/icons/Gluten-free-Icon.svg';
+import halalIcon from '../assets/icons/Halal-Icon.svg';
+import kosherIcon from '../assets/icons/Kosher-Icon.svg';
+import lactoseFreeIcon from '../assets/icons/Lactose-free-Icon.svg';
+import nutIcon from '../assets/icons/Nut-Icon.svg';
+import pescatarianIcon from '../assets/icons/Pescatarian-Icon.svg';
+import sesameIcon from '../assets/icons/Sesame-Icon.svg';
+import shellfishIcon from '../assets/icons/Shellfish-Icon.svg';
+import soyIcon from '../assets/icons/Soy-Icon.svg';
+import veganIcon from '../assets/icons/Vegan-Icon.svg';
+import vegetarianIcon from '../assets/icons/Vegetarian-Icon.svg';
+import wheatIcon from '../assets/icons/Wheat-Icon.svg';
+
 
 const props = defineProps({
   place: {
@@ -15,6 +31,43 @@ const showRatingModal = ref(false);
 
 const reviews = ref([]);
 const imageSrc = ref(props.place.imageUrl || defaultImage);
+
+const iconMap = {
+  Vegan: veganIcon,
+  Vegetarian: vegetarianIcon,
+  Halal: halalIcon,
+  Kosher: kosherIcon,
+  'Gluten-free': glutenFreeIcon,
+  Dairy: dairyIcon,
+  Egg: eggIcon,
+  Fish: fishIcon,
+  'Lactose-free': lactoseFreeIcon,
+  Nut: nutIcon,
+  Pescatarian: pescatarianIcon,
+  Sesame: sesameIcon,
+  Shellfish: shellfishIcon,
+  Soy: soyIcon,
+  Wheat: wheatIcon,
+};
+
+const iconColorMap = {
+  Vegan: 'text-amber-800',
+  Vegetarian: 'text-lime-700',
+  Halal: 'text-green-950',
+  Kosher: 'text-amber-700',
+  'Gluten-free': 'text-yellow-600',
+  Dairy: 'text-slate-500',
+  Egg: 'text-amber-800',
+  Fish: 'text-lime-700',
+  'Lactose-free': 'text-red-950',
+  Nut: 'text-amber-700',
+  Pescatarian: 'text-yellow-600',
+  Sesame: 'text-green-950',
+  Shellfish: 'text-slate-500',
+  Soy: 'text-red-950',
+  Wheat: 'text-brown-700'
+};
+
 
 // Watch for changes to the place and its image
 watch(() => props.place, (newPlace) => {
@@ -96,11 +149,28 @@ function getAverageStars(reviews) {
         </p>
       </div>
 
+      <!-- Icon Tag (based on place.icon) -->
+      <div class="mt-3" v-if="place.icon && iconMap[place.icon]">
+        <div class="inline-flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1 bg-gray-50 shadow-sm w-fit">
+          <img
+            :src="iconMap[place.icon]"
+            alt="Dietary Icon"
+            class="w-6 h-6"
+          />
+          <span class="text-sm font-medium"
+            :class="iconColorMap[place.icon]"
+          >
+            {{ place.icon }}
+          </span>
+        </div>
+      </div>
+
+      
       <div class="flex flex-col gap-4 mt-4">
         <!-- View Allergen List Button -->
         <a
           :href="`/view-allergens/${place.id}`"
-          class="bg-amber-700 text-white px-3 py-2 rounded flex items-center gap-2"
+          class="bg-amber-800 text-white px-3 py-2 rounded flex items-center gap-2"
         >
           <DocumentTextIcon class="w-5 h-5 text-white" />
           View Allergen List
@@ -109,9 +179,9 @@ function getAverageStars(reviews) {
         <!-- Rate This Restaurant Button -->
         <button
           @click="showRatingModal = true"
-          class="bg-lime-600 text-green-950 px-3 py-2 rounded flex items-center gap-2"
+          class="bg-lime-700 text-white px-3 py-2 rounded flex items-center gap-2 hover:bg-green-950"
         >
-          <PencilSquareIcon class="w-5 h-5 text-green-950" />
+          <PencilSquareIcon class="w-5 h-5 text-white" />
           Rate This Restaurant
         </button>
       </div>
