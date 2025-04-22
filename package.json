@@ -20,6 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@heroicons/vue": "^2.2.0",
+    "@inotom/vue-curve-text": "^3.0.0",
     "axios": "^1.8.4",
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
