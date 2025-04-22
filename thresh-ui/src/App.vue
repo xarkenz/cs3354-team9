@@ -13,12 +13,14 @@ import BanUser from './pages/BanUser.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
 import Profile from './pages/Profile.vue'
+import ReportIncorrectAllergy from './pages/ReportIncorrectAllergy.vue'
 
 const routes = {
   '/': Home,
   '/create-account': AccountCreation,
   '/sign-in': SignIn,
   '/remove-restaurant': RemoveRestaurant,
+  '/report-incorrect-allergy': ReportIncorrectAllergy,
   '/filter-search': FilterSearch,
   '/view-allergens': ViewAllergens,
   '/delete-account': DeleteAccount,
@@ -54,7 +56,7 @@ const currentView = computed(() => {
 
 <template>
   <div>
-    <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300">
+    <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300 mb-6">
       <nav>
         <ul class="flex items-center gap-x-5 mx-5">
           <li><a href="#/" class="flex items-center gap-x-3 mr-auto"><img class="size-18" src="./assets/Thresh circular logo.png"><img src="./assets/THRESH textual logo.png"></a></li>

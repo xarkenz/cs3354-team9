@@ -26,6 +26,10 @@ export default defineConfig(({ mode }) => {
         // API calls made on the frontend port should be redirected to the backend port instead
         '/api': env.BACKEND_URL || `http://localhost:${env.BACKEND_PORT || 3000}`,
       },
+      watch: {
+        // Don't reload when the DB changes
+        ignored: ['**/ThreshDB.db'],
+      },
     },
   }
 })

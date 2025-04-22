@@ -1,7 +1,6 @@
 <!--Created by Isaac Philo for UC16: Log into account-->
 <!-- This page allows any user to log into their account, given either their username or email and their password -->
 <!-- When the user clicks sign -->
-import { useNavigate } from 'react-router-dom';
 
 <template>
 <body>
@@ -29,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 // Author: Isaac Philo
 // This code is for UC16: Log into account.
 // It allows a user to log into their account with an email or username paired with a password.
+
 export default {
   name: 'SignIn',
   data() {
@@ -65,28 +65,24 @@ export default {
       };
       //Send the request
       try{
-        let response = await fetch("http://localhost:3000/api/login", requestOptions);
+        let response = await fetch("http://localhost:3000/api/login", requestOptions).then(response => response.json());
+        console.log(response);
+        if (!response || response.error) {
+          throw response?.error
+        }
         //Attempt to store the returned session cookie
-        let body = JSON.parse(await response.text());
-        console.log(body);
-        this.$cookies.set("session", body.sessionToken);
-
-        // Added these two lines to store the username and userID to the local storage.
-        localStorage.setItem('userID', body.user.id);
-        localStorage.setItem('username', body.user.username);
-
+        this.$cookies.set("session", response.sessionToken);
         console.log("Successful Login!");
-        console.log(`returned sessionToken = ${body.sessionToken}`);
+        console.log(`returned sessionToken = ${response.sessionToken}`);
         console.log(`local session cookie =${this.$cookies.get("session")}`);
-        this.sessionToken = body.sessionToken;
+        this.sessionToken = response.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
-        navigate('/filter-search');
-        
+        location.hash = "/filter-search"
       }
       catch (error){
-        console.log(error);
-        alert("Login failed.");
+        console.error(error);
+        alert(error || "Login failed.");
       }
     }
   }

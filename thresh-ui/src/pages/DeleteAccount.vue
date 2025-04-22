@@ -28,12 +28,18 @@ Created by Sean Clarke for UC17: Delete Own Account
       </button>
     </div>
     <div v-if="showFinishMessage" class="text-center">
-      <p class="text-lg">Your account is being deleted. Thank you for using Thresh!</p>
+      <p class="text-lg">Your account has been deleted. Thank you for using Thresh!</p>
+      <p class="text-lg">
+        <a href="#/" class="underline">Return to homepage</a>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
+
 export default {
   name: 'DeleteAccount',
 
@@ -46,21 +52,41 @@ export default {
   },
 
   methods: {
-    requestAccountDeletion() {
+    async requestAccountDeletion() {
       if (!this.showConfirmMessage) {
         // First time: show confirmation message
         this.showConfirmMessage = true
       }
       else if (this.acknowledged) {
         // Second time: actually delete the account
-        this.deleteAccount()
-        this.showConfirmMessage = false
-        this.showFinishMessage = true
+        if (await this.deleteAccount()) {
+          this.showConfirmMessage = false
+          this.showFinishMessage = true
+        }
       }
     },
 
-    deleteAccount() {
-      console.log('Pretend an API request was made to delete the account')
+    async deleteAccount() {
+      const headers = new Headers()
+      headers.append("Content-Type", "application/json")
+      headers.append("mycookies", `session=${cookies.get("session")}`)
+
+      const requestOptions = {
+        method: "DELETE",
+        headers: headers,
+      }
+
+      let response = await fetch("http://localhost:3000/api/account", requestOptions).then(response => response.json())
+
+      if (!response || response.error) {
+        console.error(response)
+        alert("Failed to delete account: " + response?.error)
+        return false
+      }
+      else {
+        console.log(response)
+        return true
+      }
     }
   },
 }

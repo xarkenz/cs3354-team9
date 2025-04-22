@@ -64,6 +64,10 @@ export default {
         alert("Please enter a username.");
         return;
       }
+      if(this.password.length === 0 && this.confirmationPassword.length === 0){
+        alert("Please enter a password and a confirmation password.");
+        return;
+      }
       if(this.password.length === 0){
         alert("Please enter a password.");
         return;
@@ -96,17 +100,17 @@ export default {
         };
         //Send the request
         try{
-          let response = await fetch("http://localhost:3000/api/signup", requestOptions);
-          let body = JSON.parse(await response.text());
-          console.log(body);
+          let response = await fetch("http://localhost:3000/api/signup", requestOptions).then(response => response.json());
+          console.log(response);
           //The $cookies variable is a global cookies variable defined in main.js from the vue3-cookies import
           //Store the cookies
-          this.$cookies.set("session", body.sessionToken);
-          console.log(`sessionToken = ${body.sessionToken}`);
+          this.$cookies.set("session", response.sessionToken);
+          console.log(`sessionToken = ${response.sessionToken}`);
           console.log(`session=${this.$cookies.get("session")}`);
-          this.sessionToken = body.sessionToken;
+          this.sessionToken = response.sessionToken;
           console.log(`global variable this.sessionToken = ${this.sessionToken}`);
           alert("Account created!");
+          location.hash = "/filter-search"
         }
         catch (error){
           console.log(error);
