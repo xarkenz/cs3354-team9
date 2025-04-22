@@ -28,19 +28,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const isVisible = ref(true);
+const isVisible = ref(false);
 const isExiting = ref(false);
 
+// Always show animation on hard reload (or first load),
+// but NOT on client-side router navigation
 onMounted(() => {
-  setTimeout(() => {
-    isExiting.value = true;
+  const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+
+  const shouldShow =
+    navigationType === 'reload' || navigationType === 'navigate';
+
+  // Only show on a fresh page load or reload, not history navigation (like back/forward)
+  if (shouldShow) {
+    isVisible.value = true;
 
     setTimeout(() => {
-      isVisible.value = false;
-    }, 1000);
-  }, 4000);
+      isExiting.value = true;
+
+      setTimeout(() => {
+        isVisible.value = false;
+      }, 1000); // exit wipe animation duration
+    }, 3000); // how long to show animation before exit
+  }
 });
 </script>
+
+
 
 <style scoped>
 .wipe-in {
