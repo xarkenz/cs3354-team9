@@ -2,14 +2,14 @@
 
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div class="text-xl py-30 block mb-5 underline">Welcome, {{username}}!</div>
+    <div class="text-xl py-30 block mb-5">Welcome, <b>{{username}}</b>!</div>
     <div><img class="size-40" src = "./../assets/profile.png"></div>
-    <button
-      @click="goToFavorite"
+    <a
+      href="#/save-favorite-restaurant"
       class="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
     >
-      Favorites
-    </button>
+      Favorite Restaurants
+    </a>
     <a
       href="#/delete-account"
       class="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
