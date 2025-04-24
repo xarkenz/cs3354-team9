@@ -73,10 +73,8 @@ export default {
         //Attempt to store the returned session cookie
         this.$cookies.set("session", response.sessionToken);
         console.log("Successful Login!");
-        console.log(`returned sessionToken = ${response.sessionToken}`);
-        console.log(`local session cookie =${this.$cookies.get("session")}`);
+        console.log(`local session cookie = ${this.$cookies.get("session")}`);
         this.sessionToken = response.sessionToken;
-        console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
         location.hash = "/filter-search"
       }
