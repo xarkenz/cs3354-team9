@@ -16,6 +16,11 @@
     >
       Account Settings
     </a>
+
+
+    <li><a href="#/delete-account">Delete account</a></li>
+    <li><a href="#/ban-user">Ban User</a></li>
+    <li><a href="#/save-favorite-restaurant">Save Favorite Restaurant</a></li>
   </div>
 </template>
 

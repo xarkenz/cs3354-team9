@@ -71,8 +71,9 @@
 
       <!-- Success Toast -->
       <div
-        v-if="submitted"
-        class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50"
+        v-show="submitted"
+        class="fixed top-1/7 left-1/2 transform -translate-x-1/4 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-[9999] transition-opacity duration-6000 opacity-0"
+        :class="{ 'opacity-100': submitted }"
       >
         Thank you! Your review has been submitted!
       </div>
@@ -100,14 +101,15 @@ export default {
     };
   },
   mounted() {
-    const userId = localStorage.getItem('userID');
+    const userId = sessionStorage.getItem("userID"); // ✅ Correct: get, not set
     if (!userId) {
       alert('You must be logged in to rate a restaurant.');
-      this.$emit('close'); // Close just the modal
+      this.$emit('close');
       return;
     }
 
     this.authorID = parseInt(userId);
+    console.log('Author ID set to:', this.authorID);
   },
   methods: {
     async submitReview() {
@@ -129,16 +131,24 @@ export default {
         if (!response.ok) throw new Error('Failed to submit review');
 
         this.submitted = true;
-        this.rating = 0;
-        this.title = '';
-        this.review = '';
+        console.log("Submitted set to true");
 
-        // Longer timeout to show the toast before closing the modal
+        // Wait for DOM to update
+        await this.$nextTick();
+
+        // Show toast for 2 seconds
         setTimeout(() => {
           this.submitted = false;
-          this.$emit('close');     // Close the modal
-          this.$emit('submitted'); // (Optional) Let parent know a review was submitted
-        }, 4000);
+
+          // Reset inputs
+          this.rating = 0;
+          this.title = '';
+          this.review = '';
+
+          // Notify parent
+          this.$emit('submitted');
+          this.$emit('close');
+        }, 1000);
       } catch (err) {
         console.error(err);
         alert('Failed to submit review.');

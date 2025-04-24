@@ -98,15 +98,20 @@ app.post("/api/login", async (req, res) => {
       OR: [{email: usernameEmail}, {username: usernameEmail}]
     },
   });
-  if(!prismaResponse){
-    return res.status(401).json({ error: 'Login Failed! User not found.' });
-  }
   if(((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)) && prismaResponse.password === hash){
     const sessionToken = uuid();
-    sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
+    sessions[sessionToken] = {
+      email: prismaResponse.email,
+      username: prismaResponse.username,
+      userId: prismaResponse.id
+    };
     res.set('Set-Cookie', `session=${sessionToken}`);
-    res.json({ sessionToken });
-  }
+    res.json({
+      sessionToken,
+      userID: prismaResponse.id,
+      username: prismaResponse.username
+    });
+  }  
   else{
     return res.status(401).json({ error: 'Login Failed! Incorrect login or password!' });
   }
@@ -176,6 +181,9 @@ app.get('/api/dishes', async (req, res) => {
 //Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
 app.get('/api/business/:businessId/dishes', async (req, res) => {
   const { businessId } = req.params;
+
+  res.status(200).json({ reviews: foundReviews });
+
 
   try {
     const businessWithDishes = await prisma.business.findUnique({
