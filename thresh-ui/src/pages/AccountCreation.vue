@@ -110,7 +110,6 @@ export default {
           this.sessionToken = response.sessionToken;
           console.log(`global variable this.sessionToken = ${this.sessionToken}`);
           alert("Account created!");
-          location.hash = "/filter-search"
         }
         catch (error){
           console.log(error);

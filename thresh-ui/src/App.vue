@@ -6,6 +6,7 @@ import NotFound from './pages/NotFound.vue'
 import Home from './pages/Home.vue'
 import AccountCreation from './pages/AccountCreation.vue'
 import SignIn from './pages/SignIn.vue'
+import RateRestaurant from './pages/RateRestaurant.vue'
 import RemoveRestaurant from './pages/RemoveRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
@@ -59,6 +60,7 @@ const routes = {
   '/save-favorite-restaurant': SaveFavoriteRestaurant,
   '/map': Map,
   '/profile': Profile,
+  '/rate-restaurant': RateRestaurant,
 }
 
 const currentPath = ref(window.location.hash)
