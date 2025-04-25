@@ -48,40 +48,31 @@ const currentUser = ref(null)
 fetchUser().then(user => currentUser.value = user)
 
 const routes = {
-  '/': Home,
-  '/create-account': AccountCreation,
-  '/sign-in': SignIn,
-  '/remove-restaurant': RemoveRestaurant,
-  '/report-incorrect-allergy': ReportIncorrectAllergy,
-  '/filter-search': FilterSearch,
-  '/view-allergens': ViewAllergens,
-  '/delete-account': DeleteAccount,
-  '/save-favorite-restaurant': SaveFavoriteRestaurant,
-  '/map': Map,
-  '/profile': Profile,
-  '/rate-restaurant': RateRestaurant,
+  '': Home,
+  'create-account': AccountCreation,
+  'sign-in': SignIn,
+  'remove-restaurant': RemoveRestaurant,
+  'report-incorrect-allergy': ReportIncorrectAllergy,
+  'filter-search': FilterSearch,
+  'view-allergens': ViewAllergens,
+  'delete-account': DeleteAccount,
+  'save-favorite-restaurant': SaveFavoriteRestaurant,
+  'map': Map,
+  'profile': Profile,
+  'rate-restaurant': RateRestaurant,
+  'view-allergens': ViewAllergens,
+  'user': User,
 }
 
 const currentPath = ref(window.location.hash)
 
 const currentView = computed(() => {
-  const path = currentPath.value.slice(1) || '/';
-
-  // Support dynamic route: /rate-restaurant/:id
-  if (path.startsWith('rate-restaurant/')) {
-    return RateRestaurant
-  }
-
-  // Support dynamic route: /view-allergens/:id
-  if (path.startsWith('view-allergens/')) {
-    return ViewAllergens
-  }
-
-  // Support dynamic route: /user/:id
-  if (path.startsWith('user/')) {
-    return User
-  }
-
+  // get the first section of the path url, without slashes. i.e.
+  // /this-part/not-this-part
+  //  ^^^^^^^^^
+  // this will support indexing by /page/:parameters
+  const path = currentPath.value.match(/^\/?([^/]*)(?:\/|$)/i)[1];
+  // return the matching page, else a 404 page
   return routes[path] || NotFound;
 })
 
