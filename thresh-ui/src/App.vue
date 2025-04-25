@@ -11,7 +11,7 @@ import RemoveRestaurant from './pages/RemoveRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
 import DeleteAccount from './pages/DeleteAccount.vue'
-import BanUser from './pages/BanUser.vue'
+import User from './pages/User.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
 import Profile from './pages/Profile.vue'
@@ -56,7 +56,6 @@ const routes = {
   '/filter-search': FilterSearch,
   '/view-allergens': ViewAllergens,
   '/delete-account': DeleteAccount,
-  '/ban-user': BanUser,
   '/save-favorite-restaurant': SaveFavoriteRestaurant,
   '/map': Map,
   '/profile': Profile,
@@ -76,6 +75,11 @@ const currentView = computed(() => {
   // Support dynamic route: /view-allergens/:id
   if (path.startsWith('view-allergens/')) {
     return ViewAllergens
+  }
+
+  // Support dynamic route: /user/:id
+  if (path.startsWith('user/')) {
+    return User
   }
 
   return routes[path] || NotFound;

@@ -33,7 +33,7 @@
           <li><a href="#/filter-search">Filter search</a></li>
           <li><a href="#/view-allergens">View allergens</a></li>
           <li><a href="#/delete-account">Delete account</a></li>
-          <li><a href="#/ban-user">Ban User</a></li>
+          <li><a href="#/user/example-user">Example User Profile</a></li>
           <li><a href="#/save-favorite-restaurant">Save Favorite Restaurant</a></li>
           <li><a href="#/map">Map</a></li>
           <li><a href="#/profile">Profile</a></li>
