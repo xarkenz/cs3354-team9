@@ -96,6 +96,7 @@ export default {
       username: "",
       password: "",
       confirmationPassword: "",
+      sessionToken: "",  // you also used this but didn't define it
     };
   },
   methods: {
@@ -122,25 +123,25 @@ export default {
           method: "POST",
           headers,
           body: raw,
-        };
-        //Send the request
-        try{
-          let response = await fetch("http://localhost:3000/api/signup", requestOptions).then(response => response.json());
-          console.log(response);
-          //The $cookies variable is a global cookies variable defined in main.js from the vue3-cookies import
-          //Store the cookies
-          this.$cookies.set("session", response.sessionToken);
-          console.log(`sessionToken = ${response.sessionToken}`);
-          console.log(`session=${this.$cookies.get("session")}`);
-          this.sessionToken = response.sessionToken;
-          sessionStorage.setItem("userID", response.userID);
-          console.log(`global variable this.sessionToken = ${this.sessionToken}`);
-          alert("Account created!");
-          location.hash = "/filter-search"
-        }
-        catch (error){
-          console.log(error);
-        }
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        // Store cookies
+        this.$cookies.set("session", data.sessionToken);
+        console.log(`sessionToken = ${data.sessionToken}`);
+        console.log(`session=${this.$cookies.get("session")}`);
+
+        this.sessionToken = data.sessionToken;
+        sessionStorage.setItem("userID", data.userID);
+        console.log(`global variable this.sessionToken = ${this.sessionToken}`);
+
+        alert("Account created!");
+        location.hash = "/filter-search";
+      } catch (error) {
+        console.error(error);
+        alert("There was an error creating the account.");
       }
     },
   },

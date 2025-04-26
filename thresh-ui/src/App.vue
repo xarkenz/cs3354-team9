@@ -71,7 +71,8 @@ const currentView = computed(() => {
   // /this-part/not-this-part
   //  ^^^^^^^^^
   // this will support indexing by /page/:parameters
-  const path = currentPath.value.match(/^#\/?([^/]*)/)[1];
+  const match = currentPath.value.match(/^#\/?([^/]*)/);
+  const path = match ? match[1] : '';
   console.log(path);
   // return the matching page, else a 404 page
   return routes[path] || NotFound;
@@ -87,7 +88,7 @@ const username = computed(() => currentUser.value?.username)
 
 <template>
   <div>
-    <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300 z-50 bg-white mb-6">
+    <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300 z-50 bg-white">
       <nav>
         <ul class="flex items-center gap-x-5 mx-6">
           <li>
@@ -111,7 +112,7 @@ const username = computed(() => currentUser.value?.username)
               <div class="text-lg font-semibold text-green-950">
                 {{ username }}
               </div>
-              <img class="size-16" src="./assets/profile.png">
+              <img class="size-14" src="./assets/profile.png">
             </a>
           </li>
         </ul>
