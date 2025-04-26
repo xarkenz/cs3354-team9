@@ -71,7 +71,7 @@ const currentView = computed(() => {
   // /this-part/not-this-part
   //  ^^^^^^^^^
   // this will support indexing by /page/:parameters
-  const path = currentPath.value.slice(1).match(/^\/?([^/]*)(?:\/|$)/i)[1];
+  const path = currentPath.value.match(/^#\/?([^/]*)/)[1];
   console.log(path);
   // return the matching page, else a 404 page
   return routes[path] || NotFound;
