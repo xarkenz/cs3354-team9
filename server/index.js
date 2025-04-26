@@ -88,7 +88,7 @@ app.post("/api/signup", async (req, res) => {
 // Used to ban a user from the service
 app.post('/api/ban-user', async (req, res) => {
   const sessionToken = getSessionToken(req);
-  if(!sessions[sessionToken].isAdmin)
+  if(!sessions[sessionToken]?.isAdmin)
     return res.status(403).json({ error: 'You are not an admin!' });
   const username = req.body.username;
   const selectResponse = await prisma.user.findFirst({where: {username}});
