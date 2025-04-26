@@ -18,6 +18,11 @@
     >
       Account Settings
     </a>
+
+
+    <li><a href="#/delete-account">Delete account</a></li>
+    <li><a href="#/ban-user">Ban User</a></li>
+    <li><a href="#/save-favorite-restaurant">Save Favorite Restaurant</a></li>
     <button
       @click="signOut"
       class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"

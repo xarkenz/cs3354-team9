@@ -86,7 +86,8 @@ async function fetchReviews(restaurantId) {
   try {
     const res = await fetch(`http://localhost:3000/api/reviews?restaurantId=${restaurantId}`);
     const result = await res.json();
-    reviews.value = result.data || [];
+    console.log('Fetched reviews:', result); // Helps debug
+    reviews.value = result.reviews || result.data || []; // covers both
   } catch (err) {
     console.error('Failed to load reviews:', err);
     reviews.value = [];
@@ -95,6 +96,11 @@ async function fetchReviews(restaurantId) {
 
 function handleImageError() {
   imageSrc.value = defaultImage;
+}
+
+// Re-fetches updated reviews
+function handleReviewSubmitted() {
+  fetchReviews(props.place.id); 
 }
 
 function getAverageStars(reviews) {
@@ -202,6 +208,7 @@ function getAverageStars(reviews) {
         v-if="showRatingModal"
         :place="place"
         @close="showRatingModal = false"
+        @submitted="handleReviewSubmitted"
       />
 
       <!-- Reviews Section -->
