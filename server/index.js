@@ -84,6 +84,59 @@ app.post("/api/signup", async (req, res) => {
     }
   }
 });
+// Created by Eliza Heasley
+// Used to ban a user from the service
+app.post('/api/ban-user', async (req, res) => {
+  const sessionToken = getSessionToken(req);
+  if(!sessions[sessionToken]?.isAdmin)
+    return res.status(403).json({ error: 'You are not an admin!' });
+  const username = req.body.username;
+  const selectResponse = await prisma.user.findFirst({where: {username}});
+  if(!selectResponse)
+    return res.status(404).json({ error: 'User not found.' });
+  if(selectResponse.isBanned)
+    return res.status(409).json({ error: 'User is already banned.' });
+  if(selectResponse.isAdmin)
+    return res.status(403).json({ error: 'You cannot ban another admin!' });
+  const updateResponse = await prisma.user.update({
+    where: {username},
+    data: {isBanned: true},
+  });
+  if(!updateResponse)
+    return res.status(500).json({ error: 'Ban failed! How did we get here?' });
+  // attempt to delete any sessions for this user
+  for(const [bannedSession, bannedToken] of Object.entries(sessions))
+    if(bannedToken.username == username)
+      delete sessions[bannedSession];
+  return res.status(200).json({});
+});
+// Created by Eliza Heasley
+// Used to get the publicly-visible profile info of another user, including their reviews
+app.get('/api/user/:username', async (req, res) => {
+  const sessionToken = getSessionToken(req);
+  const username = req.params.username;
+  const userResponse = await prisma.user.findFirst({
+    where: {username},
+    include: {
+      reviews: {
+        include: {
+          business: true,
+        },
+      },
+    },
+  });
+  if(!userResponse || userResponse.isBanned)
+    return res.status(404).json({ error: 'User not found.' });
+  const canBan = sessions[sessionToken] && sessions[sessionToken].isAdmin && !userResponse.isAdmin;
+  const responseBody = {
+    username: userResponse.username,
+    reviews: userResponse.reviews.map(review => ({
+      business: review.business,
+    })),
+    canBan,
+  };
+  return res.status(200).json(responseBody);
+});
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to log in to an account with an email or username and a password
 app.post("/api/login", async (req, res) => {
@@ -99,12 +152,12 @@ app.post("/api/login", async (req, res) => {
     },
   });
   if(((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)) && prismaResponse.password === hash){
+    if(prismaResponse.isBanned)
+      return res.status(403).json({ error: 'Login Failed! User is banned.' });
     const sessionToken = uuid();
-    sessions[sessionToken] = {
-      email: prismaResponse.email,
-      username: prismaResponse.username,
-      userId: prismaResponse.id
-    };
+    sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
+    if(prismaResponse.isAdmin)
+      sessions[sessionToken].isAdmin = true; // only add an isAdmin field if the user is, in fact, an admin
     res.set('Set-Cookie', `session=${sessionToken}`);
     res.json({
       sessionToken,

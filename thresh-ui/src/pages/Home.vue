@@ -62,6 +62,7 @@
           <!-- <li><a href="#/ban-user">Ban User</a></li>
           <li><a href="#/save-favorite-restaurant">Save Favorite Restaurant</a></li> -->
           <!-- <li><a href="#/profile">Profile</a></li> -->
+          <li><a href="#/user/example-user">Example User Profile</a></li>
           <li><a href="#/map">Map</a></li>
 
         </ul>
@@ -101,6 +102,8 @@ onMounted(() => {
 .grad {
   background: #f1f0e9;
 background: linear-gradient(to right, #f0ead5 0%, #e7bb8c 50%, #eee1a7 100%);
+background-clip: text;
+color: transparent;
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 

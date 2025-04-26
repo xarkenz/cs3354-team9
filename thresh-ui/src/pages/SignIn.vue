@@ -89,13 +89,21 @@ export default {
         headers,
         body: raw,
       };
-
-      try {
-        const response = await fetch("http://localhost:3000/api/login", requestOptions).then(res => res.json());
-        if (!response || response.error) throw response?.error;
-
+      //Send the request
+      try{
+        let response = await fetch("http://localhost:3000/api/login", requestOptions).then(response => response.json());
+        console.log(response);
+        if (!response || response.error) {
+          throw response?.error
+        }
+        //Attempt to store the returned session cookie
         this.$cookies.set("session", response.sessionToken, { expires: null });
         sessionStorage.setItem("userID", response.userID);
+        console.log("Successful Login!");
+        console.log(`returned sessionToken = ${response.sessionToken}`);
+        console.log(`local session cookie = ${this.$cookies.get("session")}`);
+        this.sessionToken = response.sessionToken;
+        console.log(`global variable this.sessionToken = ${this.sessionToken}`);
         alert(`Welcome, ${this.usernameEmail}!`);
         location.hash = "/filter-search";
       } catch (error) {

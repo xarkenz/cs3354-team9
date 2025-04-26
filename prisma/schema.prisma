@@ -23,10 +23,12 @@ model Business {
 model User {
   id                     Int                     @id @default(autoincrement())
   email                  String                  @unique
-  username               String
+  username               String                  @unique
   password               String
   dishRestrictionReviews DishRestrictionReview[]
   reviews                Review[]
+  isAdmin                Boolean @default(false)
+  isBanned               Boolean @default(false)
 }
 
 model Review {

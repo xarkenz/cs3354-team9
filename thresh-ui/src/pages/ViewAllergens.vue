@@ -1,4 +1,4 @@
-<!--Created by Aaryaa Moharir  for 2 use cases: Add allergens and view allergens -->
+<!--Created by Aaryaa Moharir for 2 use cases: Add allergens and view allergens -->
 
 <script setup>
 import { onMounted, ref, reactive } from 'vue';
