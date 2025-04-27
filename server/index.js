@@ -50,7 +50,7 @@ app.post("/api/signup", async (req, res) => {
   const password = req.body.password;
   const confirmationPassword = req.body.confirmationPassword;
   if(password !== confirmationPassword){
-    return res.status(401).send('Signup Failed! Password and confirmation password do not match!');
+    return res.status(401).json({ error: 'Password and confirmation password do not match!' });
   }
   else{
     const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
@@ -65,22 +65,19 @@ app.post("/api/signup", async (req, res) => {
         },
       });
       if(!prismaResponse){
-        return res.status(401).send('Signup Failed!');
+        return res.status(401).json({ error: 'Signup Failed!' });
       }
       else{
         console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
         const sessionToken = uuid();
         sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
         res.set('Set-Cookie', `session=${sessionToken}`);
-        res.write(JSON.stringify({"sessionToken": sessionToken}));
-        res.status(200);
-        // res.json({redirectUrl: "#/"});
-        res.send();
+        return res.status(200).json({ sessionToken, userId: prismaResponse.id });
       }
     }
     catch (error) {
       console.log(error);
-      res.send(error);
+      return res.status(500).json({ error: `Internal error: ${error}` });
     }
   }
 });
@@ -151,20 +148,21 @@ app.post("/api/login", async (req, res) => {
       OR: [{email: usernameEmail}, {username: usernameEmail}]
     },
   });
-  if(((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)) && prismaResponse.password === hash){
-    if(prismaResponse.isBanned)
+  if(prismaResponse && ((prismaResponse.username === usernameEmail) || (prismaResponse.email === usernameEmail)) && prismaResponse.password === hash){
+    if(prismaResponse.isBanned) {
       return res.status(403).json({ error: 'Login Failed! User is banned.' });
+    }
     const sessionToken = uuid();
     sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
     if(prismaResponse.isAdmin)
       sessions[sessionToken].isAdmin = true; // only add an isAdmin field if the user is, in fact, an admin
     res.set('Set-Cookie', `session=${sessionToken}`);
-    res.json({
+    return res.json({
       sessionToken,
       userID: prismaResponse.id,
       username: prismaResponse.username
     });
-  }  
+  }
   else{
     return res.status(401).json({ error: 'Login Failed! Incorrect login or password!' });
   }
@@ -177,7 +175,7 @@ app.get('/api/whoami', (req, res) => {
   if (sessionToken) {
     let user = sessions[sessionToken];
     console.log("Responding to GET /api/whoami with " + JSON.stringify(user));
-    res.json({ user });
+    return res.json({ user });
   }
   else {
     return res.status(400).json({ error: "Not logged in!" });
@@ -200,7 +198,7 @@ app.delete('/api/account', async (req, res) => {
     console.log("Deleted user: " + JSON.stringify(deletedUser));
     // Invalidate the session
     delete sessions[sessionToken];
-    res.status(200).json({});
+    return res.status(200).json({});
   }
   else {
     return res.status(400).json({ error: "Not logged in!" });

@@ -1,7 +1,7 @@
 <!-- Made by Isaac Philo. This is a simple user profile. -->
 
 <template>
-  <div class="flex flex-col justify-center items-center gap-5">
+  <div class="p-10 flex flex-col justify-center items-center gap-5">
     <div class="text-xl">
       Welcome, <b>{{ currentUser?.username || 'anonymous user' }}</b>!
     </div>
@@ -10,19 +10,14 @@
       href="#/save-favorite-restaurant"
       class="px-4 py-2 rounded-full bg-lime-700 text-white hover:bg-lime-800 transition"
     >
-      Favorite Restaurants
+      🤍 Favorite Restaurants
     </a>
     <a
       href="#/delete-account"
       class="px-4 py-2 rounded-full bg-lime-700 text-white hover:bg-lime-800 transition"
     >
-      Account Settings
+      ⚙️ Account Settings
     </a>
-
-
-    <li><a href="#/delete-account">Delete account</a></li>
-    <li><a href="#/ban-user">Ban User</a></li>
-    <li><a href="#/save-favorite-restaurant">Save Favorite Restaurant</a></li>
     <button
       @click="signOut"
       class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition"

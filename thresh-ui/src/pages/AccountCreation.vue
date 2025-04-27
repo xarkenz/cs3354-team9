@@ -119,14 +119,15 @@ export default {
       });
 
       try {
-        const response = await fetch("http://localhost:3000/api/signup", {
+        const data = await fetch("http://localhost:3000/api/signup", {
           method: "POST",
           headers,
           body: raw,
-        });
-
-        const data = await response.json();
+        }).then(response => response.json());
         console.log(data);
+        if (!data || data.error) {
+          throw data?.error
+        }
 
         // Store cookies
         this.$cookies.set("session", data.sessionToken);

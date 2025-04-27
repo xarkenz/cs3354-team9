@@ -51,7 +51,7 @@
             @click="saveFavorite(restaurant)"
             class="save-btn"
           >
-            ❤️ Save to Favorites
+            🤍 Save to Favorites
           </button>
           <button 
             v-else 
