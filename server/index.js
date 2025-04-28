@@ -211,6 +211,9 @@ app.get('/api/hello', (req, res) => {
 
 app.use('/api/reviews', reviewRoutes);
 
+const adminRoutes = require('./routes/admin');
+app.use('/api/admin', adminRoutes);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
