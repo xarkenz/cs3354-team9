@@ -1,9 +1,9 @@
 // This and package.json changes based initially on templates in
 // https://expressjs.com/ and
 // https://blog.codeminer42.com/making-a-full-stack-app-with-vue-vite-and-express-that-supports-hot-reload/
-const jsSHA = require("jssha"); //For hashing passwords
-const uuid = require('uuid').v4; //for making unique session tokens
-const sessions = {}; //for storing session tokens
+const jsSHA = require("jssha");
+const uuid = require('uuid').v4;
+const { sessions, getSessionToken } = require('./session');
 const express = require('express')
 const app = express()
 app.use(express.json());
