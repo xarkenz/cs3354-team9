@@ -63,7 +63,8 @@ const routes = {
   'profile': Profile,
   'rate-restaurant': RateRestaurant,
   'view-allergens': ViewAllergens,
-  import ReportIncorrectAllergy from './pages/ReportIncorrectAllergy.vue'
+  'manage-restaurants': ManageRestaurants,
+  'manage-allergens':   ManageAllergens,
   'user': User,
 }
 
