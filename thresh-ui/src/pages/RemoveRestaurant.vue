@@ -6,11 +6,11 @@
 
 <template>
   <div class="p-8 max-w-2xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Flagged Restaurants</h1>
+    <h1 class="text-3xl font-bold mb-6">All Restaurants</h1>
 
     <!-- empty state -->
     <div v-if="!restaurants.length" class="text-gray-500">
-      No flagged restaurants.
+      No restaurants found.
     </div>
 
     <!-- list -->
@@ -22,7 +22,7 @@
       >
         <div>
           <p class="font-semibold text-lg">{{ r.name }}</p>
-          <p class="text-gray-600 mt-1">Flagged for {{ r.flagReason }}.</p>
+          <p class="text-gray-600 mt-1">ID: {{ r.id }}</p>
         </div>
         <button
           @click="promptRemoval(r)"
@@ -68,6 +68,9 @@
 </template>
 
 <script>
+import { useCookies } from 'vue3-cookies'
+const { cookies } = useCookies()
+
 export default {
   name: 'RemoveRestaurant',
   data() {
@@ -80,42 +83,66 @@ export default {
     };
   },
   methods: {
-    // DEMO ONLY: always load mock data
-    fetchFlagged() {
-      this.restaurants = [
-        { id: 1, name: 'Fake Restaurant 1',    flagReason: 'inappropriate content' },
-        { id: 2, name: 'Inappropriate Eatery', flagReason: 'fake reviews'         }
-      ];
-      this.errorMsg = '';
+    async fetchRestaurants() {
+      try {
+        const res = await fetch('/api/restaurants', {
+          headers: {
+            'Content-Type': 'application/json',
+            'mycookies': `session=${cookies.get('session')}`
+          }
+        });
+        const json = await res.json();
+        this.restaurants = json.restaurants || json.data || [];
+        this.errorMsg = '';
+      } catch (err) {
+        console.error(err);
+        this.errorMsg = 'Failed to load restaurants.';
+      }
     },
 
     promptRemoval(r) {
-      this.selected = r;
+      this.selected   = r;
       this.successMsg = '';
-      this.errorMsg = '';
-      this.showModal = true;
+      this.errorMsg   = '';
+      this.showModal  = true;
     },
 
     cancelRemoval() {
       this.showModal = false;
-      this.selected = null;
+      this.selected  = null;
     },
 
-    removeRestaurant() {
+    async removeRestaurant() {
       this.showModal = false;
-      // demo: just remove it locally
-      this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
-      this.successMsg = `"${this.selected.name}" has been removed successfully.`;
-      this.selected = null;
+      try {
+        const res = await fetch(`/api/restaurants/${this.selected.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'mycookies': `session=${cookies.get('session')}`
+          }
+        });
+        const json = await res.json();
+        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.');
+
+        // remove locally
+        this.restaurants = this.restaurants.filter(r => r.id !== this.selected.id);
+        this.successMsg  = `"${this.selected.name}" has been removed successfully.`;
+      } catch (err) {
+        console.error(err);
+        this.errorMsg = `Failed to remove "${this.selected.name}".`;
+      } finally {
+        this.selected = null;
+      }
     }
   },
   mounted() {
-    this.fetchFlagged();
+    this.fetchRestaurants();
   }
-};
+}
 </script>
 
-
 <style scoped>
-/* Tailwind handles styling */
+/* All styling is handled by your Tailwind config */
 </style>
+
