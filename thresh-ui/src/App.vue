@@ -16,6 +16,8 @@ import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
 import Profile from './pages/Profile.vue'
 import ReportIncorrectAllergy from './pages/ReportIncorrectAllergy.vue'
+import ManageRestaurants from './pages/ManageRestaurants.vue'
+import ManageAllergens  from './pages/ManageAllergens.vue'
 
 const { cookies } = useCookies()
 
