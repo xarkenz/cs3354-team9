@@ -5,81 +5,162 @@
 
 <template>
   <div class="p-6 max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Report Incorrect Allergy Information</h1>
+    <h1 class="text-2xl font-bold mb-4">Allergen Records</h1>
 
-    <!-- list of menu items -->
-    <ul>
+    <!-- empty state -->
+    <div v-if="!menuItems.length" class="text-gray-500">
+      No allergen records found.
+    </div>
+
+    <!-- list -->
+    <ul v-else>
       <li
         v-for="item in menuItems"
-        :key="item.id"
+        :key="`${item.restaurantId}-${item.allergen}`"
         class="mb-4 p-4 border rounded-lg flex justify-between items-center"
       >
         <div>
           <p class="font-medium">{{ item.name }}</p>
           <p class="text-sm text-gray-600">
-            Allergens: {{ item.allergens.join(', ') || 'None' }}
+            Allergen: <strong>{{ item.allergen }}</strong>
           </p>
         </div>
         <button
-          @click="reportItem(item.id)"
+          @click="promptRemoval(item)"
           class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded"
         >
-          Report
+          Remove
         </button>
       </li>
     </ul>
 
-    <!-- feedback message -->
-    <div v-if="message" class="mt-4" :class="success ? 'text-green-600' : 'text-red-600'">
-      {{ message }}
+    <!-- confirmation modal -->
+    <div
+      v-if="showModal"
+      class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
+    >
+      <div class="bg-white rounded-lg p-6 w-80 space-y-4">
+        <h2 class="text-xl font-semibold">Confirm Removal</h2>
+        <p>
+          Are you sure you want to remove
+          <strong>"{{ selected.allergen }}"</strong>
+          from <strong>"{{ selected.name }}"</strong>?
+        </p>
+        <div class="mt-4 flex justify-end space-x-4">
+          <button
+            @click="removeAllergen"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+          >
+            Yes, Remove
+          </button>
+          <button
+            @click="cancelRemoval"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
+
+    <!-- feedback -->
+    <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
+    <p v-if="errorMsg"   class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
 <script>
+import { useCookies } from 'vue3-cookies'
+const { cookies } = useCookies()
+
 export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],  // menu items loaded from backend or mock
-      message: '',    // user feedback
-      success: false  // whether last report succeeded
+      menuItems: [],      // flattened list { restaurantId, name, allergen }
+      showModal: false,
+      selected: null,
+      successMsg: '',
+      errorMsg: ''
     };
   },
   methods: {
-    // Try real fetch, fallback to mock so you can demo
     async fetchMenu() {
       try {
-        const res = await fetch('/api/menu-items');
-        if (!res.ok) throw new Error();
-        this.menuItems = await res.json();
-      } catch {
-        // MOCK DATA
-        this.menuItems = [
-          { id: 1, name: 'Chocolate Cake',         allergens: ['Milk','Egg','Wheat'] },
-          { id: 2, name: 'Peanut Butter Sandwich', allergens: ['Peanuts','Gluten'] }
-        ];
+        // get all restaurants with their allergen lists
+        const res = await fetch('/api/restaurants', {
+          headers: {
+            'Content-Type':'application/json',
+            'mycookies': `session=${cookies.get('session')}`
+          }
+        });
+        const json = await res.json();
+        const list = json.restaurants || json.data || [];
+        // flatten
+        this.menuItems = list.flatMap(r =>
+          (r.allergens || []).map(a => ({
+            restaurantId: r.id,
+            name: r.name,
+            allergen: a
+          }))
+        );
+        this.errorMsg = '';
+      } catch (err) {
+        console.error(err);
+        this.errorMsg = 'Failed to load allergen records.';
       }
     },
 
-    async reportItem(id) {
+    promptRemoval(item) {
+      this.selected    = item;
+      this.successMsg  = '';
+      this.errorMsg    = '';
+      this.showModal   = true;
+    },
+
+    cancelRemoval() {
+      this.showModal = false;
+      this.selected  = null;
+    },
+
+    async removeAllergen() {
+      this.showModal = false;
       try {
-        const res = await fetch(`/api/reports/allergy/${id}`, { method: 'POST' });
-        if (!res.ok) throw new Error();
-        this.message = 'Report submitted. Thank you for your feedback!';
-        this.success = true;
-      } catch {
-        this.message = 'Failed to submit report. Please try again later.';
-        this.success = false;
+        const { restaurantId, allergen } = this.selected;
+        const res = await fetch(
+          `/api/restaurants/${restaurantId}/allergens/${encodeURIComponent(allergen)}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'mycookies': `session=${cookies.get('session')}`
+            }
+          }
+        );
+        const json = await res.json();
+        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.');
+
+        // remove locally
+        this.menuItems = this.menuItems.filter(
+          i => !(i.restaurantId === restaurantId && i.allergen === allergen)
+        );
+        this.successMsg = `Allergen "${allergen}" removed from "${this.selected.name}".`;
+      } catch (err) {
+        console.error(err);
+        this.errorMsg = `Failed to remove "${this.selected.allergen}".`;
+      } finally {
+        this.selected = null;
       }
     }
   },
+
   mounted() {
     this.fetchMenu();
   }
-};
+}
 </script>
 
 <style scoped>
-/* Tailwind covers spacing and coloring. */
+/* All styling is handled by your Tailwind config */
 </style>
+
