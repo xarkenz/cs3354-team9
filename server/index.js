@@ -3,15 +3,20 @@
 // https://blog.codeminer42.com/making-a-full-stack-app-with-vue-vite-and-express-that-supports-hot-reload/
 const jsSHA = require("jssha");
 const uuid = require('uuid').v4;
-const { sessions, getSessionToken } = require('./session');
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 app.use(express.json());
-const port = process.env.BACKEND_PORT || 3000
-// import { PrismaClient } from '../prisma/app/generated/prisma/client'
+const port = process.env.BACKEND_PORT || 3000;
+
+// pull in your review routes
 const reviewRoutes = require('./review'); // Used to get reviews for each business
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+
+// wire in your new admin routes
+const adminRoutes  = require('./routes/admin');
+
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const cors = require("cors");
 app.use(cors({
   origin: "*",
@@ -24,6 +29,9 @@ app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.ht
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+// in-memory session store
+const sessions = {};
 
 //Created by Isaac Philo on April 18th, 2025
 function getSessionToken(request){ //Extract the session token from among the cookies of the request's header
@@ -41,6 +49,7 @@ function getSessionToken(request){ //Extract the session token from among the co
   }
   return sessionToken;
 }
+
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to sign up for an account with an email, username, password, and confirmation password. Presently, the frontend also checks to see whether the password and confirmation password are the same, but I figured I'd check here as well.
 app.post("/api/signup", async (req, res) => {
@@ -81,6 +90,7 @@ app.post("/api/signup", async (req, res) => {
     }
   }
 });
+
 // Created by Eliza Heasley
 // Used to ban a user from the service
 app.post('/api/ban-user', async (req, res) => {
@@ -107,6 +117,7 @@ app.post('/api/ban-user', async (req, res) => {
       delete sessions[bannedSession];
   return res.status(200).json({});
 });
+
 // Created by Eliza Heasley
 // Used to get the publicly-visible profile info of another user, including their reviews
 app.get('/api/user/:username', async (req, res) => {
@@ -134,6 +145,7 @@ app.get('/api/user/:username', async (req, res) => {
   };
   return res.status(200).json(responseBody);
 });
+
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to log in to an account with an email or username and a password
 app.post("/api/login", async (req, res) => {
@@ -167,6 +179,7 @@ app.post("/api/login", async (req, res) => {
     return res.status(401).json({ error: 'Login Failed! Incorrect login or password!' });
   }
 });
+
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
@@ -203,20 +216,14 @@ app.delete('/api/account', async (req, res) => {
   else {
     return res.status(400).json({ error: "Not logged in!" });
   }
-})
+});
 
 app.get('/api/hello', (req, res) => {
   res.json('Hello World!')
 });
 
 app.use('/api/reviews', reviewRoutes);
-
-const adminRoutes = require('./routes/admin');
 app.use('/api/admin', adminRoutes);
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-});
 
 app.get('/api/dishes', async (req, res) => {
   try {
@@ -235,38 +242,35 @@ app.get('/api/dishes', async (req, res) => {
 //Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
 app.get('/api/business/:businessId/dishes', async (req, res) => {
   const { businessId } = req.params;
-
-  res.status(200).json({ reviews: foundReviews });
-
+  // remove this stray line:
+  // res.status(200).json({ reviews: foundReviews });
 
   try {
     const businessWithDishes = await prisma.business.findUnique({
-      where: {
-        id: parseInt(businessId),
-      },
-      
+      where: { id: parseInt(businessId) },
       include: {
         dishes: {
-
-           select: {
+          select: {
             name: true,
             dishRestrictionReviews: true,
             businessID: true, 
             id: true,
-
           }
-          
         }
       }
     });
-
     if (!businessWithDishes) {
       return res.status(404).json({ error: 'Business not found' });
     }
-
     res.json(businessWithDishes.dishes);
   } catch (error) {
     console.error('Error fetching business dishes:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+//START SERVER 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
+
