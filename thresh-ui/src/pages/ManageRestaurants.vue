@@ -1,105 +1,131 @@
 <template>
-  <div class="p-8">
-    <h1 class="text-3xl font-bold mb-4">Manage Restaurants</h1>
-    <div v-if="error" class="text-red-600 mb-2">{{ error }}</div>
-    <div v-if="success" class="text-green-600 mb-2">{{ success }}</div>
+  <div class="p-8 max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Manage Restaurants</h1>
 
-    <table class="min-w-full bg-white border">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 border">ID</th>
-          <th class="px-4 py-2 border">Name</th>
-          <th class="px-4 py-2 border">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="r in restaurants" :key="r.id" class="hover:bg-gray-50">
-          <td class="px-4 py-2 border">{{ r.id }}</td>
-          <td class="px-4 py-2 border">{{ r.name }}</td>
-          <td class="px-4 py-2 border">
-            <button
-              @click="confirmDelete(r)"
-              class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- empty state -->
+    <div v-if="!restaurants.length" class="text-gray-500">
+      No restaurants found.
+    </div>
 
-    <!-- confirmation modal -->
+    <!-- list -->
+    <ul v-else class="space-y-4">
+      <li
+        v-for="r in restaurants"
+        :key="r.id"
+        class="flex justify-between items-center bg-white border rounded-lg p-4 shadow"
+      >
+        <div>
+          <p class="font-semibold text-lg">{{ r.name }}</p>
+          <p class="text-gray-600">ID: {{ r.id }}</p>
+        </div>
+        <button
+          @click="promptDelete(r)"
+          class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
+        >
+          Remove
+        </button>
+      </li>
+    </ul>
+
+    <!-- confirm modal -->
     <div
       v-if="showModal"
-      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center"
+      class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
     >
-      <div class="bg-white p-6 rounded shadow-lg w-80">
-        <p>Are you sure you want to delete</p>
-        <p class="font-semibold mt-2">“{{ selected.name }}”?</p>
+      <div class="bg-white rounded-lg p-6 w-80 space-y-4">
+        <h2 class="text-xl font-semibold">Confirm Removal</h2>
+        <p>
+          Permanently remove
+          <strong>"{{ selected.name }}"</strong>?
+        </p>
         <div class="mt-4 flex justify-end space-x-4">
           <button
-            @click="deleteRestaurant"
-            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+            @click="confirmDelete"
+            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
           >
-            Yes
+            Yes, Remove
           </button>
           <button
-            @click="cancel"
-            class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded"
+            @click="cancelDelete"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded"
           >
             Cancel
           </button>
         </div>
       </div>
     </div>
+
+    <!-- feedback -->
+    <p v-if="message" :class="messageClass" class="mt-6 font-medium">
+      {{ message }}
+    </p>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
+<script>
+import { useCookies } from 'vue3-cookies'
+const { cookies } = useCookies()
 
-const restaurants = ref([])
-const error = ref('')
-const success = ref('')
-const showModal = ref(false)
-const selected = ref(null)
-
-async function fetchRestaurants() {
-  try {
-    const res = await fetch('http://localhost:3000/api/admin/restaurants')
-    const json = await res.json()
-    restaurants.value = json.restaurants
-  } catch {
-    error.value = 'Failed to load restaurants.'
+export default {
+  name: 'ManageRestaurants',
+  data() {
+    return {
+      restaurants: [],
+      showModal: false,
+      selected: null,
+      message: '',
+      isError: false,
+    }
+  },
+  computed: {
+    messageClass() {
+      return this.isError ? 'text-red-600' : 'text-green-600'
+    }
+  },
+  methods: {
+    async fetchRestaurants() {
+      this.message = ''
+      try {
+        const res = await fetch('http://localhost:3000/api/admin/restaurants', {
+          headers: { mycookies: `session=${cookies.get('session')}` }
+        })
+        const json = await res.json()
+        this.restaurants = json.data || []
+      } catch (e) {
+        this.message = 'Failed to load restaurants.'
+        this.isError = true
+      }
+    },
+    promptDelete(r) {
+      this.selected = r
+      this.showModal = true
+    },
+    cancelDelete() {
+      this.showModal = false
+      this.selected = null
+    },
+    async confirmDelete() {
+      try {
+        await fetch(
+          `http://localhost:3000/api/admin/restaurants/${this.selected.id}`,
+          {
+            method: 'DELETE',
+            headers: { mycookies: `session=${cookies.get('session')}` }
+          }
+        )
+        this.message = `"${this.selected.name}" removed.`
+        this.isError = false
+        this.showModal = false
+        this.selected = null
+        this.fetchRestaurants()
+      } catch (e) {
+        this.message = 'Failed to delete restaurant.'
+        this.isError = true
+      }
+    }
+  },
+  mounted() {
+    this.fetchRestaurants()
   }
 }
-
-function confirmDelete(r) {
-  selected.value = r
-  error.value = success.value = ''
-  showModal.value = true
-}
-
-function cancel() {
-  showModal.value = false
-  selected.value = null
-}
-
-async function deleteRestaurant() {
-  try {
-    await fetch(
-      `http://localhost:3000/api/admin/restaurants/${selected.value.id}`,
-      { method: 'DELETE' }
-    )
-    success.value = `"${selected.value.name}" deleted.`
-    restaurants.value = restaurants.value.filter(r => r.id !== selected.value.id)
-  } catch {
-    error.value = 'Deletion failed.'
-  } finally {
-    showModal.value = false
-    selected.value = null
-  }
-}
-
-onMounted(fetchRestaurants)
 </script>
