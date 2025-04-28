@@ -52,6 +52,8 @@
               <li><a href="#/view-allergens">View allergens</a></li>
               <li><a href="#/user/example-user">Ban User (must be logged in as administrator)</a></li>
               <li><a href="#/map">Map</a></li>
+              <li><a href="#/manage-restaurants">Manage Restaurants</a></li>
+              <li><a href="#/manage-allergens">Manage Allergens</a></li>
             </ul>
           </div>
         </div>
