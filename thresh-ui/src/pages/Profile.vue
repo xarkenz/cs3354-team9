@@ -1,7 +1,7 @@
 <!-- Made by Isaac Philo. This is a simple user profile. -->
 
 <template>
-    <div class="p-10 flex flex-col justify-center items-center gap-5">
+  <div class="p-10 flex flex-col justify-center items-center gap-5">
     <div class="text-xl">
       Welcome, <b>{{ currentUser?.username || 'anonymous user' }}</b>!
     </div>
@@ -21,7 +21,7 @@
 
     <!-- Account Settings Button -->
     <a
-      href="#/delete-account"
+      href="#/account-settings"
       class="flex items-center gap-2 px-4 py-2 rounded-full bg-lime-700 text-white hover:bg-lime-800 transition"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,23 +40,23 @@
     </button>
 
     <!-- Display Reviews -->
-<div v-if="userReviews.length" class="mt-10 w-full max-w-2xl">
-  <h2 class="text-2xl font-bold mb-4 text-center">Your Reviews</h2>
-  <div v-for="review in userReviews" :key="review.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
-    <h3 class="text-lg font-semibold mb-1">{{ review.title }}</h3>
-    <div class="flex items-center mb-2">
-      <template v-if="Number.isInteger(review.numStars)">
-        <span v-for="n in review.numStars" :key="n" class="text-yellow-400">★</span>
-        <span v-for="n in (5 - review.numStars)" :key="'empty' + n" class="text-gray-300">★</span>
-      </template>
-      <template v-else>
-        <span class="text-gray-400">No rating</span>
-      </template>
+    <div v-if="userReviews.length" class="mt-10 w-full max-w-2xl">
+      <h2 class="text-2xl font-bold mb-4 text-center">Your Reviews</h2>
+      <div v-for="review in userReviews" :key="review.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h3 class="text-lg font-semibold mb-1">{{ review.title }}</h3>
+        <div class="flex items-center mb-2">
+          <template v-if="Number.isInteger(review.numStars)">
+            <span v-for="n in review.numStars" :key="n" class="text-yellow-400">★</span>
+            <span v-for="n in (5 - review.numStars)" :key="'empty' + n" class="text-gray-300">★</span>
+          </template>
+          <template v-else>
+            <span class="text-gray-400">No rating</span>
+          </template>
+        </div>
+        <p class="text-gray-700">{{ review.content }}</p>
+        <p class="text-sm text-gray-500 mt-2">Restaurant: <b>{{ review.business?.name }}</b></p>
+      </div>
     </div>
-    <p class="text-gray-700">{{ review.content }}</p>
-    <p class="text-sm text-gray-500 mt-2">Restaurant: <b>{{ review.business?.name }}</b></p>
-  </div>
-</div>
 
   </div>
 </template>
