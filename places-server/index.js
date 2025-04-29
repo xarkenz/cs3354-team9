@@ -95,7 +95,7 @@ app.get('/api/restaurant-locations', async (req, res) => {
 });
 
 // GET: Return all dishes for a specific restaurant
-// GET: Return all restaurants in the DB with name, lat, lng
+// Basic structure made by Sarah but edited it for the view allergens use case by Aaryaa 
 app.get('/api/restaurant-locations-dishes', async (req, res) => {
   try {
     const restaurants = await prisma.business.findMany({
@@ -165,6 +165,65 @@ app.post('/api/reviews', async (req, res) => {
   }
 });
 
+//post endpoint to edit the allergens in the databasse 
+// PUT: Update allergen information for a specific dish
+app.put('/api/dishes/:dishId/allergens', async (req, res) => {
+  const { dishId } = req.params;
+  const { allergens, allergenFree } = req.body;
+  
+  // Validate the input data
+  if (!dishId || isNaN(parseInt(dishId))) {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'Valid dish ID is required' 
+    });
+  }
+  
+  // Validate that allergens and allergenFree are arrays
+  if (!Array.isArray(allergens) || !Array.isArray(allergenFree)) {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'allergens and allergenFree must be arrays' 
+    });
+  }
+  
+  try {
+    // First check if the dish exists
+    const dish = await prisma.dish.findUnique({
+      where: { id: parseInt(dishId) }
+    });
+    
+    if (!dish) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Dish not found' 
+      });
+    }
+    
+    // Update the dish with new allergen information
+    const updatedDish = await prisma.dish.update({
+      where: { id: parseInt(dishId) },
+      data: {
+        allergens: allergens,
+        allergenFree: allergenFree
+      }
+    });
+    
+    // Return the updated dish information
+    res.status(200).json({ 
+      success: true, 
+      message: 'Allergen information updated successfully',
+      data: updatedDish 
+    });
+    
+  } catch (error) {
+    console.error('Error updating allergen information:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to update allergen information' 
+    });
+  }
+});
 
 
 app.listen(PORT, () => {
