@@ -11,14 +11,20 @@ const restaurants = ref([]);
 const selectedRestaurant = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const notification = reactive({
+  show: false,
+  message: '',
+  isError: false,
+  timeout: null
+});
 
-// Define all possible allergens for your application
+// all possible allergens 
 const allergenHeaders = [
   "Milk", "Soy", "Egg", "Wheat", "Peanuts", "Tree Nuts", "Fish", 
   "Shellfish", "Sesame", "Gluten", "Mustard", "Gelatin", "Artificial Colors"
 ];
 
-// Map of the properties 
+// map of the properties  
 const allergenMap = {
   milk: "Milk",
   soy: "Soy",
@@ -35,12 +41,12 @@ const allergenMap = {
   artificialColors: "Artificial Colors"
 };
 
-// Convert allergen keys to lowercase for case-insensitive matching
+// convert allergen keys to all lowkeycase 
 const normalizeAllergenKey = (key) => {
   return key.toLowerCase().replace(/\s+/g, '');
 };
 
-// Fetch data on component mount
+// fetch data 
 onMounted(async () => {
   try {
     loading.value = true;
@@ -62,7 +68,7 @@ onMounted(async () => {
   }
 });
 
-// Function to get allergen status for a specific dish and allergen
+// get the allergen status for a specific dish 
 const getAllergenStatus = (dish, allergenKey) => {
   // Find the key in allergenMap that matches the header
   const key = Object.keys(allergenMap).find(key => 
@@ -71,11 +77,11 @@ const getAllergenStatus = (dish, allergenKey) => {
   
   if (!key) return "unidentified";
   
-  // Convert arrays to lowercase for case-insensitive comparison
+  // convert to lowercase to compare easily 
   const normalizedAllergens = dish.allergens?.map(a => a.toLowerCase()) || [];
   const normalizedAllergenFree = dish.allergenFree?.map(a => a.toLowerCase()) || [];
   
-  // Check if the allergen is in the allergens array
+  // is the allergen in the allergens array 
   if (normalizedAllergens.includes(key.toLowerCase())) {
     return true;
   }
@@ -83,7 +89,7 @@ const getAllergenStatus = (dish, allergenKey) => {
   else if (normalizedAllergenFree.includes(key.toLowerCase())) {
     return false;
   }
-  // If it's in neither array
+  // if it's in niether array then we say it's unidentified 
   else {
     return "unidentified";
   }
@@ -107,7 +113,7 @@ const toggleEditMode = (dishId) => {
   }
 };
 
-// Change the selected restaurant
+// change the selected restaurant
 const changeRestaurant = (restaurant) => {
   selectedRestaurant.value = restaurant;
   // Reset expanded and editing states when changing restaurant
@@ -115,39 +121,112 @@ const changeRestaurant = (restaurant) => {
   Object.keys(editingDishes).forEach(key => delete editingDishes[key]);
 };
 
+// function to show notification
+const showNotification = (message, isError = false) => {
+  // Clear any existing timeout
+  if (notification.timeout) {
+    clearTimeout(notification.timeout);
+  }
+  
+  // Set notification properties
+  notification.message = message;
+  notification.isError = isError;
+  notification.show = true;
+  
+  // Auto-hide notification after 5 seconds
+  notification.timeout = setTimeout(() => {
+    notification.show = false;
+  }, 5000);
+};
+
+// Function to refresh data from the server
+const refreshRestaurantData = async () => {
+  try {
+    loading.value = true;
+    const response = await fetch('http://localhost:3001/api/restaurant-locations-dishes');
+    const result = await response.json();
+    
+    // Update restaurants array
+    restaurants.value = result.data;
+    
+    // Find and update the selected restaurant with fresh data
+    if (selectedRestaurant.value) {
+      const updatedRestaurant = restaurants.value.find(r => r.id === selectedRestaurant.value.id);
+      if (updatedRestaurant) {
+        selectedRestaurant.value = updatedRestaurant;
+      }
+    }
+    
+    loading.value = false;
+  } catch (error) {
+    console.error('Failed to refresh restaurant data:', error);
+    loading.value = false;
+  }
+};
+
 // toggle an allergen (for when we're in edit mode)
-const toggleAllergen = (dishId, allergenKey) => {
+const toggleAllergen = async (dishId, allergenKey) => {
   if (editingDishes[dishId] && selectedRestaurant.value) {
     const dish = selectedRestaurant.value.dishes.find(d => d.id === dishId);
     if (dish) {
-      // Find the normalized key to use with our data
+      // find the lowercase key 
       const normalizedKey = normalizeAllergenKey(allergenKey);
       
-      // Current status of the allergen
+      // what's the status of the allergen
       const status = getAllergenStatus(dish, allergenKey);
       
-      // Initialize arrays if they don't exist
+      // if arrays don't exist, create them
       if (!dish.allergens) dish.allergens = [];
       if (!dish.allergenFree) dish.allergenFree = [];
-      
-      // Copy arrays to modify them
+   
       const allergens = [...dish.allergens];
       const allergenFree = [...dish.allergenFree];
-      
-      // Remove from both arrays first (in case it's in either)
+
       dish.allergens = allergens.filter(a => normalizeAllergenKey(a) !== normalizedKey);
       dish.allergenFree = allergenFree.filter(a => normalizeAllergenKey(a) !== normalizedKey);
       
-      // Toggle the status
+      // change the status (allergens -> allergenFree, allergenFree -> remove)
       if (status === true) {
         // If it was in allergens, move to allergenFree
         dish.allergenFree.push(allergenKey);
       } else if (status === false) {
-        // If it was in allergenFree, remove from both (make it unidentified)
-        // Already removed above
       } else {
-        // If it was unidentified, add to allergens
         dish.allergens.push(allergenKey);
+      }
+      
+      // Update the database with the changes
+      try {
+        // just updated information for the backend api 
+        const payload = {
+          dishId: dish.id,
+          allergens: dish.allergens,
+          allergenFree: dish.allergenFree
+        };
+        
+        // Send the update to the server
+        const response = await fetch(`http://localhost:3001/api/dishes/${dish.id}/allergens`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to update allergen information');
+        }
+        
+        console.log('Allergen information updated successfully in database');
+        
+        // success notification 
+        showNotification('Allergen information updated successfully', false);
+      } catch (error) {
+        console.error('Error updating allergen information:', error);
+        // error notification
+        showNotification(`Error updating allergen information: ${error.message}`, true);
+        
+        // revert the change if needed. 
+        refreshRestaurantData();
       }
     }
   }
@@ -159,6 +238,14 @@ const toggleAllergen = (dishId, allergenKey) => {
     <h1 class="text-2xl font-bold text-[#BC6C25] mt-8 mb-4 text-center">
       Allergen Information
     </h1>
+
+    <!-- Notification area for success/error messages -->
+    <div v-if="notification.show" :class="`px-8 py-3 mb-4 rounded ${notification.isError ? 'bg-red-100 text-red-800 border border-red-300' : 'bg-green-100 text-green-800 border border-green-300'}`">
+      <div class="flex justify-between items-center">
+        <p>{{ notification.message }}</p>
+        <button @click="notification.show = false" class="text-gray-600 hover:text-gray-800">×</button>
+      </div>
+    </div>
 
     <!-- Restaurant Selector -->
     <div class="px-8 mb-6">
@@ -285,3 +372,4 @@ table td {
   transform: translateY(-10px);
 }
 </style>
+

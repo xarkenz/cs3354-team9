@@ -1,7 +1,7 @@
 // prisma/seed.js
 require('dotenv').config()            // ← LOADS DATABASE_URL
 const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+
 
 async function main() {
   await prisma.business.createMany({
@@ -27,7 +27,7 @@ main()
   })
 
 const { PrismaClient } = require('@prisma/client')
-//const prisma = new PrismaClient()
+const prisma = new PrismaClient()
 
 async function main() {
   await prisma.business.createMany({
