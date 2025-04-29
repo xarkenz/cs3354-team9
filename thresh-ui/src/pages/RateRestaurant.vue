@@ -97,63 +97,59 @@ export default {
       title: '',
       review: '',
       submitted: false,
-      authorID: 1,
     };
   },
   mounted() {
-    const userId = sessionStorage.getItem("userID"); // ✅ Correct: get, not set
+    const userId = sessionStorage.getItem("userID");
     if (!userId) {
       alert('You must be logged in to rate a restaurant.');
       this.$emit('close');
       return;
     }
 
-    this.authorID = parseInt(userId);
-    console.log('Author ID set to:', this.authorID);
+    // this.authorID = parseInt(userId);
+    // console.log('Author ID set to:', this.authorID);
   },
   methods: {
     async submitReview() {
-      if (!this.rating || !this.review.trim() || !this.title.trim()) return;
+  if (!this.rating || !this.review.trim() || !this.title.trim()) return;
 
-      try {
-        const response = await fetch('http://localhost:3000/api/reviews', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            businessID: this.place.id,
-            authorID: this.authorID,
-            title: this.title.trim(),
-            content: this.review.trim(),
-            numStars: this.rating,
-          }),
-        });
+  try {
+    const response = await fetch('http://localhost:3000/api/reviews', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'mycookies': document.cookie
+      },
+      body: JSON.stringify({
+        businessID: this.place.id,
+        title: this.title.trim(),
+        content: this.review.trim(),
+        numStars: this.rating,
+      }),
+    });
 
-        if (!response.ok) throw new Error('Failed to submit review');
+    if (!response.ok) throw new Error('Failed to submit review');
 
-        this.submitted = true;
-        console.log("Submitted set to true");
+    this.submitted = true;
+    console.log("Submitted set to true");
 
-        // Wait for DOM to update
-        await this.$nextTick();
+    await this.$nextTick();
 
-        // Show toast for 2 seconds
-        setTimeout(() => {
-          this.submitted = false;
+    setTimeout(() => {
+      this.submitted = false;
+      this.rating = 0;
+      this.title = '';
+      this.review = '';
+      this.$emit('submitted');
+      this.$emit('close');
+    }, 1000);
+  } catch (err) {
+    console.error(err);
+    alert('Failed to submit review.');
+  }
+},
 
-          // Reset inputs
-          this.rating = 0;
-          this.title = '';
-          this.review = '';
-
-          // Notify parent
-          this.$emit('submitted');
-          this.$emit('close');
-        }, 1000);
-      } catch (err) {
-        console.error(err);
-        alert('Failed to submit review.');
-      }
-    },
   },
 };
 </script>

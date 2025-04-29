@@ -7,12 +7,14 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 const port = process.env.BACKEND_PORT || 3000;
+const { sessions, getSessionToken } = require('./sessionStore');
+
 
 // pull in your review routes
 const reviewRoutes = require('./review'); // Used to get reviews for each business
 
 // wire in your new admin routes
-const adminRoutes  = require('./routes/admin');
+// const adminRoutes  = require('./routes/admin');
 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -29,26 +31,6 @@ app.use(function(req, res, next) { //https://enable-cors.org/server_expressjs.ht
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-// in-memory session store
-const sessions = {};
-
-//Created by Isaac Philo on April 18th, 2025
-function getSessionToken(request){ //Extract the session token from among the cookies of the request's header
-  // console.log("Attempting to extract session token from cookies = " + request);
-  //NOTE: Since regular cookies are not sent between websites unless some very specific form of authentication is used, I am using a custom header property instead called myCookies
-  // console.log("Properties of request headers: " + Object.getOwnPropertyNames(request.headers));
-  let cookiesUnSplit = request.headers.mycookies;
-  let cookies = cookiesUnSplit.split(";");
-  console.log("cookies = " + cookies);
-  let sessionToken = null;
-  for(let i = 0; i < cookies.length; i++){
-    if(cookies[i].split('=')[0] === 'session'){
-      sessionToken = cookies[i].split('=')[1];
-    }
-  }
-  return sessionToken;
-}
 
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to sign up for an account with an email, username, password, and confirmation password. Presently, the frontend also checks to see whether the password and confirmation password are the same, but I figured I'd check here as well.
@@ -223,7 +205,7 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.use('/api/reviews', reviewRoutes);
-app.use('/api/admin', adminRoutes);
+// app.use('/api/admin', adminRoutes);
 
 app.get('/api/dishes', async (req, res) => {
   try {
@@ -273,4 +255,6 @@ app.get('/api/business/:businessId/dishes', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 });
+
+module.exports = { sessions, getSessionToken };
 
