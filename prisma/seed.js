@@ -1,6 +1,4 @@
 // prisma/seed.js
-
-// prisma/seed.js
 require('dotenv').config()            // ← LOADS DATABASE_URL
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
