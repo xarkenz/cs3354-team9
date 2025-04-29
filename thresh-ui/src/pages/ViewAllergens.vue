@@ -10,12 +10,19 @@ const editingDishes = reactive({});
 
 onMounted(async () => {
   try {
-    const businessId = 1;
-    const response = await fetch(`/api/business/${businessId}/dishes`);
-    const data = await response.json();
-    console.log('Data from backend:', data); 
-  } catch (error) {
-    console.error('API fetch failed:', error);
+    const businessId = 50;
+    try {
+      const places = ref([]);
+      const response = await fetch('http://localhost:3001/api/restaurant-locations');
+      const result = await response.json();
+      console.log("Fetched restaurants:", result.data);
+      places.value = result.data; 
+    
+    } catch (error) {
+      console.error('API fetch failed:', error);
+    }
+  } catch (e) {
+    console.error('Outer try failed:', e);
   }
 });
 

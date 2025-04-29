@@ -244,6 +244,7 @@ app.get('/api/business/:businessId/dishes', async (req, res) => {
             dishRestrictionReviews: true,
             businessID: true, 
             id: true,
+            allergens: true, 
           }
         }
       }
