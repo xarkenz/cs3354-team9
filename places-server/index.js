@@ -94,6 +94,52 @@ app.get('/api/restaurant-locations', async (req, res) => {
   }
 });
 
+// GET: Return all dishes for a specific restaurant
+// GET: Return all restaurants in the DB with name, lat, lng
+app.get('/api/restaurant-locations-dishes', async (req, res) => {
+  try {
+    const restaurants = await prisma.business.findMany({
+      select: {
+        id: true,
+        name: true,
+        lat: true,
+        lng: true,
+        priceRange: true,
+        imageUrl: true,
+        icon: true,
+        reviews: {
+          select: {
+            id: true,
+            title: true,
+            content: true,
+            numStars: true,
+            author: {
+              select: {
+                username: true
+              }
+            }
+          }
+        },
+        dishes: {
+          select: {
+            id: true,
+            businessID: true,
+            name: true,
+            allergens: true,
+            allergenFree: true,
+          }
+        }
+      }
+    });
+
+    res.status(200).json({ success: true, data: restaurants });
+  } catch (error) {
+    // DEBUGGGGGG
+    console.error('Error fetching restaurants:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.post('/api/reviews', async (req, res) => {
   const { businessID, authorID, title, content, numStars } = req.body;
 
