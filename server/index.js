@@ -121,7 +121,14 @@ app.get('/api/user/:username', async (req, res) => {
   const responseBody = {
     username: userResponse.username,
     reviews: userResponse.reviews.map(review => ({
-      business: review.business,
+      id: review.id,
+      title: review.title,       
+      content: review.content,     
+      numStars: review.numStars,  
+      business: {
+        id: review.business.id,
+        name: review.business.name,
+      },
     })),
     canBan,
   };
