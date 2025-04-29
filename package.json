@@ -14,7 +14,7 @@
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "prisma:generate": "prisma generate",
-+   "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
