@@ -157,45 +157,68 @@ export default {
       // Dummy restaurant data for testing
       this.restaurants = [
         {
-          id: 1,
-          name: "Tasty Tacos",
+          id: 86,
+          name: "Mi Cocina",
           cuisine: "Mexican",
-          location: "123 Main St, Dallas, TX",
-          rating: 4.5,
-          priceRange: "$"
+          location: "32.9789318021346,-96.7666886932541",
+          priceRange: "$$",
         },
         {
-          id: 2,
-          name: "Pizza Paradise",
-          cuisine: "Italian",
-          location: "456 Oak Ave, Dallas, TX",
-          rating: 4.2,
-          priceRange: "$$"
+          id: 50,
+          name: "My Canh Restaurant",
+          cuisine: "",
+          location: "32.9169266,-96.7010156",
+          rating: 5,
+          priceRange: "$$",
         },
         {
-          id: 3,
-          name: "Sushi Sensation",
-          cuisine: "Japanese",
-          location: "789 Pine St, Dallas, TX",
-          rating: 4.8,
-          priceRange: "$$$"
-        },
-        {
-          id: 4,
-          name: "Burger Barn",
+          id: 51,
+          name: "Whataburger",
           cuisine: "American",
-          location: "321 Elm St, Dallas, TX",
-          rating: 3.9,
-          priceRange: "$"
-        },
-        {
-          id: 5,
-          name: "Curry Corner",
-          cuisine: "Indian",
-          location: "654 Maple Dr, Dallas, TX",
-          rating: 4.6,
-          priceRange: "$$"
+          location: "32.9086395,-96.69982",
+          rating: 5,
+          priceRange: "$$",
         }
+        // {
+        //   id: 1,
+        //   name: "Tasty Tacos",
+        //   cuisine: "Mexican",
+        //   location: "123 Main St, Dallas, TX",
+        //   rating: 4.5,
+        //   priceRange: "$"
+        // },
+        // {
+        //   id: 2,
+        //   name: "Pizza Paradise",
+        //   cuisine: "Italian",
+        //   location: "456 Oak Ave, Dallas, TX",
+        //   rating: 4.2,
+        //   priceRange: "$$"
+        // },
+        // {
+        //   id: 3,
+        //   name: "Sushi Sensation",
+        //   cuisine: "Japanese",
+        //   location: "789 Pine St, Dallas, TX",
+        //   rating: 4.8,
+        //   priceRange: "$$$"
+        // },
+        // {
+        //   id: 4,
+        //   name: "Burger Barn",
+        //   cuisine: "American",
+        //   location: "321 Elm St, Dallas, TX",
+        //   rating: 3.9,
+        //   priceRange: "$"
+        // },
+        // {
+        //   id: 5,
+        //   name: "Curry Corner",
+        //   cuisine: "Indian",
+        //   location: "654 Maple Dr, Dallas, TX",
+        //   rating: 4.6,
+        //   priceRange: "$$"
+        // }
       ];
       
       this.$emit('restaurants-loaded', this.restaurants);
