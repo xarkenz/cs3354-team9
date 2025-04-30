@@ -5,11 +5,9 @@
 
 <template>
   <div class="p-6 max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Allergen Records</h1>
+    <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens</h1>
 
-    <div v-if="!menuItems.length" class="text-gray-500">
-      No allergen records found.
-    </div>
+    <div v-if="!menuItems.length" class="text-gray-500">No allergen records found.</div>
 
     <ul v-else>
       <li
@@ -32,7 +30,7 @@
       </li>
     </ul>
 
-    <!-- Confirmation Modal -->
+    <!-- confirm modal -->
     <div
       v-if="showModal"
       class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
@@ -40,8 +38,7 @@
       <div class="bg-white rounded-lg p-6 w-80 space-y-4">
         <h2 class="text-xl font-semibold">Confirm Removal</h2>
         <p>
-          Remove
-          <strong>"{{ selected.allergen }}"</strong>
+          Remove <strong>"{{ selected.allergen }}"</strong>
           from <strong>"{{ selected.name }}"</strong>?
         </p>
         <div class="mt-4 flex justify-end space-x-4">
@@ -61,9 +58,9 @@
       </div>
     </div>
 
-    <!-- Feedback Messages -->
+    <!-- feedback -->
     <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
-    <p v-if="errorMsg"   class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
+    <p v-if="errorMsg" class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -85,74 +82,70 @@ export default {
   methods: {
     async fetchMenu() {
       try {
-        // 1) fetch all dishes (includes `allergens` JSON array)
         const res = await fetch('/api/dishes', {
-          headers: {
-            'Content-Type':'application/json',
-            'mycookies': `session=${cookies.get('session')}`
-          }
-        });
-        const dishes = await res.json();
-
-        // 2) flatten to one row per allergen
+          headers: { 'Content-Type':'application/json', 'mycookies': `session=${cookies.get('session')}` }
+        })
+        const dishes = await res.json()
         this.menuItems = dishes.flatMap(d =>
           (d.allergens || []).map(a => ({
             dishId: d.id,
-            name: d.name,
+            name:   d.name,
             allergen: a
           }))
-        );
-        this.errorMsg = '';
+        )
+        this.errorMsg = ''
       } catch (err) {
-        console.error(err);
-        this.errorMsg = 'Failed to load allergen records.';
+        console.error(err)
+        this.errorMsg = 'Failed to load allergen records.'
       }
     },
 
     promptRemoval(item) {
-      this.selected   = item;
-      this.showModal  = true;
-      this.successMsg = '';
-      this.errorMsg   = '';
+      this.selected   = item
+      this.showModal  = true
+      this.successMsg = ''
+      this.errorMsg   = ''
     },
 
     cancelRemoval() {
-      this.showModal = false;
-      this.selected  = null;
+      this.showModal = false
+      this.selected  = null
     },
 
     async removeAllergen() {
-      this.showModal = false;
+      this.showModal = false
       try {
-        const { dishId, allergen } = this.selected;
+        const { dishId, allergen } = this.selected
         const res = await fetch(
           `/api/dishes/${dishId}/allergens/${encodeURIComponent(allergen)}`,
           {
             method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'mycookies': `session=${cookies.get('session')}`
-            }
+            headers: { 'Content-Type':'application/json', 'mycookies': `session=${cookies.get('session')}` }
           }
-        );
-        const json = await res.json();
-        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.');
+        )
+        const json = await res.json()
+        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.')
 
-        // locally remove from list
-        this.menuItems = this.menuItems.filter(
-          i => !(i.dishId === dishId && i.allergen === allergen)
-        );
-        this.successMsg = `Allergen "${allergen}" removed from "${this.selected.name}".`;
+        // update locally
+        this.menuItems = this.menuItems.filter(i =>
+          !(i.dishId === dishId && i.allergen === allergen)
+        )
+        this.successMsg = `Removed "${allergen}" from "${this.selected.name}".`
       } catch (err) {
-        console.error(err);
-        this.errorMsg = `Failed to remove "${this.selected.allergen}".`;
+        console.error(err)
+        this.errorMsg = `Failed to remove "${this.selected.allergen}".`
       } finally {
-        this.selected = null;
+        this.selected = null
       }
     }
   },
+
   mounted() {
-    this.fetchMenu();
+    this.fetchMenu()
   }
 }
 </script>
+
+<style scoped>
+/* styling is driven by your Tailwind setup */
+</style>
