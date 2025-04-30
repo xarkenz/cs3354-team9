@@ -250,32 +250,47 @@ app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
 });
 
 //Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
-app.get('/api/business/:businessId/dishes', async (req, res) => {
-  const { businessId } = req.params;
+app.get('/api/dishes', async (req, res) => {
   try {
-    const businessWithDishes = await prisma.business.findUnique({
-      where: { id: parseInt(businessId) },
-      include: {
-        dishes: {
-          select: {
-            name: true,
-            dishRestrictionReviews: true,
-            businessID: true, 
-            id: true,
-            allergens: true, 
-          }
-        }
+    // only select id, name and allergens so the frontend can flatten them
+    const dishes = await prisma.dish.findMany({
+      select: {
+        id: true,
+        name: true,
+        allergens: true
       }
     });
-    if (!businessWithDishes) {
-      return res.status(404).json({ error: 'Business not found' });
-    }
-    res.json(businessWithDishes.dishes);
+    return res.json(dishes);
   } catch (error) {
-    console.error('Error fetching business dishes:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error fetching dishes:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// DELETE a single allergen from a dish's JSON array
+app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
+  const dishId = parseInt(req.params.dishId, 10);
+  const allergenToRemove = decodeURIComponent(req.params.allergen);
+  try {
+    const dish = await prisma.dish.findUnique({
+      where: { id: dishId },
+      select: { allergens: true }
+    });
+    if (!dish) {
+      return res.status(404).json({ error: 'Dish not found' });
+    }
+    const newAllergens = (dish.allergens || []).filter(a => a !== allergenToRemove);
+    await prisma.dish.update({
+      where: { id: dishId },
+      data: { allergens: newAllergens }
+    });
+    return res.json({ allergens: newAllergens });
+  } catch (e) {
+    console.error('Error deleting allergen:', e);
+    return res.status(500).json({ error: 'Could not remove allergen' });
+  }
+});
+
 
 // list all restaurants
 app.get('/api/restaurants', async (req, res) => {
