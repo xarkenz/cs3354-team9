@@ -33,10 +33,13 @@
               <option>Vegan</option>
               <option>Vegetarian</option>
               <option>Halal</option>
-              <option>Peanut</option>
+              <option>Nuts</option>
               <option>Gluten</option>
-              <option>Dairy</option>
-              <option>None</option>
+              <option>Kosher</option>
+              <option>Lactose</option>
+              <option>Sesame</option>
+              <option>Pescatarian</option>
+              <option>Soy</option>
               <option>None</option>
             </select>
           </div>
@@ -279,9 +282,11 @@ export default {
           (restaurant.dishes && this.restaurantSupportsAllergy(restaurant, this.selectedAllergy));
         
         // Filter by dietary restriction - check both dietaryRestriction field and icons array
-        const matchesDietary = !this.selectedDietaryRestriction || 
-          this.restaurantSupportsDietary(restaurant, this.selectedDietaryRestriction);
-        
+        const matchesDietary = 
+  !this.selectedDietaryRestriction || 
+  this.selectedDietaryRestriction === 'None' || 
+  this.restaurantSupportsDietary(restaurant, this.selectedDietaryRestriction);
+
         // Filter by price range
         const matchesPrice = !this.selectedPrice || restaurant.priceRange === this.selectedPrice;
         

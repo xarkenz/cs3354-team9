@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3001;
 
-app.use(cors()); // Allow frontend to access
+app.use(cors()); //front end access 
 app.use(express.json());
 
 app.get('/api/save-restaurants', async (req, res) => {
@@ -140,6 +140,7 @@ app.get('/api/restaurant-locations-dishes', async (req, res) => {
   }
 });
 
+//made to edit reviews 
 app.post('/api/reviews', async (req, res) => {
   const { businessID, authorID, title, content, numStars } = req.body;
 
@@ -179,7 +180,7 @@ app.put('/api/dishes/:dishId/allergens', async (req, res) => {
     });
   }
   
-  // Validate that allergens and allergenFree are arrays
+  // make sure they're arrays 
   if (!Array.isArray(allergens) || !Array.isArray(allergenFree)) {
     return res.status(400).json({ 
       success: false, 
@@ -188,7 +189,7 @@ app.put('/api/dishes/:dishId/allergens', async (req, res) => {
   }
   
   try {
-    // First check if the dish exists
+    // does the dish exist?
     const dish = await prisma.dish.findUnique({
       where: { id: parseInt(dishId) }
     });
@@ -200,7 +201,7 @@ app.put('/api/dishes/:dishId/allergens', async (req, res) => {
       });
     }
     
-    // Update the dish with new allergen information
+    // update with the new information 
     const updatedDish = await prisma.dish.update({
       where: { id: parseInt(dishId) },
       data: {
@@ -209,7 +210,7 @@ app.put('/api/dishes/:dishId/allergens', async (req, res) => {
       }
     });
     
-    // Return the updated dish information
+    // return the updated dish information 
     res.status(200).json({ 
       success: true, 
       message: 'Allergen information updated successfully',
