@@ -33,10 +33,13 @@
               <option>Vegan</option>
               <option>Vegetarian</option>
               <option>Halal</option>
-              <option>Peanut</option>
+              <option>Nuts</option>
               <option>Gluten</option>
-              <option>Dairy</option>
-              <option>None</option>
+              <option>Kosher</option>
+              <option>Lactose</option>
+              <option>Sesame</option>
+              <option>Pescatarian</option>
+              <option>Soy</option>
               <option>None</option>
             </select>
           </div>
