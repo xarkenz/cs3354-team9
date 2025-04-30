@@ -93,15 +93,19 @@
           </div>
         </div>
 
-        <!-- Remove Restaurant Demo Link -->
-        <div class="mt-6">
-          <a
-            href="#/remove-restaurant"
-            class="w-full block text-center bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition"
-          >
-            Remove Restaurants (Demo)
-          </a>
+           <!-- Admin: Restaurant Management -->
+        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
+      <div class="flex items-center gap-4">
+        <TrashIcon class="w-8 h-8" />
+        <div>
+          <h3 class="text-[#283618] text-sm font-bold">Remove Restaurants</h3>
+          <p>Delete restaurants from the system</p>
         </div>
+      </div>
+      <a href="#/remove-restaurant" class="block">
+        <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+      </a>
+    </div>
 
         <!-- Log Out Button -->
         <button
@@ -149,6 +153,7 @@
 <script>
 import { Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
 import RemoveRestaurant from './RemoveRestaurant.vue';
+import { TrashIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 
 export default {
   name: 'Profile',
