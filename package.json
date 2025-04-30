@@ -13,7 +13,9 @@
     "test:unit": "vitest",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "prisma generate"
+  },
+  "prisma": {
     "seed": "node prisma/seed.js"
   },
   "dependencies": {

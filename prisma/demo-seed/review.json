@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "authorID": 5,
+    "businessID": 70,
+    "title": "Fruit Juice",
+    "content": "Fresh fruits are great in drinks. Nice and refreshing after a long day.",
+    "numStars": 4
+  }
+]

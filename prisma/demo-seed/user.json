@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "email": "admin@example.com",
+    "username": "admin",
+    "password": "ce57d8bc990447c7ec35557040756db2a9ff7cdab53911f3c7995bc6bf3572cda8c94fa53789e523a680de9921c067f6717e79426df467185fc7a6dbec4b2d57",
+    "dishRestrictionReviews": [],
+    "reviews": [],
+    "isAdmin": true,
+    "isBanned": false
+  },
+  {
+    "id": 2,
+    "email": "exampleuser@example.com",
+    "username": "example-user",
+    "password": "ce57d8bc990447c7ec35557040756db2a9ff7cdab53911f3c7995bc6bf3572cda8c94fa53789e523a680de9921c067f6717e79426df467185fc7a6dbec4b2d57",
+    "dishRestrictionReviews": [],
+    "reviews": [],
+    "isAdmin": false,
+    "isBanned": false
+  },
+  {
+    "id": 4,
+    "email": "sarah@test.com",
+    "username": "saj000",
+    "password": "3627909a29c31381a071ec27f7c9ca97726182aed29a7ddd2e54353322cfb30abb9e3a6df2ac2c20fe23436311d678564d0c8d305930575f60e2d3d048184d79",
+    "dishRestrictionReviews": [],
+    "reviews": [],
+    "isAdmin": false,
+    "isBanned": false
+  },
+  {
+    "id": 5,
+    "email": "chim@test.com",
+    "username": "chimney",
+    "password": "41d136f20ab68fac5945182098997b9621714309c12d9bec7b7595b1e0f75a1c17b6f8e45510a25d1f98f677f4dcd054b007f3cf60f7652bba0654e5e90e5399",
+    "dishRestrictionReviews": [],
+    "reviews": [
+      {
+        "id": 1
+      }
+    ],
+    "isAdmin": false,
+    "isBanned": false
+  },
+  {
+    "id": 6,
+    "email": "aaryaamoharir@gmail.com",
+    "username": "Aria ",
+    "password": "d404559f602eab6fd602ac7680dacbfaadd13630335e951f097af3900e9de176b6db28512f2e000b9d04fba5133e8b1c6e8df59db3a8ab9d60be4b97cc9e81db",
+    "dishRestrictionReviews": [],
+    "reviews": [],
+    "isAdmin": false,
+    "isBanned": false
+  }
+]

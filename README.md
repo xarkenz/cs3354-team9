@@ -8,12 +8,21 @@ To run the Thresh web application locally, follow these steps:
 2. Navigate to the `thresh-ui` directory:
    ```bash
    cd thresh-ui
+   ```
 3. Install dependencies
     ```bash
     npm install
-4. Start the development server
+    ```
+4. Initialize the database
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    npx prisma db seed
+    ```
+5. Start the development server
     ```bash
     npm run dev
+    ```
 > ⚠️ **Important:**  
 > Make sure you run `npm run dev` from **inside the `thresh-ui` directory**, _not_ the outer project folder.  
 > Running the command from the wrong directory will result in an error like `'vite' is not recognized`.
