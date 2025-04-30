@@ -172,7 +172,6 @@ app.post("/api/login", async (req, res) => {
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
-  // Passing the request to this function extracts the session token cookie from the headers of the request
   const sessionToken = getSessionToken(req);
   if (sessionToken) {
     let user = sessions[sessionToken];
@@ -186,7 +185,6 @@ app.get('/api/whoami', (req, res) => {
 
 // Created by Sean Clarke on April 20th, 2025
 app.delete('/api/account', async (req, res) => {
-  // Passing the request to this function extracts the session token cookie from the headers of the request
   const sessionToken = getSessionToken(req);
   let session;
   if (sessionToken && (session = sessions[sessionToken])) {
@@ -198,7 +196,6 @@ app.delete('/api/account', async (req, res) => {
       }
     });
     console.log("Deleted user: " + JSON.stringify(deletedUser));
-    // Invalidate the session
     delete sessions[sessionToken];
     return res.status(200).json({});
   }
@@ -228,12 +225,33 @@ app.get('/api/dishes', async (req, res) => {
   }
 });
 
+// DELETE a single allergen from a dish's JSON array
+app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
+  const dishId = parseInt(req.params.dishId, 10);
+  const allergenToRemove = decodeURIComponent(req.params.allergen);
+  try {
+    const dish = await prisma.dish.findUnique({
+      where: { id: dishId },
+      select: { allergens: true }
+    });
+    if (!dish) {
+      return res.status(404).json({ error: 'Dish not found' });
+    }
+    const newAllergens = (dish.allergens || []).filter(a => a !== allergenToRemove);
+    await prisma.dish.update({
+      where: { id: dishId },
+      data: { allergens: newAllergens }
+    });
+    return res.json({ allergens: newAllergens });
+  } catch (e) {
+    console.error('Error deleting allergen:', e);
+    return res.status(500).json({ error: 'Could not remove allergen' });
+  }
+});
+
 //Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
 app.get('/api/business/:businessId/dishes', async (req, res) => {
   const { businessId } = req.params;
-  // remove this stray line:
-  // res.status(200).json({ reviews: foundReviews });
-
   try {
     const businessWithDishes = await prisma.business.findUnique({
       where: { id: parseInt(businessId) },
@@ -274,7 +292,7 @@ app.get('/api/restaurants', async (req, res) => {
 
 // delete one restaurant by id
 app.delete('/api/restaurants/:id', async (req, res) => {
-  const id = parseInt(req.params.id)
+  const id = parseInt(req.params.id, 10)
   try {
     await prisma.business.delete({ where: { id } })
     return res.json({})
@@ -290,4 +308,3 @@ app.listen(port, () => {
 });
 
 module.exports = { sessions, getSessionToken };
-
