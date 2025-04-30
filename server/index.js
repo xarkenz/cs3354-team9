@@ -211,48 +211,9 @@ app.get('/api/hello', (req, res) => {
 app.use('/api/reviews', reviewRoutes);
 // app.use('/api/admin', adminRoutes);
 
+// === REPLACED: only select id, name, allergens ===
 app.get('/api/dishes', async (req, res) => {
   try {
-    const dishes = await prisma.dish.findMany({
-      include: {
-        dishRestrictionReviews: true 
-      }
-    });
-    res.json(dishes);
-  } catch (error) {
-    console.error('Error fetching dishes:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// DELETE a single allergen from a dish's JSON array
-app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
-  const dishId = parseInt(req.params.dishId, 10);
-  const allergenToRemove = decodeURIComponent(req.params.allergen);
-  try {
-    const dish = await prisma.dish.findUnique({
-      where: { id: dishId },
-      select: { allergens: true }
-    });
-    if (!dish) {
-      return res.status(404).json({ error: 'Dish not found' });
-    }
-    const newAllergens = (dish.allergens || []).filter(a => a !== allergenToRemove);
-    await prisma.dish.update({
-      where: { id: dishId },
-      data: { allergens: newAllergens }
-    });
-    return res.json({ allergens: newAllergens });
-  } catch (e) {
-    console.error('Error deleting allergen:', e);
-    return res.status(500).json({ error: 'Could not remove allergen' });
-  }
-});
-
-//Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
-app.get('/api/dishes', async (req, res) => {
-  try {
-    // only select id, name and allergens so the frontend can flatten them
     const dishes = await prisma.dish.findMany({
       select: {
         id: true,
@@ -261,13 +222,13 @@ app.get('/api/dishes', async (req, res) => {
       }
     });
     return res.json(dishes);
-  } catch (error) {
-    console.error('Error fetching dishes:', error);
+  } catch (e) {
+    console.error('Error fetching dishes:', e);
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// DELETE a single allergen from a dish's JSON array
+// === REPLACED: DELETE a single allergen from a dish’s JSON array ===
 app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
   const dishId = parseInt(req.params.dishId, 10);
   const allergenToRemove = decodeURIComponent(req.params.allergen);
@@ -290,7 +251,6 @@ app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
     return res.status(500).json({ error: 'Could not remove allergen' });
   }
 });
-
 
 // list all restaurants
 app.get('/api/restaurants', async (req, res) => {
@@ -323,4 +283,3 @@ app.listen(port, () => {
 });
 
 module.exports = { sessions, getSessionToken };
-
