@@ -5,10 +5,10 @@ import logo from './../assets/edit-246.png';
 // stores dishes in edit more and expanded state
 const expandedDishes = reactive({});
 const editingDishes = reactive({});
-// Store dishes with pending changes
+// dishes that are unidentified 
 const pendingChanges = reactive({});
 
-// Initialize reactive reference for restaurants data
+// initialize reactive reference for restaurants data
 const restaurants = ref([]);
 const selectedRestaurant = ref(null);
 const loading = ref(true);
@@ -201,13 +201,13 @@ const toggleAllergen = (dishId, allergenKey) => {
   const dish = selectedRestaurant.value.dishes.find(d => d.id === dishId);
   if (!dish) return;
   
-  // Check if this allergen can be toggled
+  // check if it can be toggled (basically is it marked with a checkmark)
   if (!canToggleAllergen(dish, allergenKey)) {
     showNotification("Cannot modify confirmed allergens for safety reasons", true);
     return;
   }
   
-  // Initialize pending changes for this dish if not exists
+  // initialize pending changes for this dish if not already done
   if (!pendingChanges[dishId]) {
     pendingChanges[dishId] = {
       dishId: dish.id,
@@ -244,7 +244,7 @@ const toggleAllergen = (dishId, allergenKey) => {
   dish.allergenFree = [...pendingChanges[dishId].allergenFree];
 };
 
-// Save changes to the database
+// save changes to the server only if the button is pressed 
 const saveChanges = async (dishId) => {
   if (!pendingChanges[dishId]) {
     showNotification("No changes to save", false);
