@@ -41,6 +41,7 @@
               <li><a href="#/map">Map</a></li>
               <li><a href="#/manage-restaurants">Manage Restaurants</a></li>
               <li><a href="#/manage-allergens">Manage Allergens</a></li>
+              <li><a href="#/remove-restaurant">Remove Restaurants</a></li>
             </ul>
           </div> -->
         </div>

@@ -93,7 +93,7 @@ export default {
       };
       //Send the request
       try{
-        let response = await fetch("http://localhost:3000/api/login", requestOptions).then(response => response.json());
+        let response = await fetch("/api/login", requestOptions).then(response => response.json());
         console.log(response);
         if (!response || response.error) {
           throw response?.error
@@ -106,7 +106,7 @@ export default {
         console.log(`local session cookie = ${this.$cookies.get("session")}`);
         this.sessionToken = response.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
-        alert(`Welcome, ${this.usernameEmail}!`);
+        alert(`Welcome, ${response.username}!`);
         location.hash = "/filter-search";
       } catch (error) {
         console.error(error);

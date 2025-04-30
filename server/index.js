@@ -40,14 +40,17 @@ app.post("/api/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const confirmationPassword = req.body.confirmationPassword;
-  if(password !== confirmationPassword){
-    return res.status(401).json({ error: 'Password and confirmation password do not match!' });
+  if (!email || !username || !password) {
+    return res.status(400).json({ error: 'All fields are required.' });
   }
-  else{
+  else if (password !== confirmationPassword) {
+    return res.status(400).json({ error: 'Password and confirmation password do not match.' });
+  }
+  else {
     const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
     shaObj.update(`${password}`);
     const hash = shaObj.getHash("HEX");
-    try{
+    try {
       const prismaResponse = await prisma.user.create({
         data: {
           email: email,
@@ -55,20 +58,18 @@ app.post("/api/signup", async (req, res) => {
           password: hash,
         },
       });
-      if(!prismaResponse){
-        return res.status(401).json({ error: 'Signup Failed!' });
-      }
-      else{
-        console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
-        const sessionToken = uuid();
-        sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
-        res.set('Set-Cookie', `session=${sessionToken}`);
-        return res.status(200).json({ sessionToken, userId: prismaResponse.id });
-      }
+      console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
+      const sessionToken = uuid();
+      sessions[sessionToken] = {
+        email: prismaResponse.email,
+        username: prismaResponse.username,
+        userId: prismaResponse.id,
+      };
+      res.set('Set-Cookie', `session=${sessionToken}`);
+      return res.status(200).json({ sessionToken, userId: prismaResponse.id });
     }
     catch (error) {
-      console.log(error);
-      return res.status(500).json({ error: `Internal error: ${error}` });
+      res.status(403).json({ error: 'The entered username or email address is already associated with an account.' });
     }
   }
 });
@@ -172,7 +173,6 @@ app.post("/api/login", async (req, res) => {
 //Created by Isaac Philo on April 18th, 2025, with minor inspiration from https://youtu.be/BgsQrOHNKeY
 //Used to check which user corresponds to the current session token
 app.get('/api/whoami', (req, res) => {
-  // Passing the request to this function extracts the session token cookie from the headers of the request
   const sessionToken = getSessionToken(req);
   if (sessionToken) {
     let user = sessions[sessionToken];
@@ -186,7 +186,6 @@ app.get('/api/whoami', (req, res) => {
 
 // Created by Sean Clarke on April 20th, 2025
 app.delete('/api/account', async (req, res) => {
-  // Passing the request to this function extracts the session token cookie from the headers of the request
   const sessionToken = getSessionToken(req);
   let session;
   if (sessionToken && (session = sessions[sessionToken])) {
@@ -195,10 +194,9 @@ app.delete('/api/account', async (req, res) => {
         id: session.userId,
         email: session.email,
         username: session.username,
-      }
+      },
     });
     console.log("Deleted user: " + JSON.stringify(deletedUser));
-    // Invalidate the session
     delete sessions[sessionToken];
     return res.status(200).json({});
   }
@@ -206,58 +204,110 @@ app.delete('/api/account', async (req, res) => {
     return res.status(400).json({ error: "Not logged in!" });
   }
 });
-
-app.get('/api/hello', (req, res) => {
-  res.json('Hello World!')
+app.put('/api/account', async (req, res) => {
+  // Passing the request to this function extracts the session token cookie from the headers of the request
+  const sessionToken = getSessionToken(req);
+  let session;
+  if (sessionToken && (session = sessions[sessionToken])) {
+    // The idea is that this is a general-purpose API target for updating account details,
+    // though for now only email changes are processed
+    const newEmail = req.body?.email;
+    if (newEmail && typeof(newEmail) === "string") {
+      try {
+        await prisma.user.update({
+          where: {
+            id: session.userId,
+            email: session.email,
+            username: session.username,
+          },
+          data: {
+            email: newEmail,
+          },
+        });
+      }
+      catch (error) {
+        console.log(`Refused to update clashing email address for ${session.username}: ${session.email} -/> ${newEmail}`);
+        return res.status(403).json({ error: "The entered email address is already associated with an account." });
+      }
+      console.log(`Updated email address for ${session.username}: ${session.email} --> ${newEmail}`);
+      // Update the email address for the current session
+      session.email = newEmail;
+    }
+    return res.status(200).json({});
+  }
+  else {
+    return res.status(400).json({ error: "Not logged in!" });
+  }
 });
 
 app.use('/api/reviews', reviewRoutes);
 // app.use('/api/admin', adminRoutes);
 
+// === REPLACED: only select id, name, allergens ===
 app.get('/api/dishes', async (req, res) => {
   try {
     const dishes = await prisma.dish.findMany({
-      include: {
-        dishRestrictionReviews: true 
+      select: {
+        id: true,
+        name: true,
+        allergens: true
       }
     });
-    res.json(dishes);
-  } catch (error) {
-    console.error('Error fetching dishes:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.json(dishes);
+  } catch (e) {
+    console.error('Error fetching dishes:', e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-//Made by Aaryaa Moharir to view all the dishes and corresponding dish information about each dish in a Business 
-app.get('/api/business/:businessId/dishes', async (req, res) => {
-  const { businessId } = req.params;
-  // remove this stray line:
-  // res.status(200).json({ reviews: foundReviews });
-
+// === REPLACED: DELETE a single allergen from a dish’s JSON array ===
+app.delete('/api/dishes/:dishId/allergens/:allergen', async (req, res) => {
+  const dishId = parseInt(req.params.dishId, 10);
+  const allergenToRemove = decodeURIComponent(req.params.allergen);
   try {
-    const businessWithDishes = await prisma.business.findUnique({
-      where: { id: parseInt(businessId) },
-      include: {
-        dishes: {
-          select: {
-            name: true,
-            dishRestrictionReviews: true,
-            businessID: true, 
-            id: true,
-            allergens: true, 
-          }
-        }
-      }
+    const dish = await prisma.dish.findUnique({
+      where: { id: dishId },
+      select: { allergens: true }
     });
-    if (!businessWithDishes) {
-      return res.status(404).json({ error: 'Business not found' });
+    if (!dish) {
+      return res.status(404).json({ error: 'Dish not found' });
     }
-    res.json(businessWithDishes.dishes);
-  } catch (error) {
-    console.error('Error fetching business dishes:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    const newAllergens = (dish.allergens || []).filter(a => a !== allergenToRemove);
+    await prisma.dish.update({
+      where: { id: dishId },
+      data: { allergens: newAllergens }
+    });
+    return res.json({ allergens: newAllergens });
+  } catch (e) {
+    console.error('Error deleting allergen:', e);
+    return res.status(500).json({ error: 'Could not remove allergen' });
   }
 });
+
+// list all restaurants
+app.get('/api/restaurants', async (req, res) => {
+  try {
+    const restaurants = await prisma.business.findMany({
+      select: { id: true, name: true }
+    })
+    return res.json({ restaurants })
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({ error: 'Could not load restaurants' })
+  }
+})
+
+// delete one restaurant by id
+app.delete('/api/restaurants/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10)
+  try {
+    await prisma.business.delete({ where: { id } })
+    return res.json({})
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({ error: 'Deletion failed' })
+  }
+})
 
 //START SERVER 
 app.listen(port, () => {
@@ -265,4 +315,3 @@ app.listen(port, () => {
 });
 
 module.exports = { sessions, getSessionToken };
-

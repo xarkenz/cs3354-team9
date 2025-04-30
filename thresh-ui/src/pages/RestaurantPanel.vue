@@ -235,8 +235,11 @@ function getAverageStars(reviews) {
                   />
                 </svg>
               </div>
-              <p class="font-semibold text-green-900">
-                {{ review.author?.username || 'Anonymous' }}
+              <a v-if="review.author" class="font-semibold text-green-900" :href="'#/user/' + review.author.username">
+                {{review.author.username}}
+              </a>
+              <p v-else class="font-semibold text-green-900">
+                Anonymous
               </p>
             </div>
 

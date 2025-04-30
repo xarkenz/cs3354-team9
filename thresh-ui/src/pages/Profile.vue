@@ -20,7 +20,7 @@
           <label class="block text-[#283618] text-sm font-bold">Username</label>
           <input
             type="text"
-            placeholder="YourUsername"
+            placeholder="User"
             class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
             :value="currentUser?.username"
             disabled
@@ -39,24 +39,10 @@
             Edit
           </button>
         </div>
-
       </div> <!-- LEFT SECTION END -->
 
       <!-- Right Section -->
       <div class="flex flex-col justify-center gap-4">
-        <!-- Dietary Profiles -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
-          <div class="flex items-center gap-4">
-            <NoSymbolIcon class="w-8 h-8" />
-            <div>
-              <p class="font-semibold text-green-950">Dietary Profiles</p>
-              <p class="text-sm text-green-950"># Profiles Saved</p>
-            </div>
-          </div>
-        </div>
-
-
-        
         <!-- My Reviews -->
         <div
           @click="showReviewModal = true"
@@ -71,9 +57,11 @@
           </div>
         </div>
 
-
         <!-- My Favorites -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
+        <a
+          href="#/save-favorite-restaurant"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md"
+        >
           <div class="flex items-center gap-4">
             <HandThumbUpIcon class="w-8 h-8 text-green-950"/>
             <div>
@@ -81,11 +69,11 @@
               <p class="text-sm text-green-950"># Favorite Restaurants</p>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- Settings -->
-        <div
-          @click="goToAccountSettings"
+        <a
+          href="#/account-settings"
           class="cursor-pointer flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md hover:brightness-95 transition"
         >
           <div class="flex items-center gap-4">
@@ -94,9 +82,37 @@
               <p class="font-semibold text-green-950">Account Settings</p>
             </div>
           </div>
-        </div>
+        </a>
 
+        <!-- Remove Restaurants (Demo) -->
+        <a
+          href="#/remove-restaurant"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        >
+          <div class="flex items-center gap-4">
+            <TrashIcon class="w-8 h-8 text-green-950" />
+            <div>
+              <p class="font-semibold text-green-950">Remove Restaurants</p>
+              <p class="text-sm text-green-950">Demo</p>
+            </div>
+          </div>
+          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+        </a>
 
+        <!-- Report Incorrect Allergens -->
+        <a
+          href="#/report-incorrect-allergy"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        >
+          <div class="flex items-center gap-4">
+            <ExclamationCircleIcon class="w-8 h-8 text-green-950" />
+            <div>
+              <p class="font-semibold text-green-950">Report Incorrect Allergens</p>
+              <p class="text-sm text-green-950">Flag & Remove</p>
+            </div>
+          </div>
+          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+        </a>
 
         <!-- Log Out Button -->
         <button
@@ -109,15 +125,25 @@
     </div>
 
     <!-- Review Modal -->
-    <div v-if="showReviewModal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+    <div
+      v-if="showReviewModal"
+      class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
+    >
       <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full p-6 relative">
         <!-- Close button -->
-        <button @click="showReviewModal = false" class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl">&times;</button>
+        <button
+          @click="showReviewModal = false"
+          class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl"
+        >
+          &times;
+        </button>
 
         <!-- Modal Header -->
         <div class="flex items-center gap-3 mb-6">
           <img src="../assets/profile.png" class="w-10 h-10 rounded-full" alt="User" />
-          <h2 class="text-xl font-semibold text-[#283618]">{{ currentUser?.username }}’s Reviews</h2>
+          <h2 class="text-xl font-semibold text-[#283618]">
+            {{ currentUser?.username || 'User' }}’s Reviews
+          </h2>
         </div>
 
         <!-- Review List -->
@@ -127,7 +153,9 @@
             :key="review.id"
             class="bg-[#DDE2E4] rounded-md p-4 shadow-sm"
           >
-            <h3 class="text-lg font-bold text-[#283618]">{{ review.business?.name }}</h3>
+            <h3 class="text-lg font-bold text-[#283618]">
+              {{ review.business?.name }}
+            </h3>
             <div class="flex items-center text-sm text-gray-500 mb-1">
               <span v-for="n in review.numStars" :key="n" class="text-yellow-500">★</span>
               <span v-for="n in (5 - review.numStars)" :key="'empty' + n" class="text-gray-300">★</span>
@@ -136,66 +164,60 @@
           </div>
         </div>
         <div v-else class="text-center text-gray-500">No reviews yet.</div>
+      </div>
+    </div>
   </div>
-</div>
-
-
-
-  </div>
-  
 </template>
 
-
-
-
 <script>
-import { Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon} from '@heroicons/vue/24/outline';
+import {
+  Cog6ToothIcon,
+  PencilSquareIcon,
+  NoSymbolIcon,
+  HandThumbUpIcon,
+  TrashIcon,
+  ExclamationCircleIcon,
+  ChevronRightIcon
+} from '@heroicons/vue/24/outline'
 
 export default {
   name: 'Profile',
   props: ['currentUser'],
   components: {
-    Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon
+    Cog6ToothIcon,
+    PencilSquareIcon,
+    NoSymbolIcon,
+    HandThumbUpIcon,
+    TrashIcon,               
+    ExclamationCircleIcon,   
+    ChevronRightIcon         
   },
   data() {
-  return {
-    userReviews: [],
-    showReviewModal: false,
-  };
-},
+    return {
+      userReviews: [],
+      showReviewModal: false
+    }
+  },
   mounted() {
-    this.fetchUserReviews();
+    this.fetchUserReviews()
   },
   methods: {
     async fetchUserReviews() {
+      if (!this.currentUser?.username) return
       try {
-        if (!this.currentUser?.username) return;
-        
-        const response = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'mycookies': document.cookie, // Include session token manually
-          },
-        });
-
-        if (!response.ok) throw new Error('Failed to fetch user reviews');
-
-        const data = await response.json();
-        this.userReviews = data.reviews.map(r => ({
-          ...r,
-          business: r.business,
-        }));
-      } catch (error) {
-        console.error('Error loading user reviews:', error.message);
+        const r = await fetch(`/api/user/${this.currentUser.username}`, {
+          headers: { 'Content-Type':'application/json', 'mycookies': document.cookie }
+        })
+        const body = await r.json()
+        this.userReviews = body.reviews || []
+      } catch (e) {
+        console.error(e)
       }
     },
-    goToAccountSettings() {
-    window.location.hash = '/account-settings';
-  },
     signOut() {
-      this.$cookies.remove('session');
-      window.location.hash = '/';
+      this.$cookies.remove('session')
+      window.location.hash = '/'
     }
   }
-};
+}
 </script>

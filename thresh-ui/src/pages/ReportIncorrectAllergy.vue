@@ -5,18 +5,18 @@
 
 <template>
   <div class="p-6 max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Allergen Records</h1>
+    <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens (Demo)</h1>
 
-    <!-- empty state -->
+    <!-- If no items (should never happen here) -->
     <div v-if="!menuItems.length" class="text-gray-500">
       No allergen records found.
     </div>
 
-    <!-- list -->
+    <!-- Hard-coded list -->
     <ul v-else>
       <li
         v-for="item in menuItems"
-        :key="`${item.restaurantId}-${item.allergen}`"
+        :key="`${item.dishId}-${item.allergen}`"
         class="mb-4 p-4 border rounded-lg flex justify-between items-center"
       >
         <div>
@@ -65,102 +65,52 @@
 
     <!-- feedback -->
     <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
-    <p v-if="errorMsg"   class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
 <script>
-import { useCookies } from 'vue3-cookies'
-const { cookies } = useCookies()
-
 export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],      // flattened list { restaurantId, name, allergen }
+      // ← Hard-coded demo data (replace or extend as you like)
+      menuItems: [
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Milk'      },
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Wheat'     },
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Egg'       },
+        { dishId: 2, name: 'Fried Chicken',     allergen: 'Soy'       },
+        { dishId: 2, name: 'Fried Chicken',     allergen: 'Peanuts'   },
+        { dishId: 3, name: 'Shrimp Pasta',      allergen: 'Shellfish' },
+        { dishId: 3, name: 'Shrimp Pasta',      allergen: 'Gluten'    }
+      ],
       showModal: false,
-      selected: null,
-      successMsg: '',
-      errorMsg: ''
-    };
-  },
-  methods: {
-    async fetchMenu() {
-      try {
-        // get all restaurants with their allergen lists
-        const res = await fetch('/api/restaurants', {
-          headers: {
-            'Content-Type':'application/json',
-            'mycookies': `session=${cookies.get('session')}`
-          }
-        });
-        const json = await res.json();
-        const list = json.restaurants || json.data || [];
-        // flatten
-        this.menuItems = list.flatMap(r =>
-          (r.allergens || []).map(a => ({
-            restaurantId: r.id,
-            name: r.name,
-            allergen: a
-          }))
-        );
-        this.errorMsg = '';
-      } catch (err) {
-        console.error(err);
-        this.errorMsg = 'Failed to load allergen records.';
-      }
-    },
-
-    promptRemoval(item) {
-      this.selected    = item;
-      this.successMsg  = '';
-      this.errorMsg    = '';
-      this.showModal   = true;
-    },
-
-    cancelRemoval() {
-      this.showModal = false;
-      this.selected  = null;
-    },
-
-    async removeAllergen() {
-      this.showModal = false;
-      try {
-        const { restaurantId, allergen } = this.selected;
-        const res = await fetch(
-          `/api/restaurants/${restaurantId}/allergens/${encodeURIComponent(allergen)}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'mycookies': `session=${cookies.get('session')}`
-            }
-          }
-        );
-        const json = await res.json();
-        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.');
-
-        // remove locally
-        this.menuItems = this.menuItems.filter(
-          i => !(i.restaurantId === restaurantId && i.allergen === allergen)
-        );
-        this.successMsg = `Allergen "${allergen}" removed from "${this.selected.name}".`;
-      } catch (err) {
-        console.error(err);
-        this.errorMsg = `Failed to remove "${this.selected.allergen}".`;
-      } finally {
-        this.selected = null;
-      }
+      selected:  null,
+      successMsg:'',
     }
   },
-
-  mounted() {
-    this.fetchMenu();
+  methods: {
+    promptRemoval(item) {
+      this.selected   = item
+      this.showModal  = true
+      this.successMsg = ''
+    },
+    cancelRemoval() {
+      this.selected  = null
+      this.showModal = false
+    },
+    removeAllergen() {
+      // remove it from the local array
+      this.menuItems = this.menuItems.filter(i =>
+        !(i.dishId === this.selected.dishId && i.allergen === this.selected.allergen)
+      )
+      this.successMsg = `"${this.selected.allergen}" removed from "${this.selected.name}".`
+      this.selected   = null
+      this.showModal  = false
+    }
   }
 }
 </script>
 
 <style scoped>
-/* All styling is handled by your Tailwind config */
+/* styling comes from your Tailwind config */
 </style>
-

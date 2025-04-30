@@ -1,10 +1,3 @@
-
- <!-- 
- Author: Neel Suresh
- UC03: Filter Search Results
- UC04: Search for restaurant
- -->
- 
 <template>
   <div class="filter-search-page">
     <div class="container">
@@ -31,16 +24,7 @@
       <div class="filter-section">
         <h2 class="filter-heading">Filters</h2>
         <div class="filters">
-          <div class="filter-group">
-            <label>Allergy</label>
-            <select v-model="selectedAllergy" class="filter-select">
-              <option disabled value="">Select Allergy</option>
-              <option>Peanut</option>
-              <option>Gluten</option>
-              <option>Dairy</option>
-              <option>None</option>
-            </select>
-          </div>
+  
 
           <div class="filter-group">
             <label>Dietary Restriction</label>
@@ -49,6 +33,13 @@
               <option>Vegan</option>
               <option>Vegetarian</option>
               <option>Halal</option>
+              <option>Nuts</option>
+              <option>Gluten</option>
+              <option>Kosher</option>
+              <option>Lactose</option>
+              <option>Sesame</option>
+              <option>Pescatarian</option>
+              <option>Soy</option>
               <option>None</option>
             </select>
           </div>
@@ -65,58 +56,61 @@
           </div>
 
           <div class="filter-group">
-            <label>Cuisine</label>
-            <select v-model="selectedCuisine" class="filter-select">
-              <option disabled value="">Select Cuisine</option>
-              <option>Italian</option>
-              <option>Mexican</option>
-              <option>Chinese</option>
-              <option>Indian</option>
-              <option>American</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
             <label>Distance</label>
-            <select v-model="selectedLocation" class="filter-select">
-              <option disabled value="">Select Location</option>
-              <option>Within 1 mile</option>
-              <option>Within 5 miles</option>
-              <option>Within 10 miles</option>
+            <select v-model="selectedDistance" class="filter-select">
+              <option disabled value="">Select Distance</option>
+              <option value="1">Within 1 mile</option>
+              <option value="5">Within 5 miles</option>
+              <option value="10">Within 10 miles</option>
             </select>
           </div>
         </div>
       </div>
 
+      <!-- Loading indicator -->
+      <div class="loading-container" v-if="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading restaurants...</p>
+      </div>
+
       <!-- Results section -->
-      <div class="results-section" v-if="results.length">
+      <div class="results-section" v-if="results.length && !loading">
         <h2 class="results-heading">{{ results.length }} Matching Restaurants</h2>
         <div class="results-grid">
-          <div v-for="restaurant in results" :key="restaurant.name" class="restaurant-card">
+          <div v-for="restaurant in results" :key="restaurant.id" class="restaurant-card">
             <div class="restaurant-header">
               <h3 class="restaurant-name">{{ restaurant.name }}</h3>
-              <div class="price-tag">{{ restaurant.price }}</div>
+              <div class="price-tag">{{ restaurant.priceRange }}</div>
+            </div>
+            
+            <div class="restaurant-image" v-if="restaurant.imageUrl">
+              <img :src="restaurant.imageUrl" :alt="restaurant.name">
             </div>
             
             <div class="restaurant-details">
-              <div class="detail-item">
+              <div class="detail-item" v-if="restaurant.cuisine">
                 <span class="detail-label">Cuisine:</span>
                 <span class="detail-value">{{ restaurant.cuisine }}</span>
               </div>
               
               <div class="detail-item">
                 <span class="detail-label">Location:</span>
-                <span class="detail-value">{{ restaurant.location }}</span>
+                <span class="detail-value">{{ getLocationText(restaurant) }}</span>
               </div>
               
-              <div class="detail-item">
+              <div class="detail-item" v-if="restaurant.allergy">
                 <span class="detail-label">Allergy-Safe:</span>
                 <span class="detail-value">{{ restaurant.allergy }}</span>
               </div>
               
-              <div class="detail-item">
+              <div class="detail-item" v-if="restaurant.dietaryRestriction || restaurant.icons || restaurant.icon">
                 <span class="detail-label">Dietary:</span>
-                <span class="detail-value">{{ restaurant.dietaryRestriction }}</span>
+                <span class="detail-value">{{ getDietaryText(restaurant) }}</span>
+              </div>
+              
+              <div class="detail-item" v-if="restaurant.reviews && restaurant.reviews.length">
+                <span class="detail-label">Rating:</span>
+                <span class="detail-value">{{ calculateAverageRating(restaurant.reviews) }} ★</span>
               </div>
             </div>
             
@@ -137,7 +131,7 @@
       </div>
 
       <!-- No results message -->
-      <div class="no-results" v-else-if="hasSearched">
+      <div class="no-results" v-else-if="hasSearched && !loading">
         <div class="no-results-content">
           <p>No matching restaurants found.</p>
           <p class="no-results-tip">Try adjusting your filters for more results.</p>
@@ -157,152 +151,213 @@ export default {
       selectedDietaryRestriction: '',
       selectedPrice: '',
       selectedCuisine: '',
-      selectedLocation: '',
+      selectedDistance: '',
       results: [],
       hasSearched: false,
-      
-      allRestaurants: [
-        {
-          name: 'Pizza Planet',
-          cuisine: 'Italian',
-          price: '$$',
-          location: 'Within 5 miles',
-          allergy: 'None',
-          dietaryRestriction: 'Vegetarian'
-        },
-        {
-          name: 'Spice Junction',
-          cuisine: 'Indian',
-          price: '$$$',
-          location: 'Within 10 miles',
-          allergy: 'Gluten',
-          dietaryRestriction: 'Halal'
-        },
-        {
-          name: 'Green Bowl',
-          cuisine: 'American',
-          price: '$',
-          location: 'Within 1 mile',
-          allergy: 'Dairy',
-          dietaryRestriction: 'Vegan'
-        },
-        {
-          name: 'Salsa House',
-          cuisine: 'Mexican',
-          price: '$$',
-          location: 'Within 5 miles',
-          allergy: 'Peanut',
-          dietaryRestriction: 'None'
-        },
-        {
-          name: 'Dragon Express',
-          cuisine: 'Chinese',
-          price: '$',
-          location: 'Within 1 mile',
-          allergy: 'None',
-          dietaryRestriction: 'Halal'
-        },
-        {
-          name: 'Taco Thunder',
-          cuisine: 'Mexican',
-          price: '$$',
-          location: 'Within 5 miles',
-          allergy: 'Gluten',
-          dietaryRestriction: 'Vegetarian'
-        },
-        {
-          name: 'Veggie Haven',
-          cuisine: 'American',
-          price: '$',
-          location: 'Within 1 mile',
-          allergy: 'None',
-          dietaryRestriction: 'Vegan'
-        },
-        {
-          name: 'Curry Castle',
-          cuisine: 'Indian',
-          price: '$$$',
-          location: 'Within 10 miles',
-          allergy: 'Peanut',
-          dietaryRestriction: 'Vegetarian'
-        },
-        {
-          name: 'Pizza House',
-          cuisine: 'Italian',
-          price: '$$$',
-          location: 'Within 5 miles',
-          allergy: 'Dairy',
-          dietaryRestriction: 'None'
-        },
-        {
-          name: 'Zen Garden',
-          cuisine: 'Chinese',
-          price: '$$',
-          location: 'Within 10 miles',
-          allergy: 'Gluten',
-          dietaryRestriction: 'Vegan'
-        },
-        {
-          name: 'BBQ Bros',
-          cuisine: 'American',
-          price: '$$',
-          location: 'Within 5 miles',
-          allergy: 'None',
-          dietaryRestriction: 'None'
-        },
-        {
-          name: 'Bella Napoli',
-          cuisine: 'Italian',
-          price: '$$',
-          location: 'Within 1 mile',
-          allergy: 'Dairy',
-          dietaryRestriction: 'Vegetarian'
-        },
-        {
-          name: 'Falafel Fiesta',
-          cuisine: 'Indian',
-          price: '$',
-          location: 'Within 1 mile',
-          allergy: 'Peanut',
-          dietaryRestriction: 'Halal'
-        },
-        {
-          name: 'Bamboo Wok',
-          cuisine: 'Chinese',
-          price: '$$',
-          location: 'Within 5 miles',
-          allergy: 'None',
-          dietaryRestriction: 'Vegetarian'
-        }
-      ]
+      loading: false,
+      allRestaurants: [],
+      userLocation: null,
+      error: null
     };
   },
+  created() {
+    this.fetchRestaurants();
+    this.getUserLocation();
+  },
   methods: {
-    applyFilters() {
-      const q = this.searchQuery.toLowerCase();
-
-      this.results = this.allRestaurants.filter(r => {
-        return (
-          (!q || r.name.toLowerCase().includes(q)) &&
-          (!this.selectedAllergy || r.allergy === this.selectedAllergy) &&
-          (!this.selectedDietaryRestriction || r.dietaryRestriction === this.selectedDietaryRestriction) &&
-          (!this.selectedPrice || r.price === this.selectedPrice) &&
-          (!this.selectedCuisine || r.cuisine === this.selectedCuisine) &&
-          (!this.selectedLocation || r.location === this.selectedLocation)
+    async fetchRestaurants() {
+      this.loading = true;
+      try {
+        // Using the same API endpoint as in the AllergenInfo component
+        const response = await fetch('http://localhost:3001/api/restaurant-locations-dishes');
+        const result = await response.json();
+        
+        if (result.success) {
+          console.log('Fetched restaurants:', result.data);
+          this.allRestaurants = result.data;
+          
+          // Apply initial filters if any are set
+          if (this.searchQuery || this.selectedAllergy || this.selectedDietaryRestriction || 
+              this.selectedPrice || this.selectedCuisine || this.selectedDistance) {
+            this.applyFilters();
+          }
+        } else {
+          console.error('Error fetching restaurants:', result.error);
+          this.error = result.error || 'Failed to fetch restaurant data';
+        }
+      } catch (error) {
+        console.error('Error fetching restaurants:', error);
+        this.error = error.message || 'Failed to fetch restaurant data';
+      } finally {
+        this.loading = false;
+      }
+    },
+    
+    getUserLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+          },
+          (error) => {
+            console.error('Error getting user location:', error);
+          }
         );
-      });
-
+      }
+    },
+    
+    calculateDistance(restaurant) {
+      if (!this.userLocation || !restaurant.lat || !restaurant.lng) return Infinity;
+      
+      // calcualte the distance between two points 
+      const R = 3958.8; // earth radius in miles
+      const dLat = this.toRadians(restaurant.lat - this.userLocation.lat);
+      const dLng = this.toRadians(restaurant.lng - this.userLocation.lng);
+      
+      const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(this.toRadians(this.userLocation.lat)) * 
+        Math.cos(this.toRadians(restaurant.lat)) * 
+        Math.sin(dLng/2) * Math.sin(dLng/2);
+      
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const distance = R * c;
+      
+      return distance;
+    },
+    
+    toRadians(degrees) {
+      return degrees * (Math.PI/180);
+    },
+    
+    getLocationText(restaurant) {
+      const distance = this.calculateDistance(restaurant);
+      if (distance === Infinity) return 'Distance unknown';
+      
+      return `${distance.toFixed(1)} miles away`;
+    },
+    
+    getDietaryText(restaurant) {
+      // Display icon as a string if available
+      if (restaurant.icon && typeof restaurant.icon === 'string') {
+        return restaurant.icon;
+      }
+      // Display icons array if available
+      else if (restaurant.icons && Array.isArray(restaurant.icons) && restaurant.icons.length > 0) {
+        return restaurant.icons.join(', ');
+      } 
+      // Fall back to dietaryRestriction
+      else if (restaurant.dietaryRestriction) {
+        return restaurant.dietaryRestriction;
+      }
+      return 'None specified';
+    },
+    
+    calculateAverageRating(reviews) {
+      if (!reviews || reviews.length === 0) return 'No ratings';
+      
+      const sum = reviews.reduce((total, review) => total + review.numStars, 0);
+      return (sum / reviews.length).toFixed(1);
+    },
+    
+    applyFilters() {
       this.hasSearched = true;
+      this.loading = true;
+      
+      const q = this.searchQuery.toLowerCase();
+      const maxDistance = this.selectedDistance ? parseInt(this.selectedDistance) : Infinity;
+
+      this.results = this.allRestaurants.filter(restaurant => {
+        const distance = this.calculateDistance(restaurant);
+        
+        // Filter by search query (restaurant name)
+        const matchesQuery = !q || restaurant.name.toLowerCase().includes(q);
+        
+        // Filter by allergy
+        const matchesAllergy = !this.selectedAllergy || 
+          (restaurant.allergy === this.selectedAllergy) || 
+          (restaurant.dishes && this.restaurantSupportsAllergy(restaurant, this.selectedAllergy));
+        
+        // Filter by dietary restriction - check both dietaryRestriction field and icons array
+        const matchesDietary = 
+  !this.selectedDietaryRestriction || 
+  this.selectedDietaryRestriction === 'None' || 
+  this.restaurantSupportsDietary(restaurant, this.selectedDietaryRestriction);
+
+        // Filter by price range
+        const matchesPrice = !this.selectedPrice || restaurant.priceRange === this.selectedPrice;
+        
+        // Filter by cuisine
+        const matchesCuisine = !this.selectedCuisine || restaurant.cuisine === this.selectedCuisine;
+        
+        // Filter by distance
+        const matchesDistance = distance <= maxDistance;
+        
+        return matchesQuery && matchesAllergy && matchesDietary && 
+               matchesPrice && matchesCuisine && matchesDistance;
+      });
+      
+      this.loading = false;
     },
+    
+    // Helper method to check if restaurant has dishes that are safe for a specific allergy
+    restaurantSupportsAllergy(restaurant, allergyType) {
+      if (!restaurant.dishes || !restaurant.dishes.length) return false;
+      
+      // Map allergyType to the corresponding key in the allergenMap
+      const allergyKey = this.getAllergyKey(allergyType);
+      if (!allergyKey) return false;
+      
+      // Check if any dish is marked as safe for this allergy (in allergenFree array)
+      return restaurant.dishes.some(dish => {
+        if (!dish.allergenFree) return false;
+        return dish.allergenFree.some(item => 
+          item.toLowerCase() === allergyKey.toLowerCase());
+      });
+    },
+    
+    // Helper method to check if restaurant supports a specific dietary restriction
+    restaurantSupportsDietary(restaurant, dietaryRestriction) {
+      // Check if icon exists as a string
+      if (restaurant.icon && typeof restaurant.icon === 'string') {
+        // Check if the icon contains the dietary restriction (case insensitive)
+        return restaurant.icon.toLowerCase().includes(dietaryRestriction.toLowerCase());
+      }
+      
+      // Check if icons exists as an array
+      else if (restaurant.icons && Array.isArray(restaurant.icons)) {
+        // Check if any icon contains the dietary restriction (case insensitive)
+        return restaurant.icons.some(icon => 
+          icon.toLowerCase().includes(dietaryRestriction.toLowerCase()));
+      }
+      
+      // If no icon or icons, check the dietaryRestriction field
+      return restaurant.dietaryRestriction === dietaryRestriction;
+    },
+    
+    // Map from frontend allergy filter to backend allergy key
+    getAllergyKey(allergyType) {
+      const allergyMap = {
+        'Peanut': 'peanuts',
+        'Gluten': 'gluten',
+        'Dairy': 'milk'
+      };
+      
+      return allergyMap[allergyType] || allergyType.toLowerCase();
+    },
+    
     viewAllergensFor(restaurant) {
-      const encodedName = encodeURIComponent(restaurant.name);
-      //window.location.hash = `/view-allergens/${encodedName}`;
-      window.location.hash = `/view-allergens`; 
+      // Navigate to the allergen view page for this restaurant
+      // Since our AllergenInfo component uses a selector, we'll use a URL parameter
+      // that the AllergenInfo component can read to pre-select the restaurant
+      window.location.hash = `/view-allergens/${restaurant.id}`;
     },
+    
     rateRestaurant(restaurant) {
-      const encodedName = encodeURIComponent(restaurant.name);
-      //window.location.hash = `/rate-restaurant/${encodedName}`;
-      window.location.hash = `/rate-restaurant`; 
+      window.location.hash = `/rate-restaurant/${restaurant.id}`;
     }
   }
 };
@@ -472,6 +527,17 @@ export default {
   font-weight: 600;
 }
 
+.restaurant-image {
+  height: 160px;
+  overflow: hidden;
+}
+
+.restaurant-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .restaurant-details {
   padding: 15px 20px;
 }
@@ -540,5 +606,29 @@ export default {
 .no-results-tip {
   font-style: italic;
   margin-top: 10px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #F0EFEB;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #DDA15E;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
