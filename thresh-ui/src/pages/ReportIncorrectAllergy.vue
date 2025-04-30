@@ -5,13 +5,14 @@
 
 <template>
   <div class="p-6 max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens</h1>
+    <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens (Demo)</h1>
 
-    <div v-if="!menuItems.length && !errorMsg" class="text-gray-500">
-      Loading…
+    <!-- If no items (should never happen here) -->
+    <div v-if="!menuItems.length" class="text-gray-500">
+      No allergen records found.
     </div>
-    <div v-if="errorMsg" class="text-red-600 font-medium">{{ errorMsg }}</div>
 
+    <!-- Hard-coded list -->
     <ul v-else>
       <li
         v-for="item in menuItems"
@@ -33,7 +34,7 @@
       </li>
     </ul>
 
-    <!-- confirm modal -->
+    <!-- confirmation modal -->
     <div
       v-if="showModal"
       class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
@@ -41,7 +42,8 @@
       <div class="bg-white rounded-lg p-6 w-80 space-y-4">
         <h2 class="text-xl font-semibold">Confirm Removal</h2>
         <p>
-          Remove <strong>"{{ selected.allergen }}"</strong>
+          Are you sure you want to remove
+          <strong>"{{ selected.allergen }}"</strong>
           from <strong>"{{ selected.name }}"</strong>?
         </p>
         <div class="mt-4 flex justify-end space-x-4">
@@ -67,94 +69,48 @@
 </template>
 
 <script>
-import { useCookies } from 'vue3-cookies'
-const { cookies } = useCookies()
-
 export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],      // flattened list { dishId, name, allergen }
+      // ← Hard-coded demo data (replace or extend as you like)
+      menuItems: [
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Milk'      },
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Wheat'     },
+        { dishId: 1, name: 'Chocolate Cake',    allergen: 'Egg'       },
+        { dishId: 2, name: 'Fried Chicken',     allergen: 'Soy'       },
+        { dishId: 2, name: 'Fried Chicken',     allergen: 'Peanuts'   },
+        { dishId: 3, name: 'Shrimp Pasta',      allergen: 'Shellfish' },
+        { dishId: 3, name: 'Shrimp Pasta',      allergen: 'Gluten'    }
+      ],
       showModal: false,
-      selected: null,
-      successMsg: '',
-      errorMsg: ''
+      selected:  null,
+      successMsg:'',
     }
   },
   methods: {
-    async fetchMenu() {
-      try {
-        // ← point at your Express API on port 3000:
-        const res = await fetch('http://localhost:3000/api/dishes', {
-          headers: {
-            'Content-Type': 'application/json',
-            'mycookies': `session=${cookies.get('session')}`
-          }
-        })
-        if (!res.ok) throw new Error('Network response was not ok')
-        const dishes = await res.json()
-        this.menuItems = dishes.flatMap(d =>
-          (d.allergens || []).map(a => ({
-            dishId:  d.id,
-            name:    d.name,
-            allergen: a
-          }))
-        )
-      } catch (err) {
-        console.error(err)
-        this.errorMsg = 'Failed to load allergen records.'
-      }
-    },
-
     promptRemoval(item) {
       this.selected   = item
       this.showModal  = true
       this.successMsg = ''
-      this.errorMsg   = ''
     },
-
     cancelRemoval() {
-      this.showModal = false
       this.selected  = null
-    },
-
-    async removeAllergen() {
       this.showModal = false
-      try {
-        const { dishId, allergen } = this.selected
-        const res = await fetch(
-          `http://localhost:3000/api/dishes/${dishId}/allergens/${encodeURIComponent(allergen)}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'mycookies': `session=${cookies.get('session')}`
-            }
-          }
-        )
-        if (!res.ok) throw new Error('Deletion failed')
-        await res.json()
-
-        // remove locally
-        this.menuItems = this.menuItems.filter(i =>
-          !(i.dishId === dishId && i.allergen === allergen)
-        )
-        this.successMsg = `Removed "${allergen}" from "${this.selected.name}".`
-      } catch (err) {
-        console.error(err)
-        this.errorMsg = `Failed to remove "${this.selected.allergen}".`
-      } finally {
-        this.selected = null
-      }
+    },
+    removeAllergen() {
+      // remove it from the local array
+      this.menuItems = this.menuItems.filter(i =>
+        !(i.dishId === this.selected.dishId && i.allergen === this.selected.allergen)
+      )
+      this.successMsg = `"${this.selected.allergen}" removed from "${this.selected.name}".`
+      this.selected   = null
+      this.showModal  = false
     }
-  },
-
-  mounted() {
-    this.fetchMenu()
   }
 }
 </script>
 
 <style scoped>
-/* styling is driven by your Tailwind setup */
+/* styling comes from your Tailwind config */
 </style>
