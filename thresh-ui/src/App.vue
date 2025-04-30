@@ -21,36 +21,30 @@ import ManageAllergens  from './pages/ManageAllergens.vue'
 
 import { MapIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/vue/24/outline'
 
-
 const { cookies } = useCookies()
 
 async function fetchUser() {
   const sessionToken = cookies.get('session')
-  if (!sessionToken) {
-    return null
-  }
+  if (!sessionToken) return null
 
   const headers = new Headers()
   headers.append("Content-Type", "application/json")
   headers.append("mycookies", `session=${sessionToken}`)
 
-  const requestOptions = {
-    method: "GET",
-    headers: headers,
-  }
-
   try {
-    let response = await fetch("http://localhost:3000/api/whoami", requestOptions).then(response => response.json())
-    return response?.user
-  }
-  catch (error) {
-    console.error(error)
+    const response = await fetch("http://localhost:3000/api/whoami", {
+      method: "GET",
+      headers
+    })
+    const body = await response.json()
+    return body.user
+  } catch {
     return null
   }
 }
 
 const currentUser = ref(null)
-fetchUser().then(user => currentUser.value = user)
+fetchUser().then(u => currentUser.value = u)
 
 const routes = {
   '': Home,
@@ -65,29 +59,22 @@ const routes = {
   'map': Map,
   'profile': Profile,
   'rate-restaurant': RateRestaurant,
-  'view-allergens': ViewAllergens,
   'manage-restaurants': ManageRestaurants,
-  'manage-allergens':   ManageAllergens,
-  'user': User,
+  'manage-allergens': ManageAllergens,
+  'user': User
 }
 
 const currentPath = ref(window.location.hash)
 
 const currentView = computed(() => {
-  // get the first section of the path url, without slashes. i.e.
-  // /this-part/not-this-part
-  //  ^^^^^^^^^
-  // this will support indexing by /page/:parameters
-  const match = currentPath.value.match(/^#\/?([^/]*)/);
-  const path = match ? match[1] : '';
-  console.log(path);
-  // return the matching page, else a 404 page
-  return routes[path] || NotFound;
+  const match = currentPath.value.match(/^#\/?([^/]*)/)
+  const path = match ? match[1] : ''
+  return routes[path] || NotFound
 })
 
 window.addEventListener('hashchange', () => {
   currentPath.value = window.location.hash
-  fetchUser().then(user => currentUser.value = user)
+  fetchUser().then(u => currentUser.value = u)
 })
 
 const username = computed(() => currentUser.value?.username)
@@ -98,57 +85,56 @@ const username = computed(() => currentUser.value?.username)
     <header class="sticky top-0 left-0 right-0 p-2 border-b-2 border-slate-300 z-50 bg-white">
       <nav>
         <ul class="flex items-center gap-x-5 mx-6">
-  <!-- Logo -->
-  <li>
-    <a href="#/" class="flex items-center gap-x-3">
-      <img class="size-18" src="./assets/Thresh circular logo.png">
-      <img src="./assets/THRESH textual logo.png">
-    </a>
-  </li>
+          <!-- Logo -->
+          <li>
+            <a href="#/" class="flex items-center gap-x-3">
+              <img class="h-6" src="./assets/Thresh circular logo.png" />
+              <img src="./assets/THRESH textual logo.png" />
+            </a>
+          </li>
 
-  <div class="ml-auto flex items-center gap-x-3">
-    <!-- Map Icon -->
-    <a href="#/map" class="hover:text-green-700">
-      <MapIcon class="w-8 h-8 text-green-950" />
-    </a>
+          <div class="ml-auto flex items-center gap-x-3">
+            <!-- Map Icon -->
+            <a href="#/map" class="hover:text-green-700">
+              <MapIcon class="w-8 h-8 text-green-950" />
+            </a>
 
-    <!-- Search Icon -->
-    <a href="#/filter-search" class="hover:text-green-700">
-      <MagnifyingGlassIcon class="w-8 h-8 text-green-950" />
-    </a>
+            <!-- Search Icon -->
+            <a href="#/filter-search" class="hover:text-green-700">
+              <MagnifyingGlassIcon class="w-8 h-8 text-green-950" />
+            </a>
 
-    <!-- If NOT logged in: Show Sign Up / Sign In -->
-    <template v-if="!username">
-      <a href="#/create-account" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-slate-50 bg-green-950">
-        Sign Up
-      </a>
-      <a href="#/sign-in" class="px-2 py-2 rounded-md outline-green-950 outline-2 text-green-950">
-        Sign In
-      </a>
-    </template>
+            <!-- If NOT logged in: Sign Up / Sign In -->
+            <template v-if="!username">
+              <a href="#/create-account"
+                 class="px-2 py-2 rounded-md text-white bg-green-950 hover:bg-green-800 transition">
+                Sign Up
+              </a>
+              <a href="#/sign-in"
+                 class="px-2 py-2 rounded-md text-green-950 hover:bg-green-100 transition">
+                Sign In
+              </a>
+            </template>
 
-    <!-- If logged in: Show Username and Profile -->
-    <template v-else>
-      <a href="#/profile" class="flex items-center gap-x-2">
-        <div class="text-lg font-semibold text-green-950">
-          {{ username }}
-        </div>
-        <UserCircleIcon class="w-9 h-9 text-green-950" />
-      </a>
-    </template>
-  </div>
-</ul>
-
+            <!-- If logged in: Username & Profile -->
+            <template v-else>
+              <a href="#/profile" class="flex items-center gap-x-2">
+                <div class="text-lg font-semibold text-green-950">{{ username }}</div>
+                <UserCircleIcon class="w-9 h-9 text-green-950" />
+              </a>
+            </template>
+          </div>
+        </ul>
       </nav>
     </header>
+
     <main class="w-full">
-      <component :is="currentView" :currentUser="currentUser"/>
+      <component :is="currentView" :currentUser="currentUser" />
     </main>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App',
-}
+export default { name: 'App' }
 </script>
+

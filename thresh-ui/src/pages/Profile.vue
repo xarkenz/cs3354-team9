@@ -11,9 +11,7 @@
           <img class="w-24 h-24 rounded-full object-cover" src="../assets/profile.png" alt="Profile" />
           <div>
             <h2 class="text-[#283618] text-lg">Welcome,</h2>
-            <p class="text-[#283618] text-2xl font-bold">
-              {{ currentUser?.username || 'User' }}
-            </p>
+            <p class="text-[#283618] text-2xl font-bold">{{ currentUser?.username || 'User' }}</p>
           </div>
         </div>
 
@@ -48,7 +46,7 @@
         <!-- Dietary Profiles -->
         <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
           <div class="flex items-center gap-4">
-            <NoSymbolIcon class="w-8 h-8" />
+            <NoSymbolIcon class="w-8 h-8 text-green-950" />
             <div>
               <p class="font-semibold text-green-950">Dietary Profiles</p>
               <p class="text-sm text-green-950"># Profiles Saved</p>
@@ -73,7 +71,7 @@
         <!-- My Favorites -->
         <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
           <div class="flex items-center gap-4">
-            <HandThumbUpIcon class="w-8 h-8 text-green-950" />
+            <HandThumbUpIcon class="w-8 h-8 text-green-950"/>
             <div>
               <p class="font-semibold text-green-950">My Favorites</p>
               <p class="text-sm text-green-950"># Favorite Restaurants</p>
@@ -95,10 +93,7 @@
         </div>
 
         <!-- Remove Restaurants (Demo) -->
-        <a
-          href="#/remove-restaurant"
-          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md hover:brightness-95 transition"
-        >
+        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
           <div class="flex items-center gap-4">
             <TrashIcon class="w-8 h-8 text-green-950" />
             <div>
@@ -106,8 +101,24 @@
               <p class="text-sm text-green-950">Demo</p>
             </div>
           </div>
-          <ChevronRightIcon class="w-6 h-6 text-green-950" />
-        </a>
+          <a href="#/remove-restaurant" class="block">
+            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          </a>
+        </div>
+
+        <!-- Report Incorrect Allergens -->
+        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
+          <div class="flex items-center gap-4">
+            <ExclamationCircleIcon class="w-8 h-8 text-green-950" />
+            <div>
+              <p class="font-semibold text-green-950">Report Incorrect Allergens</p>
+              <p class="text-sm text-green-950">Flag & Remove</p>
+            </div>
+          </div>
+          <a href="#/report-incorrect-allergy" class="block">
+            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          </a>
+        </div>
 
         <!-- Log Out Button -->
         <button
@@ -171,9 +182,9 @@ import {
   NoSymbolIcon,
   HandThumbUpIcon,
   TrashIcon,
+  ExclamationCircleIcon,
   ChevronRightIcon
-} from '@heroicons/vue/24/outline';
-import RemoveRestaurant from './RemoveRestaurant.vue';
+} from '@heroicons/vue/24/outline'
 
 export default {
   name: 'Profile',
@@ -183,45 +194,39 @@ export default {
     PencilSquareIcon,
     NoSymbolIcon,
     HandThumbUpIcon,
-    TrashIcon,
-    ChevronRightIcon,
-    RemoveRestaurant
+    TrashIcon,               
+    ExclamationCircleIcon,   
+    ChevronRightIcon         
   },
   data() {
     return {
       userReviews: [],
-      showReviewModal: false,
-    };
+      showReviewModal: false
+    }
   },
   mounted() {
-    this.fetchUserReviews();
+    this.fetchUserReviews()
   },
   methods: {
     async fetchUserReviews() {
+      if (!this.currentUser?.username) return
       try {
-        if (!this.currentUser?.username) return;
-        
-        const response = await fetch(`/api/user/${this.currentUser.username}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'mycookies': document.cookie,
-          },
-        });
-
-        if (!response.ok) throw new Error('Failed to fetch user reviews');
-        const data = await response.json();
-        this.userReviews = data.reviews.map(r => ({ ...r, business: r.business }));
-      } catch (error) {
-        console.error('Error loading user reviews:', error.message);
+        const r = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
+          headers: { 'Content-Type':'application/json', 'mycookies': document.cookie }
+        })
+        const body = await r.json()
+        this.userReviews = body.reviews || []
+      } catch (e) {
+        console.error(e)
       }
     },
     goToAccountSettings() {
-      window.location.hash = '/account-settings';
+      window.location.hash = '/account-settings'
     },
     signOut() {
-      this.$cookies.remove('session');
-      window.location.hash = '/';
+      this.$cookies.remove('session')
+      window.location.hash = '/'
     }
   }
-};
+}
 </script>
