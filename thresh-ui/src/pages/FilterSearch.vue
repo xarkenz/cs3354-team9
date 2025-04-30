@@ -311,8 +311,8 @@ export default {
 <style scoped>
 .filter-search-page {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
+  background-color: #606C38;
+  color: #283618;
   min-height: 100vh;
   padding: 20px;
 }
@@ -331,11 +331,12 @@ export default {
 .header h1 {
   font-size: 2.5rem;
   margin: 0;
-  color: #DDA15E;
+  color: #F0EFEB;
+  font-weight: 600;
 }
 
 .subtitle {
-  color: #666;
+  color: #F0EFEB;
   margin-top: 8px;
 }
 
@@ -346,6 +347,7 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
+  background-color: white;
 }
 
 .search-input {
@@ -354,6 +356,7 @@ export default {
   font-size: 1rem;
   border: none;
   outline: none;
+  color: #283618;
 }
 
 .search-button {
@@ -368,7 +371,7 @@ export default {
 }
 
 .search-button:hover {
-  background-color: #DDA15E;
+  background-color: #BC6C25;
 }
 
 .filter-section {
@@ -386,6 +389,7 @@ export default {
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
 }
 
 .filters {
@@ -403,7 +407,7 @@ export default {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  color: #4b5563;
+  color: #283618;
 }
 
 .filter-select {
@@ -413,6 +417,7 @@ export default {
   border-radius: 6px;
   font-size: 0.95rem;
   background-color: #fff;
+  color: #283618;
 }
 
 .results-section {
@@ -502,7 +507,8 @@ export default {
   background-color: #4338ca;
 }
 
-.view-allergens-button, .rate-restaurant-button  {
+.view-allergens-button,
+.rate-restaurant-button {
   width: 100%;
   padding: 10px 15px;
   background-color: #914F3B;
@@ -516,7 +522,7 @@ export default {
 }
 
 .view-allergens-button:hover {
-  background-color: #914F3B;
+  background-color: #7a3d2f;
 }
 
 .no-results {
@@ -528,7 +534,7 @@ export default {
 
 .no-results-content {
   text-align: center;
-  color: #6b7280;
+  color: #F0EFEB;
 }
 
 .no-results-tip {
