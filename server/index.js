@@ -259,6 +259,31 @@ app.get('/api/business/:businessId/dishes', async (req, res) => {
   }
 });
 
+// list all restaurants
+app.get('/api/restaurants', async (req, res) => {
+  try {
+    const restaurants = await prisma.business.findMany({
+      select: { id: true, name: true }
+    })
+    return res.json({ restaurants })
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({ error: 'Could not load restaurants' })
+  }
+})
+
+// delete one restaurant by id
+app.delete('/api/restaurants/:id', async (req, res) => {
+  const id = parseInt(req.params.id)
+  try {
+    await prisma.business.delete({ where: { id } })
+    return res.json({})
+  } catch (e) {
+    console.error(e)
+    return res.status(500).json({ error: 'Deletion failed' })
+  }
+})
+
 //START SERVER 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
