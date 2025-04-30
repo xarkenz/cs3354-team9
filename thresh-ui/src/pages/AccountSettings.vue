@@ -105,6 +105,7 @@ export default {
       else {
         alert("Email address successfully updated.")
         this.newEmail = ""
+        window.location.reload()
       }
     },
 

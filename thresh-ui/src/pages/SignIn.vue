@@ -106,7 +106,7 @@ export default {
         console.log(`local session cookie = ${this.$cookies.get("session")}`);
         this.sessionToken = response.sessionToken;
         console.log(`global variable this.sessionToken = ${this.sessionToken}`);
-        alert(`Welcome, ${this.usernameEmail}!`);
+        alert(`Welcome, ${response.username}!`);
         location.hash = "/filter-search";
       } catch (error) {
         console.error(error);

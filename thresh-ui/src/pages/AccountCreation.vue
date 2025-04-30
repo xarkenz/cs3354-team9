@@ -127,7 +127,6 @@ export default {
         return;
       }
 
-      const headers = new Headers({ "Content-Type": "application/json" });
       const raw = JSON.stringify({
         email: this.email,
         username: this.username,
@@ -138,7 +137,9 @@ export default {
       try {
         const data = await fetch("/api/signup", {
           method: "POST",
-          headers,
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: raw,
         }).then(response => response.json());
         console.log(data);
@@ -159,7 +160,7 @@ export default {
         location.hash = "/filter-search";
       } catch (error) {
         console.error(error);
-        alert("There was an error creating the account.");
+        alert(`Failed to create account: ${error}`);
       }
     },
   },

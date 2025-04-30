@@ -40,14 +40,17 @@ app.post("/api/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const confirmationPassword = req.body.confirmationPassword;
-  if(password !== confirmationPassword){
-    return res.status(401).json({ error: 'Password and confirmation password do not match!' });
+  if (!email || !username || !password) {
+    return res.status(400).json({ error: 'All fields are required.' });
   }
-  else{
+  else if (password !== confirmationPassword) {
+    return res.status(400).json({ error: 'Password and confirmation password do not match.' });
+  }
+  else {
     const shaObj = new jsSHA("SHA-512", "TEXT", { encoding: "UTF8" });
     shaObj.update(`${password}`);
     const hash = shaObj.getHash("HEX");
-    try{
+    try {
       const prismaResponse = await prisma.user.create({
         data: {
           email: email,
@@ -55,20 +58,18 @@ app.post("/api/signup", async (req, res) => {
           password: hash,
         },
       });
-      if(!prismaResponse){
-        return res.status(401).json({ error: 'Signup Failed!' });
-      }
-      else{
-        console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
-        const sessionToken = uuid();
-        sessions[sessionToken] = {email: prismaResponse.email, username: prismaResponse.username, userId: prismaResponse.id};
-        res.set('Set-Cookie', `session=${sessionToken}`);
-        return res.status(200).json({ sessionToken, userId: prismaResponse.id });
-      }
+      console.log("Success! Prisma responded with: " + JSON.stringify(prismaResponse));
+      const sessionToken = uuid();
+      sessions[sessionToken] = {
+        email: prismaResponse.email,
+        username: prismaResponse.username,
+        userId: prismaResponse.id,
+      };
+      res.set('Set-Cookie', `session=${sessionToken}`);
+      return res.status(200).json({ sessionToken, userId: prismaResponse.id });
     }
     catch (error) {
-      console.log(error);
-      return res.status(500).json({ error: `Internal error: ${error}` });
+      res.status(403).json({ error: 'The entered username or email address is already associated with an account.' });
     }
   }
 });
