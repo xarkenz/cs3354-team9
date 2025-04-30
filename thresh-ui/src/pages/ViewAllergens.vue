@@ -368,7 +368,7 @@ const hasPendingChanges = (dishId) => {
         <div v-if="expandedDishes[dish.id]" class="p-4">
           <div class="flex justify-center">
             <div class="overflow-x-auto w-full">
-              <div v-if="editingDishes[dish.id]" class="bg-yellow-100 p-3 mb-3 rounded border border-yellow-400">
+              <div v-if="editingDishes[dish.id]" class="bg-[#FFCC94] p-3 mb-3 rounded border border-[#4B231B]">
                 <p class="text-yellow-800 font-medium">Edit Mode Active: You can only modify unidentified allergens or those marked as not present. The toggle sequence is: Empty → Not Present (X) → Present (✓).</p>
               </div>
               
@@ -391,7 +391,7 @@ const hasPendingChanges = (dishId) => {
                         @click="toggleAllergen(dish.id, header)">
                       <template v-if="getAllergenStatus(dish, header) === true">
                         <div class="flex justify-center items-center">
-                          <span class="text-green-600 font-bold">✔️</span>
+                          <span class="text-[#914F3B] font-bold">✔️</span>
                           <span v-if="editingDishes[dish.id]" class="ml-1 text-xs text-gray-500">(Locked)</span>
                         </div>
                       </template>
@@ -415,7 +415,7 @@ const hasPendingChanges = (dishId) => {
                   </span>
                   <button 
                     @click="saveChanges(dish.id)" 
-                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded shadow transition"
+                    class="px-4 py-2 bg-[#914F3B] hover:bg-[#914F3B] text-white font-semibold rounded shadow transition"
                     :disabled="!hasPendingChanges(dish.id)"
                     :class="{'opacity-50 cursor-not-allowed': !hasPendingChanges(dish.id)}"
                   >
