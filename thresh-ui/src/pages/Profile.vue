@@ -52,7 +52,7 @@
             <PencilSquareIcon class="w-8 h-8 text-green-950" />
             <div>
               <p class="font-semibold text-green-950">My Reviews</p>
-              <p class="text-sm text-green-950"># Reviews Posted</p>
+              <p class="text-sm text-green-950">{{ userReviews.length }} Review{{ userReviews.length === 1 ? '' : 's' }}</p>
             </div>
           </div>
         </div>
