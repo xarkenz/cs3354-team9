@@ -7,7 +7,9 @@
   <div class="p-6 max-w-lg mx-auto">
     <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens</h1>
 
-    <div v-if="!menuItems.length" class="text-gray-500">No allergen records found.</div>
+    <div v-if="!menuItems.length" class="text-gray-500">
+      No allergen records found.
+    </div>
 
     <ul v-else>
       <li
@@ -82,14 +84,18 @@ export default {
   methods: {
     async fetchMenu() {
       try {
-        const res = await fetch('/api/dishes', {
-          headers: { 'Content-Type':'application/json', 'mycookies': `session=${cookies.get('session')}` }
+        // ← point at your Express API on port 3000:
+        const res = await fetch('http://localhost:3000/api/dishes', {
+          headers: {
+            'Content-Type':'application/json',
+            'mycookies': `session=${cookies.get('session')}`
+          }
         })
         const dishes = await res.json()
         this.menuItems = dishes.flatMap(d =>
           (d.allergens || []).map(a => ({
-            dishId: d.id,
-            name:   d.name,
+            dishId:  d.id,
+            name:    d.name,
             allergen: a
           }))
         )
@@ -117,10 +123,13 @@ export default {
       try {
         const { dishId, allergen } = this.selected
         const res = await fetch(
-          `/api/dishes/${dishId}/allergens/${encodeURIComponent(allergen)}`,
+          `http://localhost:3000/api/dishes/${dishId}/allergens/${encodeURIComponent(allergen)}`,
           {
             method: 'DELETE',
-            headers: { 'Content-Type':'application/json', 'mycookies': `session=${cookies.get('session')}` }
+            headers: {
+              'Content-Type':'application/json',
+              'mycookies': `session=${cookies.get('session')}`
+            }
           }
         )
         const json = await res.json()
