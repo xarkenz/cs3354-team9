@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 
   try {
     const reviews = await prisma.review.findMany({
-      where: { businessID },
+      where: { businessID, author: { isBanned: false } },
       orderBy: { id: 'desc' },
       include: { author: true },
     });
