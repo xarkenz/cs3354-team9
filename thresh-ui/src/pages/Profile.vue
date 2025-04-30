@@ -55,8 +55,6 @@
           </div>
         </div>
 
-
-        
         <!-- My Reviews -->
         <div
           @click="showReviewModal = true"
@@ -70,7 +68,6 @@
             </div>
           </div>
         </div>
-
 
         <!-- My Favorites -->
         <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
@@ -96,7 +93,15 @@
           </div>
         </div>
 
-
+        <!-- Remove Restaurant Demo Link -->
+        <div class="mt-6">
+          <a
+            href="#/remove-restaurant"
+            class="w-full block text-center bg-red-600 hover:bg-red-700 text-white py-2 rounded-md transition"
+          >
+            Remove Restaurants (Demo)
+          </a>
+        </div>
 
         <!-- Log Out Button -->
         <button
@@ -136,33 +141,31 @@
           </div>
         </div>
         <div v-else class="text-center text-gray-500">No reviews yet.</div>
+      </div>
+    </div>
   </div>
-</div>
-
-
-
-  </div>
-  
 </template>
 
-
-
-
 <script>
-import { Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon} from '@heroicons/vue/24/outline';
+import { Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
+import RemoveRestaurant from './RemoveRestaurant.vue';
 
 export default {
   name: 'Profile',
   props: ['currentUser'],
   components: {
-    Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon
+    Cog6ToothIcon,
+    PencilSquareIcon,
+    NoSymbolIcon,
+    HandThumbUpIcon,
+    RemoveRestaurant
   },
   data() {
-  return {
-    userReviews: [],
-    showReviewModal: false,
-  };
-},
+    return {
+      userReviews: [],
+      showReviewModal: false,
+    };
+  },
   mounted() {
     this.fetchUserReviews();
   },
@@ -190,8 +193,8 @@ export default {
       }
     },
     goToAccountSettings() {
-    window.location.hash = '/account-settings';
-  },
+      window.location.hash = '/account-settings';
+    },
     signOut() {
       this.$cookies.remove('session');
       window.location.hash = '/';
