@@ -15,30 +15,31 @@
           </div>
         </div>
 
-        <!-- Username / Email / Edit -->
+        <!-- Inputs and Edit Button -->
         <div class="w-full space-y-4">
           <label class="block text-[#283618] text-sm font-bold">Username</label>
           <input
             type="text"
+            placeholder="YourUsername"
+            class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
             :value="currentUser?.username"
             disabled
-            class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
           />
 
           <label class="block text-[#283618] text-sm font-bold">Email</label>
           <input
             type="text"
+            placeholder="YourEmail"
+            class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
             :value="currentUser?.email || 'N/A'"
             disabled
-            class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
           />
 
           <button class="w-full bg-[#DDA15E] hover:bg-[#BC6C25] text-white py-2 rounded-md transition">
             Edit
           </button>
         </div>
-      </div>
-      <!-- LEFT SECTION END -->
+      </div> <!-- LEFT SECTION END -->
 
       <!-- Right Section -->
       <div class="flex flex-col justify-center gap-4">
@@ -70,7 +71,7 @@
         <!-- My Favorites -->
         <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
           <div class="flex items-center gap-4">
-            <HandThumbUpIcon class="w-8 h-8 text-green-950" />
+            <HandThumbUpIcon class="w-8 h-8 text-green-950"/>
             <div>
               <p class="font-semibold text-green-950">My Favorites</p>
               <p class="text-sm text-green-950"># Favorite Restaurants</p>
@@ -78,7 +79,7 @@
           </div>
         </div>
 
-        <!-- Account Settings -->
+        <!-- Settings -->
         <div
           @click="goToAccountSettings"
           class="cursor-pointer flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md hover:brightness-95 transition"
@@ -92,10 +93,7 @@
         </div>
 
         <!-- Remove Restaurants (Demo) -->
-        <div
-          @click="() => window.location.hash = '/remove-restaurant'"
-          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
-        >
+        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
           <div class="flex items-center gap-4">
             <TrashIcon class="w-8 h-8 text-green-950" />
             <div>
@@ -103,25 +101,26 @@
               <p class="text-sm text-green-950">Demo</p>
             </div>
           </div>
-          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          <a href="#/remove-restaurant" class="block">
+            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          </a>
         </div>
 
         <!-- Report Incorrect Allergens -->
-        <div
-          @click="() => window.location.hash = '/report-incorrect-allergy'"
-          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
-        >
+        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
           <div class="flex items-center gap-4">
             <ExclamationCircleIcon class="w-8 h-8 text-green-950" />
             <div>
               <p class="font-semibold text-green-950">Report Incorrect Allergens</p>
-              <p class="text-sm text-green-950">Flag &amp; Remove</p>
+              <p class="text-sm text-green-950">Flag & Remove</p>
             </div>
           </div>
-          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          <a href="#/report-incorrect-allergy" class="block">
+            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+          </a>
         </div>
 
-        <!-- Log Out -->
+        <!-- Log Out Button -->
         <button
           @click="signOut"
           class="mt-6 w-full py-2 rounded-md bg-white border border-[#4B231B] text-[#914F3B] font-bold hover:bg-[#914F3B] hover:text-white transition"
@@ -131,30 +130,9 @@
       </div>
     </div>
 
-    <!-- Review Modal (unchanged) -->
+    <!-- Review Modal -->
     <div v-if="showReviewModal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full p-6 relative">
-        <button @click="showReviewModal = false" class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl">&times;</button>
-        <div class="flex items-center gap-3 mb-6">
-          <img src="../assets/profile.png" class="w-10 h-10 rounded-full" alt="User" />
-          <h2 class="text-xl font-semibold text-[#283618]">{{ currentUser?.username }}’s Reviews</h2>
-        </div>
-        <div v-if="userReviews.length" class="space-y-4">
-          <div
-            v-for="review in userReviews"
-            :key="review.id"
-            class="bg-[#DDE2E4] rounded-md p-4 shadow-sm"
-          >
-            <h3 class="text-lg font-bold text-[#283618]">{{ review.business?.name }}</h3>
-            <div class="flex items-center text-sm text-gray-500 mb-1">
-              <span v-for="n in review.numStars" :key="n" class="text-yellow-500">★</span>
-              <span v-for="n in (5 - review.numStars)" :key="'empty'+n" class="text-gray-300">★</span>
-            </div>
-            <p class="text-gray-800">{{ review.content }}</p>
-          </div>
-        </div>
-        <div v-else class="text-center text-gray-500">No reviews yet.</div>
-      </div>
+      <!-- … your existing modal … -->
     </div>
   </div>
 </template>
@@ -169,7 +147,6 @@ import {
   ExclamationCircleIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/outline'
-import RemoveRestaurant from './RemoveRestaurant.vue'
 
 export default {
   name: 'Profile',
@@ -179,10 +156,9 @@ export default {
     PencilSquareIcon,
     NoSymbolIcon,
     HandThumbUpIcon,
-    TrashIcon,
-    ExclamationCircleIcon,
-    ChevronRightIcon,
-    RemoveRestaurant
+    TrashIcon,               
+    ExclamationCircleIcon,   
+    ChevronRightIcon         
   },
   data() {
     return {
@@ -197,10 +173,10 @@ export default {
     async fetchUserReviews() {
       if (!this.currentUser?.username) return
       try {
-        const resp = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
-          headers: { 'Content-Type': 'application/json', 'mycookies': document.cookie }
+        const r = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
+          headers: { 'Content-Type':'application/json', 'mycookies': document.cookie }
         })
-        const body = await resp.json()
+        const body = await r.json()
         this.userReviews = body.reviews || []
       } catch (e) {
         console.error(e)
