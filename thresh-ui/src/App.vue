@@ -10,7 +10,7 @@ import RateRestaurant from './pages/RateRestaurant.vue'
 import RemoveRestaurant from './pages/RemoveRestaurant.vue'
 import FilterSearch from './pages/FilterSearch.vue'
 import ViewAllergens from './pages/ViewAllergens.vue'
-import DeleteAccount from './pages/DeleteAccount.vue'
+import AccountSettings from './pages/AccountSettings.vue'
 import User from './pages/User.vue'
 import SaveFavoriteRestaurant from './pages/SaveFavoriteRestaurant.vue'
 import Map from './pages/Map.vue'
@@ -60,7 +60,7 @@ const routes = {
   'report-incorrect-allergy': ReportIncorrectAllergy,
   'filter-search': FilterSearch,
   'view-allergens': ViewAllergens,
-  'delete-account': DeleteAccount,
+  'account-settings': AccountSettings,
   'save-favorite-restaurant': SaveFavoriteRestaurant,
   'map': Map,
   'profile': Profile,
