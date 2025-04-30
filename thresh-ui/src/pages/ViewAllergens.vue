@@ -95,6 +95,12 @@ const getAllergenStatus = (dish, allergenKey) => {
   }
 };
 
+// Check if an allergen can be toggled (only if it's unidentified or marked as not present)
+const canToggleAllergen = (dish, allergenKey) => {
+  const status = getAllergenStatus(dish, allergenKey);
+  return status === "unidentified" || status === false;
+};
+
 // toggle the expanded state of a dish
 const toggleDish = (dishId) => {
   expandedDishes[dishId] = !expandedDishes[dishId];
@@ -166,69 +172,74 @@ const refreshRestaurantData = async () => {
 
 // toggle an allergen (for when we're in edit mode)
 const toggleAllergen = async (dishId, allergenKey) => {
-  if (editingDishes[dishId] && selectedRestaurant.value) {
-    const dish = selectedRestaurant.value.dishes.find(d => d.id === dishId);
-    if (dish) {
-      // find the lowercase key 
-      const normalizedKey = normalizeAllergenKey(allergenKey);
-      
-      // what's the status of the allergen
-      const status = getAllergenStatus(dish, allergenKey);
-      
-      // if arrays don't exist, create them
-      if (!dish.allergens) dish.allergens = [];
-      if (!dish.allergenFree) dish.allergenFree = [];
-   
-      const allergens = [...dish.allergens];
-      const allergenFree = [...dish.allergenFree];
+  if (!editingDishes[dishId] || !selectedRestaurant.value) return;
+  
+  const dish = selectedRestaurant.value.dishes.find(d => d.id === dishId);
+  if (!dish) return;
+  
+  // Check if this allergen can be toggled
+  if (!canToggleAllergen(dish, allergenKey)) {
+    showNotification("Cannot modify confirmed allergens for safety reasons", true);
+    return;
+  }
+  
+  // find the lowercase key 
+  const normalizedKey = normalizeAllergenKey(allergenKey);
+  
+  // what's the status of the allergen
+  const status = getAllergenStatus(dish, allergenKey);
+  
+  // if arrays don't exist, create them
+  if (!dish.allergens) dish.allergens = [];
+  if (!dish.allergenFree) dish.allergenFree = [];
 
-      dish.allergens = allergens.filter(a => normalizeAllergenKey(a) !== normalizedKey);
-      dish.allergenFree = allergenFree.filter(a => normalizeAllergenKey(a) !== normalizedKey);
-      
-      // change the status (allergens -> allergenFree, allergenFree -> remove)
-      if (status === true) {
-        // If it was in allergens, move to allergenFree
-        dish.allergenFree.push(allergenKey);
-      } else if (status === false) {
-      } else {
-        dish.allergens.push(allergenKey);
-      }
-      
-      // Update the database with the changes
-      try {
-        // just updated information for the backend api 
-        const payload = {
-          dishId: dish.id,
-          allergens: dish.allergens,
-          allergenFree: dish.allergenFree
-        };
-        
-        // Send the update to the server
-        const response = await fetch(`http://localhost:3001/api/dishes/${dish.id}/allergens`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-        
-        if (!response.ok) {
-          throw new Error('Failed to update allergen information');
-        }
-        
-        console.log('Allergen information updated successfully in database');
-        
-        // success notification 
-        showNotification('Allergen information updated successfully', false);
-      } catch (error) {
-        console.error('Error updating allergen information:', error);
-        // error notification
-        showNotification(`Error updating allergen information: ${error.message}`, true);
-        
-        // revert the change if needed. 
-        refreshRestaurantData();
-      }
+  const allergens = [...dish.allergens];
+  const allergenFree = [...dish.allergenFree];
+
+  dish.allergens = allergens.filter(a => normalizeAllergenKey(a) !== normalizedKey);
+  dish.allergenFree = allergenFree.filter(a => normalizeAllergenKey(a) !== normalizedKey);
+  
+  // change the status (unidentified -> allergens, allergenFree -> unidentified)
+  if (status === "unidentified") {
+    // If it was unidentified, mark as allergen present
+    dish.allergens.push(allergenKey);
+  } else if (status === false) {
+    // If it was marked as not present, change to unidentified (remove from both arrays)
+  }
+  
+  // Update the database with the changes
+  try {
+    // just updated information for the backend api 
+    const payload = {
+      dishId: dish.id,
+      allergens: dish.allergens,
+      allergenFree: dish.allergenFree
+    };
+    
+    // Send the update to the server
+    const response = await fetch(`http://localhost:3001/api/dishes/${dish.id}/allergens`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update allergen information');
     }
+    
+    console.log('Allergen information updated successfully in database');
+    
+    // success notification 
+    showNotification('Allergen information updated successfully', false);
+  } catch (error) {
+    console.error('Error updating allergen information:', error);
+    // error notification
+    showNotification(`Error updating allergen information: ${error.message}`, true);
+    
+    // revert the change if needed. 
+    refreshRestaurantData();
   }
 };
 </script>
@@ -309,7 +320,7 @@ const toggleAllergen = async (dishId, allergenKey) => {
           <div class="flex justify-center">
             <div class="overflow-x-auto w-full">
               <div v-if="editingDishes[dish.id]" class="bg-yellow-100 p-3 mb-3 rounded border border-yellow-400">
-                <p class="text-yellow-800 font-medium">Edit Mode Active: Click on cells to toggle allergens.</p>
+                <p class="text-yellow-800 font-medium">Edit Mode Active: You can only modify unidentified allergens or those marked as not present.</p>
               </div>
               
               <table class="min-w-full border border-[#914F3B] border-collapse rounded-lg overflow-hidden shadow-lg">
@@ -324,16 +335,23 @@ const toggleAllergen = async (dishId, allergenKey) => {
                   <tr class="hover:bg-red-50">
                     <td v-for="header in allergenHeaders" :key="header" 
                         class="px-4 py-2 text-center border border-[#914F3B]"
-                        :class="{ 'cursor-pointer': editingDishes[dish.id] }"
+                        :class="{
+                          'cursor-pointer': editingDishes[dish.id] && canToggleAllergen(dish, header),
+                          'bg-gray-100': editingDishes[dish.id] && !canToggleAllergen(dish, header)
+                        }"
                         @click="toggleAllergen(dish.id, header)">
                       <template v-if="getAllergenStatus(dish, header) === true">
-                        ✔️
+                        <div class="flex justify-center items-center">
+                          <span class="text-green-600 font-bold">✔️</span>
+                          <span v-if="editingDishes[dish.id]" class="ml-1 text-xs text-gray-500">(Locked)</span>
+                        </div>
                       </template>
                       <template v-else-if="getAllergenStatus(dish, header) === false">
-                        X
+                        <span class="text-red-600 font-bold">X</span>
                       </template>
                       <template v-else>
                         <!-- Empty for unidentified -->
+                        <span class="text-gray-300">-</span>
                       </template>
                     </td>
                   </tr>
@@ -372,4 +390,3 @@ table td {
   transform: translateY(-10px);
 }
 </style>
-
