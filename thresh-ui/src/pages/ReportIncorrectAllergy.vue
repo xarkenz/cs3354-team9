@@ -7,9 +7,10 @@
   <div class="p-6 max-w-lg mx-auto">
     <h1 class="text-2xl font-bold mb-4">Flag & Remove Allergens</h1>
 
-    <div v-if="!menuItems.length" class="text-gray-500">
-      No allergen records found.
+    <div v-if="!menuItems.length && !errorMsg" class="text-gray-500">
+      Loading…
     </div>
+    <div v-if="errorMsg" class="text-red-600 font-medium">{{ errorMsg }}</div>
 
     <ul v-else>
       <li
@@ -62,7 +63,6 @@
 
     <!-- feedback -->
     <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
-    <p v-if="errorMsg" class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -74,7 +74,7 @@ export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],      // { dishId, name, allergen }
+      menuItems: [],      // flattened list { dishId, name, allergen }
       showModal: false,
       selected: null,
       successMsg: '',
@@ -87,10 +87,11 @@ export default {
         // ← point at your Express API on port 3000:
         const res = await fetch('http://localhost:3000/api/dishes', {
           headers: {
-            'Content-Type':'application/json',
+            'Content-Type': 'application/json',
             'mycookies': `session=${cookies.get('session')}`
           }
         })
+        if (!res.ok) throw new Error('Network response was not ok')
         const dishes = await res.json()
         this.menuItems = dishes.flatMap(d =>
           (d.allergens || []).map(a => ({
@@ -99,7 +100,6 @@ export default {
             allergen: a
           }))
         )
-        this.errorMsg = ''
       } catch (err) {
         console.error(err)
         this.errorMsg = 'Failed to load allergen records.'
@@ -127,15 +127,15 @@ export default {
           {
             method: 'DELETE',
             headers: {
-              'Content-Type':'application/json',
+              'Content-Type': 'application/json',
               'mycookies': `session=${cookies.get('session')}`
             }
           }
         )
-        const json = await res.json()
-        if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.')
+        if (!res.ok) throw new Error('Deletion failed')
+        await res.json()
 
-        // update locally
+        // remove locally
         this.menuItems = this.menuItems.filter(i =>
           !(i.dishId === dishId && i.allergen === allergen)
         )
