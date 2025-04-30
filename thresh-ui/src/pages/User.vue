@@ -37,7 +37,7 @@
                     <div v-else class="text-center text-gray-500">No reviews yet.</div>
                 </div>
                 <div v-if="user.canBan" class="mt-2">
-                    <button id="banUser" @click="banUser" class="mt-6 w-full py-2 rounded-md bg-white font-bold bg-[#914F3B] hover:bg-[#662713] text-white transition">Ban User</button>
+                    <button id="banUser" @click="banUser" class="mt-6 w-full py-2 rounded-md bg-white font-bold bg-[#914F3B] hover:bg-[#7a3d2f] text-white transition">Ban User</button>
                 </div>
             </template>
             <template v-else>
