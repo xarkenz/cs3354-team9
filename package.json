@@ -13,10 +13,11 @@
     "test:unit": "vitest",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "resetdb": "node ./prisma/clean.js && prisma generate && prisma db push && prisma db seed"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node ./prisma/seed.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
