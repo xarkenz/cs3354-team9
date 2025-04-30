@@ -12,13 +12,6 @@
 
       <!-- HERO SECTION -->
       <div class="relative w-screen h-screen overflow-hidden bg-[#606C38]">
-        <!-- Background Spline iframe -->
-        <iframe
-          src="https://my.spline.design/bowlspooncopy-jlAMfmMhVgnUlXTKuQ3D7CIr/"
-          frameborder="0"
-          class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-30"
-          allowfullscreen
-        ></iframe>
 
         <!-- Overlay content -->
         <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
@@ -28,7 +21,7 @@
             </svg>
           </div>
 
-          <h4 class="animate-character text-4xl font-large mb-8 font-bold">
+          <h4 class="text-4xl font-large mb-8 font-bold text-[#FEFAE0]">
             Find The Right Bite, Every Time
           </h4>
 
@@ -38,13 +31,7 @@
             Get Started
           </a>
 
-          <div>
-            <p class="text-slate-200 font-semibold text-md">Already have an account?</p>
-            <a class="font-semibold text-orange-300" href="#/sign-in">
-              Sign In to Thresh.
-            </a>
-          </div>
-          <div class="text-slate-300 text-left my-5 mx-auto">
+          <!-- <div class="text-slate-300 text-left my-5 mx-auto">
             <p class="font-semibold">Demo use cases:</p>
             <ul>
               <li><a href="#/report-incorrect-allergy">Report Incorrect Allergy</a></li>
@@ -55,7 +42,7 @@
               <li><a href="#/manage-restaurants">Manage Restaurants</a></li>
               <li><a href="#/manage-allergens">Manage Allergens</a></li>
             </ul>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
