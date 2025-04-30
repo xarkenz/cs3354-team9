@@ -2,9 +2,18 @@
   <div class="flex min-h-screen">
     <!-- Left image -->
     <div class="flex-1 bg-[#606C38] flex justify-center items-center">
-      <img src="../assets/corn.png" alt="Corn" class="max-w-md w-full" />
+      <!-- <img src="../assets/corn.png" alt="Corn" class="max-w-md w-full" /> -->
+       <!-- <img src="../assets/collage1.png" alt="food-collage" class="max-w-3xl w-full" /> -->
+      <!-- Background Spline iframe -->
+      <iframe
+          src="https://my.spline.design/burger-sYsg97qHhDhNM34udRjufQGq/"
+          frameborder="0"
+          class="w-full h-full justify-center"
+          allowfullscreen
+        ></iframe>
     </div>
 
+    <!-- absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-30 -->
     <!-- Right signup form -->
     <div class="flex-1 bg-[#606C38] flex items-center justify-center">
       <form @submit.prevent="createAccount" class="w-full max-w-md px-8 py-10">
@@ -82,6 +91,14 @@
         >
           Register
         </button>
+
+        <div class="flex gap-2 items-center justify-center my-2">
+        <p class="text-slate-200 font-semibold text-md">Already have an account?</p>
+        <a class="font-semibold text-orange-300" href="#/sign-in">
+          Sign In to Thresh.
+        </a>
+      </div>
+
       </form>
     </div>
   </div>
