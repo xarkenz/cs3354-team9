@@ -11,7 +11,9 @@
           <img class="w-24 h-24 rounded-full object-cover" src="../assets/profile.png" alt="Profile" />
           <div>
             <h2 class="text-[#283618] text-lg">Welcome,</h2>
-            <p class="text-[#283618] text-2xl font-bold">{{ currentUser?.username || 'User' }}</p>
+            <p class="text-[#283618] text-2xl font-bold">
+              {{ currentUser?.username || 'User' }}
+            </p>
           </div>
         </div>
 
@@ -71,7 +73,7 @@
         <!-- My Favorites -->
         <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
           <div class="flex items-center gap-4">
-            <HandThumbUpIcon class="w-8 h-8 text-green-950"/>
+            <HandThumbUpIcon class="w-8 h-8 text-green-950" />
             <div>
               <p class="font-semibold text-green-950">My Favorites</p>
               <p class="text-sm text-green-950"># Favorite Restaurants</p>
@@ -92,10 +94,10 @@
           </div>
         </div>
 
-        <!-- Admin: Restaurant Management -->
-        <div
-          @click="() => window.location.hash = '/remove-restaurant'"
-          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        <!-- Remove Restaurants (Demo) -->
+        <a
+          href="#/remove-restaurant"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md hover:brightness-95 transition"
         >
           <div class="flex items-center gap-4">
             <TrashIcon class="w-8 h-8 text-green-950" />
@@ -104,8 +106,8 @@
               <p class="text-sm text-green-950">Demo</p>
             </div>
           </div>
-          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
-        </div>
+          <ChevronRightIcon class="w-6 h-6 text-green-950" />
+        </a>
 
         <!-- Log Out Button -->
         <button
@@ -127,13 +129,16 @@
         <button
           @click="showReviewModal = false"
           class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl"
-        >&times;</button>
+        >
+          &times;
+        </button>
 
         <!-- Modal Header -->
         <div class="flex items-center gap-3 mb-6">
           <img src="../assets/profile.png" class="w-10 h-10 rounded-full" alt="User" />
-          <h2 class="text-xl font-semibold text-[#283618]"
-            >{{ currentUser?.username }}’s Reviews</h2>
+          <h2 class="text-xl font-semibold text-[#283618]">
+            {{ currentUser?.username }}’s Reviews
+          </h2>
         </div>
 
         <!-- Review List -->
@@ -147,15 +152,8 @@
               {{ review.business?.name }}
             </h3>
             <div class="flex items-center text-sm text-gray-500 mb-1">
-              <span v-for="n in review.numStars" :key="n" class="text-yellow-500"
-                >★</span
-              >
-              <span
-                v-for="n in 5 - review.numStars"
-                :key="'empty' + n"
-                class="text-gray-300"
-                >★</span
-              >
+              <span v-for="n in review.numStars" :key="n" class="text-yellow-500">★</span>
+              <span v-for="n in (5 - review.numStars)" :key="'empty' + n" class="text-gray-300">★</span>
             </div>
             <p class="text-gray-800">{{ review.content }}</p>
           </div>
@@ -213,7 +211,7 @@ export default {
         );
         if (!response.ok) throw new Error('Failed to fetch user reviews');
         const data = await response.json();
-        this.userReviews = data.reviews.map((r) => ({ ...r, business: r.business }));
+        this.userReviews = data.reviews.map(r => ({ ...r, business: r.business }));
       } catch (error) {
         console.error('Error loading user reviews:', error.message);
       }
