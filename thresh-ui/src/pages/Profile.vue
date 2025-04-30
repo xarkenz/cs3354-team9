@@ -39,7 +39,6 @@
             Edit
           </button>
         </div>
-
       </div> <!-- LEFT SECTION END -->
 
       <!-- Right Section -->
@@ -93,19 +92,20 @@
           </div>
         </div>
 
-           <!-- Admin: Restaurant Management -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
-      <div class="flex items-center gap-4">
-        <TrashIcon class="w-8 h-8" />
-        <div>
-          <h3 class="text-[#283618] text-sm font-bold">Remove Restaurants</h3>
-          <p>Delete restaurants from the system</p>
+        <!-- Admin: Restaurant Management -->
+        <div
+          @click="() => window.location.hash = '/remove-restaurant'"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        >
+          <div class="flex items-center gap-4">
+            <TrashIcon class="w-8 h-8 text-green-950" />
+            <div>
+              <p class="font-semibold text-green-950">Remove Restaurants</p>
+              <p class="text-sm text-green-950">Demo</p>
+            </div>
+          </div>
+          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
         </div>
-      </div>
-      <a href="#/remove-restaurant" class="block">
-        <ChevronRightIcon class="w-6 h-6 text-gray-500" />
-      </a>
-    </div>
 
         <!-- Log Out Button -->
         <button
@@ -118,15 +118,22 @@
     </div>
 
     <!-- Review Modal -->
-    <div v-if="showReviewModal" class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+    <div
+      v-if="showReviewModal"
+      class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
+    >
       <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full p-6 relative">
         <!-- Close button -->
-        <button @click="showReviewModal = false" class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl">&times;</button>
+        <button
+          @click="showReviewModal = false"
+          class="absolute top-3 right-3 text-gray-600 hover:text-black text-3xl"
+        >&times;</button>
 
         <!-- Modal Header -->
         <div class="flex items-center gap-3 mb-6">
           <img src="../assets/profile.png" class="w-10 h-10 rounded-full" alt="User" />
-          <h2 class="text-xl font-semibold text-[#283618]">{{ currentUser?.username }}’s Reviews</h2>
+          <h2 class="text-xl font-semibold text-[#283618]"
+            >{{ currentUser?.username }}’s Reviews</h2>
         </div>
 
         <!-- Review List -->
@@ -136,10 +143,19 @@
             :key="review.id"
             class="bg-[#DDE2E4] rounded-md p-4 shadow-sm"
           >
-            <h3 class="text-lg font-bold text-[#283618]">{{ review.business?.name }}</h3>
+            <h3 class="text-lg font-bold text-[#283618]">
+              {{ review.business?.name }}
+            </h3>
             <div class="flex items-center text-sm text-gray-500 mb-1">
-              <span v-for="n in review.numStars" :key="n" class="text-yellow-500">★</span>
-              <span v-for="n in (5 - review.numStars)" :key="'empty' + n" class="text-gray-300">★</span>
+              <span v-for="n in review.numStars" :key="n" class="text-yellow-500"
+                >★</span
+              >
+              <span
+                v-for="n in 5 - review.numStars"
+                :key="'empty' + n"
+                class="text-gray-300"
+                >★</span
+              >
             </div>
             <p class="text-gray-800">{{ review.content }}</p>
           </div>
@@ -169,8 +185,8 @@ export default {
     PencilSquareIcon,
     NoSymbolIcon,
     HandThumbUpIcon,
-    TrashIcon,          // ← added
-    ChevronRightIcon,   // ← added
+    TrashIcon,
+    ChevronRightIcon,
     RemoveRestaurant
   },
   data() {
@@ -186,22 +202,18 @@ export default {
     async fetchUserReviews() {
       try {
         if (!this.currentUser?.username) return;
-        
         const response = await fetch(
           `http://localhost:3000/api/user/${this.currentUser.username}`,
           {
             headers: {
               'Content-Type': 'application/json',
-              'mycookies': document.cookie, // Include session token manually
+              'mycookies': document.cookie,
             },
           }
         );
         if (!response.ok) throw new Error('Failed to fetch user reviews');
         const data = await response.json();
-        this.userReviews = data.reviews.map(r => ({
-          ...r,
-          business: r.business,
-        }));
+        this.userReviews = data.reviews.map((r) => ({ ...r, business: r.business }));
       } catch (error) {
         console.error('Error loading user reviews:', error.message);
       }
