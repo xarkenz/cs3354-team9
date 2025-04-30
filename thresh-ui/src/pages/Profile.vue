@@ -43,17 +43,6 @@
 
       <!-- Right Section -->
       <div class="flex flex-col justify-center gap-4">
-        <!-- Dietary Profiles -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
-          <div class="flex items-center gap-4">
-            <NoSymbolIcon class="w-8 h-8 text-green-950" />
-            <div>
-              <p class="font-semibold text-green-950">Dietary Profiles</p>
-              <p class="text-sm text-green-950"># Profiles Saved</p>
-            </div>
-          </div>
-        </div>
-
         <!-- My Reviews -->
         <div
           @click="showReviewModal = true"
@@ -69,7 +58,10 @@
         </div>
 
         <!-- My Favorites -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md">
+        <a
+          href="#/save-favorite-restaurant"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md"
+        >
           <div class="flex items-center gap-4">
             <HandThumbUpIcon class="w-8 h-8 text-green-950"/>
             <div>
@@ -77,11 +69,11 @@
               <p class="text-sm text-green-950"># Favorite Restaurants</p>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- Settings -->
-        <div
-          @click="goToAccountSettings"
+        <a
+          href="#/account-settings"
           class="cursor-pointer flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md hover:brightness-95 transition"
         >
           <div class="flex items-center gap-4">
@@ -90,10 +82,13 @@
               <p class="font-semibold text-green-950">Account Settings</p>
             </div>
           </div>
-        </div>
+        </a>
 
         <!-- Remove Restaurants (Demo) -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
+        <a
+          href="#/remove-restaurant"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        >
           <div class="flex items-center gap-4">
             <TrashIcon class="w-8 h-8 text-green-950" />
             <div>
@@ -101,13 +96,14 @@
               <p class="text-sm text-green-950">Demo</p>
             </div>
           </div>
-          <a href="#/remove-restaurant" class="block">
-            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
-          </a>
-        </div>
+          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+        </a>
 
         <!-- Report Incorrect Allergens -->
-        <div class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition">
+        <a
+          href="#/report-incorrect-allergy"
+          class="flex items-center justify-between bg-[#C5C9B6] p-4 rounded-md shadow-md cursor-pointer hover:brightness-95 transition"
+        >
           <div class="flex items-center gap-4">
             <ExclamationCircleIcon class="w-8 h-8 text-green-950" />
             <div>
@@ -115,10 +111,8 @@
               <p class="text-sm text-green-950">Flag & Remove</p>
             </div>
           </div>
-          <a href="#/report-incorrect-allergy" class="block">
-            <ChevronRightIcon class="w-6 h-6 text-gray-500" />
-          </a>
-        </div>
+          <ChevronRightIcon class="w-6 h-6 text-gray-500" />
+        </a>
 
         <!-- Log Out Button -->
         <button
@@ -211,7 +205,7 @@ export default {
     async fetchUserReviews() {
       if (!this.currentUser?.username) return
       try {
-        const r = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
+        const r = await fetch(`/api/user/${this.currentUser.username}`, {
           headers: { 'Content-Type':'application/json', 'mycookies': document.cookie }
         })
         const body = await r.json()
@@ -219,9 +213,6 @@ export default {
       } catch (e) {
         console.error(e)
       }
-    },
-    goToAccountSettings() {
-      window.location.hash = '/account-settings'
     },
     signOut() {
       this.$cookies.remove('session')
