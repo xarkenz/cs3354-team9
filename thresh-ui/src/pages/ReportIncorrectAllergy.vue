@@ -7,16 +7,14 @@
   <div class="p-6 max-w-lg mx-auto">
     <h1 class="text-2xl font-bold mb-4">Allergen Records</h1>
 
-    <!-- empty state -->
     <div v-if="!menuItems.length" class="text-gray-500">
       No allergen records found.
     </div>
 
-    <!-- list -->
     <ul v-else>
       <li
         v-for="item in menuItems"
-        :key="`${item.restaurantId}-${item.allergen}`"
+        :key="`${item.dishId}-${item.allergen}`"
         class="mb-4 p-4 border rounded-lg flex justify-between items-center"
       >
         <div>
@@ -34,7 +32,7 @@
       </li>
     </ul>
 
-    <!-- confirmation modal -->
+    <!-- Confirmation Modal -->
     <div
       v-if="showModal"
       class="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center"
@@ -42,7 +40,7 @@
       <div class="bg-white rounded-lg p-6 w-80 space-y-4">
         <h2 class="text-xl font-semibold">Confirm Removal</h2>
         <p>
-          Are you sure you want to remove
+          Remove
           <strong>"{{ selected.allergen }}"</strong>
           from <strong>"{{ selected.name }}"</strong>?
         </p>
@@ -63,7 +61,7 @@
       </div>
     </div>
 
-    <!-- feedback -->
+    <!-- Feedback Messages -->
     <p v-if="successMsg" class="mt-6 text-green-600 font-medium">{{ successMsg }}</p>
     <p v-if="errorMsg"   class="mt-6 text-red-600 font-medium">{{ errorMsg }}</p>
   </div>
@@ -77,30 +75,30 @@ export default {
   name: 'ReportIncorrectAllergy',
   data() {
     return {
-      menuItems: [],      // flattened list { restaurantId, name, allergen }
+      menuItems: [],      // { dishId, name, allergen }
       showModal: false,
       selected: null,
       successMsg: '',
       errorMsg: ''
-    };
+    }
   },
   methods: {
     async fetchMenu() {
       try {
-        // get all restaurants with their allergen lists
-        const res = await fetch('/api/restaurants', {
+        // 1) fetch all dishes (includes `allergens` JSON array)
+        const res = await fetch('/api/dishes', {
           headers: {
             'Content-Type':'application/json',
             'mycookies': `session=${cookies.get('session')}`
           }
         });
-        const json = await res.json();
-        const list = json.restaurants || json.data || [];
-        // flatten
-        this.menuItems = list.flatMap(r =>
-          (r.allergens || []).map(a => ({
-            restaurantId: r.id,
-            name: r.name,
+        const dishes = await res.json();
+
+        // 2) flatten to one row per allergen
+        this.menuItems = dishes.flatMap(d =>
+          (d.allergens || []).map(a => ({
+            dishId: d.id,
+            name: d.name,
             allergen: a
           }))
         );
@@ -112,10 +110,10 @@ export default {
     },
 
     promptRemoval(item) {
-      this.selected    = item;
-      this.successMsg  = '';
-      this.errorMsg    = '';
-      this.showModal   = true;
+      this.selected   = item;
+      this.showModal  = true;
+      this.successMsg = '';
+      this.errorMsg   = '';
     },
 
     cancelRemoval() {
@@ -126,9 +124,9 @@ export default {
     async removeAllergen() {
       this.showModal = false;
       try {
-        const { restaurantId, allergen } = this.selected;
+        const { dishId, allergen } = this.selected;
         const res = await fetch(
-          `/api/restaurants/${restaurantId}/allergens/${encodeURIComponent(allergen)}`,
+          `/api/dishes/${dishId}/allergens/${encodeURIComponent(allergen)}`,
           {
             method: 'DELETE',
             headers: {
@@ -140,9 +138,9 @@ export default {
         const json = await res.json();
         if (!res.ok || json.error) throw new Error(json.error || 'Deletion failed.');
 
-        // remove locally
+        // locally remove from list
         this.menuItems = this.menuItems.filter(
-          i => !(i.restaurantId === restaurantId && i.allergen === allergen)
+          i => !(i.dishId === dishId && i.allergen === allergen)
         );
         this.successMsg = `Allergen "${allergen}" removed from "${this.selected.name}".`;
       } catch (err) {
@@ -153,14 +151,8 @@ export default {
       }
     }
   },
-
   mounted() {
     this.fetchMenu();
   }
 }
 </script>
-
-<style scoped>
-/* All styling is handled by your Tailwind config */
-</style>
-
