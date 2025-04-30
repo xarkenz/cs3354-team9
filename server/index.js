@@ -195,7 +195,7 @@ app.delete('/api/account', async (req, res) => {
         id: session.userId,
         email: session.email,
         username: session.username,
-      }
+      },
     });
     console.log("Deleted user: " + JSON.stringify(deletedUser));
     // Invalidate the session
@@ -206,9 +206,40 @@ app.delete('/api/account', async (req, res) => {
     return res.status(400).json({ error: "Not logged in!" });
   }
 });
-
-app.get('/api/hello', (req, res) => {
-  res.json('Hello World!')
+app.put('/api/account', async (req, res) => {
+  // Passing the request to this function extracts the session token cookie from the headers of the request
+  const sessionToken = getSessionToken(req);
+  let session;
+  if (sessionToken && (session = sessions[sessionToken])) {
+    // The idea is that this is a general-purpose API target for updating account details,
+    // though for now only email changes are processed
+    const newEmail = req.body?.email;
+    if (newEmail && typeof(newEmail) === "string") {
+      try {
+        await prisma.user.update({
+          where: {
+            id: session.userId,
+            email: session.email,
+            username: session.username,
+          },
+          data: {
+            email: newEmail,
+          },
+        });
+      }
+      catch (error) {
+        console.log(`Refused to update clashing email address for ${session.username}: ${session.email} -/> ${newEmail}`);
+        return res.status(403).json({ error: "The entered email address is already associated with an account." });
+      }
+      console.log(`Updated email address for ${session.username}: ${session.email} --> ${newEmail}`);
+      // Update the email address for the current session
+      session.email = newEmail;
+    }
+    return res.status(200).json({});
+  }
+  else {
+    return res.status(400).json({ error: "Not logged in!" });
+  }
 });
 
 app.use('/api/reviews', reviewRoutes);

@@ -10,13 +10,33 @@ Created by Sean Clarke for UC17: Delete Own Account
     </div>
     <div v-else class="w-fit mx-auto">
       <div class="text-center mb-10">
-        <label class="block my-2 font-semibold">Language</label>
-        <select v-model="selectedLanguage" class="px-4 py-2 rounded-full border-2 border-slate-300">
+        <h2 class="text-2xl font-semibold">Account Settings</h2>
+        <a href="#/profile" class="text-lime-700">← Return to profile</a>
+      </div>
+      <div class="text-center mb-10">
+        <label class="block my-2">Language</label>
+        <select v-model="selectedLanguage" class="px-4 py-2 rounded-lg border-2 border-slate-300">
           <option value="en" selected>English</option>
           <option value="es">Español</option>
           <option value="fr">Français</option>
           <option value="de">Deutsch</option>
         </select>
+      </div>
+      <div class="text-center mb-10">
+        <label class="block my-2">Email Address</label>
+        <input
+          type="email"
+          v-model="newEmail"
+          :placeholder="currentUser?.email || 'your@email.com'"
+          class="px-4 py-2 rounded-lg border-2 border-slate-300"
+        ></input>
+        <button
+          @click="updateEmail"
+          :disabled="newEmail === ''"
+          class="ml-2 px-4 py-2 rounded-lg border-2 border-lime-700 disabled:border-slate-300 bg-lime-700 disabled:bg-transparent font-semibold text-white disabled:text-slate-300"
+        >
+          Update
+        </button>
       </div>
       <div v-if="showConfirmMessage" class="w-fit mx-auto my-4 px-4 rounded-lg border-2 border-red-500">
         <p class="text-lg text-red-600"><strong>Are you sure you want to delete your account?</strong></p>
@@ -36,7 +56,7 @@ Created by Sean Clarke for UC17: Delete Own Account
         <button
           @click="requestAccountDeletion"
           :disabled="showConfirmMessage && !acknowledged"
-          class="px-4 py-2 rounded-full border-2 border-red-500 disabled:border-slate-300 bg-red-500 disabled:bg-transparent font-semibold text-white disabled:text-slate-300"
+          class="px-4 py-2 rounded-lg border-2 border-red-500 disabled:border-slate-300 bg-red-500 disabled:bg-transparent font-semibold text-white disabled:text-slate-300"
         >
           Delete Account
         </button>
@@ -50,11 +70,13 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 
 export default {
-  name: 'DeleteAccount',
+  name: "DeleteAccount",
+  props: ["currentUser"],
 
   data() {
     return {
-      selectedLanguage: 'en',
+      selectedLanguage: "en",
+      newEmail: "",
       showConfirmMessage: false,
       acknowledged: false,
       showFinishMessage: false,
@@ -62,6 +84,30 @@ export default {
   },
 
   methods: {
+    async updateEmail() {
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "mycookies": document.cookie,
+        },
+        body: JSON.stringify({
+          email: this.newEmail,
+        }),
+      }
+
+      let response = await fetch("/api/account", requestOptions).then(response => response.json())
+
+      if (!response || response.error) {
+        console.error(response)
+        alert("Failed to update email address: " + response?.error)
+      }
+      else {
+        alert("Email address successfully updated.")
+        this.newEmail = ""
+      }
+    },
+
     async requestAccountDeletion() {
       if (!this.showConfirmMessage) {
         // First time: show confirmation message
@@ -77,16 +123,15 @@ export default {
     },
 
     async deleteAccount() {
-      const headers = new Headers()
-      headers.append("Content-Type", "application/json")
-      headers.append("mycookies", `session=${cookies.get("session")}`)
-
       const requestOptions = {
         method: "DELETE",
-        headers: headers,
+        headers: {
+          "Content-Type": "application/json",
+          "mycookies": document.cookie,
+        },
       }
 
-      let response = await fetch("http://localhost:3000/api/account", requestOptions).then(response => response.json())
+      let response = await fetch("/api/account", requestOptions).then(response => response.json())
 
       if (!response || response.error) {
         console.error(response)
@@ -94,10 +139,9 @@ export default {
         return false
       }
       else {
-        console.log(response)
         return true
       }
-    }
+    },
   },
 }
 </script>

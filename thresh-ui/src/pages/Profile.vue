@@ -22,7 +22,7 @@
           <label class="block text-[#283618] text-sm font-bold">Username</label>
           <input
             type="text"
-            placeholder="YourUsername"
+            placeholder="User"
             class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
             :value="currentUser?.username"
             disabled
@@ -137,7 +137,7 @@
         <div class="flex items-center gap-3 mb-6">
           <img src="../assets/profile.png" class="w-10 h-10 rounded-full" alt="User" />
           <h2 class="text-xl font-semibold text-[#283618]">
-            {{ currentUser?.username }}’s Reviews
+            {{ currentUser?.username || 'User' }}’s Reviews
           </h2>
         </div>
 
@@ -200,15 +200,14 @@ export default {
     async fetchUserReviews() {
       try {
         if (!this.currentUser?.username) return;
-        const response = await fetch(
-          `http://localhost:3000/api/user/${this.currentUser.username}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'mycookies': document.cookie,
-            },
-          }
-        );
+        
+        const response = await fetch(`/api/user/${this.currentUser.username}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'mycookies': document.cookie,
+          },
+        });
+
         if (!response.ok) throw new Error('Failed to fetch user reviews');
         const data = await response.json();
         this.userReviews = data.reviews.map(r => ({ ...r, business: r.business }));

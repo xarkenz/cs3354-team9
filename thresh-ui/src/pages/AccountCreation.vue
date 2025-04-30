@@ -136,7 +136,7 @@ export default {
       });
 
       try {
-        const data = await fetch("http://localhost:3000/api/signup", {
+        const data = await fetch("/api/signup", {
           method: "POST",
           headers,
           body: raw,
