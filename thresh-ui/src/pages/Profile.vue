@@ -151,9 +151,15 @@
 </template>
 
 <script>
-import { Cog6ToothIcon, PencilSquareIcon, NoSymbolIcon, HandThumbUpIcon } from '@heroicons/vue/24/outline';
+import {
+  Cog6ToothIcon,
+  PencilSquareIcon,
+  NoSymbolIcon,
+  HandThumbUpIcon,
+  TrashIcon,
+  ChevronRightIcon
+} from '@heroicons/vue/24/outline';
 import RemoveRestaurant from './RemoveRestaurant.vue';
-import { TrashIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 
 export default {
   name: 'Profile',
@@ -163,6 +169,8 @@ export default {
     PencilSquareIcon,
     NoSymbolIcon,
     HandThumbUpIcon,
+    TrashIcon,          // ← added
+    ChevronRightIcon,   // ← added
     RemoveRestaurant
   },
   data() {
@@ -179,15 +187,16 @@ export default {
       try {
         if (!this.currentUser?.username) return;
         
-        const response = await fetch(`http://localhost:3000/api/user/${this.currentUser.username}`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'mycookies': document.cookie, // Include session token manually
-          },
-        });
-
+        const response = await fetch(
+          `http://localhost:3000/api/user/${this.currentUser.username}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'mycookies': document.cookie, // Include session token manually
+            },
+          }
+        );
         if (!response.ok) throw new Error('Failed to fetch user reviews');
-
         const data = await response.json();
         this.userReviews = data.reviews.map(r => ({
           ...r,
