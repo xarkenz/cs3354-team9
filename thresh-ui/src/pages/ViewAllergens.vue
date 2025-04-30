@@ -5,6 +5,8 @@ import logo from './../assets/edit-246.png';
 // stores dishes in edit more and expanded state
 const expandedDishes = reactive({});
 const editingDishes = reactive({});
+// Store dishes with pending changes
+const pendingChanges = reactive({});
 
 // Initialize reactive reference for restaurants data
 const restaurants = ref([]);
@@ -107,12 +109,25 @@ const toggleDish = (dishId) => {
   // If we're collapsing the dish, also exit edit mode
   if (!expandedDishes[dishId]) {
     editingDishes[dishId] = false;
+    // Clear any unsaved changes
+    if (pendingChanges[dishId]) {
+      delete pendingChanges[dishId];
+    }
   }
 };
 
 // toggle the edit mode for the dish
 const toggleEditMode = (dishId) => {
+  // If we're exiting edit mode and have pending changes, ask for confirmation
+  if (editingDishes[dishId] && pendingChanges[dishId]) {
+    if (!confirm("You have unsaved changes. Are you sure you want to exit edit mode?")) {
+      return;
+    }
+    delete pendingChanges[dishId];
+  }
+  
   editingDishes[dishId] = !editingDishes[dishId];
+  
   // If we're entering edit mode, make sure the dish is expanded
   if (editingDishes[dishId]) {
     expandedDishes[dishId] = true;
@@ -121,10 +136,19 @@ const toggleEditMode = (dishId) => {
 
 // change the selected restaurant
 const changeRestaurant = (restaurant) => {
+  // If we have pending changes, ask for confirmation
+  if (Object.keys(pendingChanges).length > 0) {
+    if (!confirm("You have unsaved changes. Are you sure you want to change restaurants?")) {
+      return;
+    }
+  }
+  
   selectedRestaurant.value = restaurant;
   // Reset expanded and editing states when changing restaurant
   Object.keys(expandedDishes).forEach(key => delete expandedDishes[key]);
   Object.keys(editingDishes).forEach(key => delete editingDishes[key]);
+  // Clear all pending changes
+  Object.keys(pendingChanges).forEach(key => delete pendingChanges[key]);
 };
 
 // function to show notification
@@ -171,7 +195,7 @@ const refreshRestaurantData = async () => {
 };
 
 // toggle an allergen (for when we're in edit mode)
-const toggleAllergen = async (dishId, allergenKey) => {
+const toggleAllergen = (dishId, allergenKey) => {
   if (!editingDishes[dishId] || !selectedRestaurant.value) return;
   
   const dish = selectedRestaurant.value.dishes.find(d => d.id === dishId);
@@ -183,46 +207,60 @@ const toggleAllergen = async (dishId, allergenKey) => {
     return;
   }
   
+  // Initialize pending changes for this dish if not exists
+  if (!pendingChanges[dishId]) {
+    pendingChanges[dishId] = {
+      dishId: dish.id,
+      allergens: [...(dish.allergens || [])],
+      allergenFree: [...(dish.allergenFree || [])]
+    };
+  }
+  
   // find the lowercase key 
   const normalizedKey = normalizeAllergenKey(allergenKey);
   
   // what's the status of the allergen
   const status = getAllergenStatus(dish, allergenKey);
   
-  // if arrays don't exist, create them
-  if (!dish.allergens) dish.allergens = [];
-  if (!dish.allergenFree) dish.allergenFree = [];
-
-  const allergens = [...dish.allergens];
-  const allergenFree = [...dish.allergenFree];
-
-  dish.allergens = allergens.filter(a => normalizeAllergenKey(a) !== normalizedKey);
-  dish.allergenFree = allergenFree.filter(a => normalizeAllergenKey(a) !== normalizedKey);
+  // Remove from both arrays first
+  pendingChanges[dishId].allergens = pendingChanges[dishId].allergens.filter(
+    a => normalizeAllergenKey(a) !== normalizedKey
+  );
+  pendingChanges[dishId].allergenFree = pendingChanges[dishId].allergenFree.filter(
+    a => normalizeAllergenKey(a) !== normalizedKey
+  );
   
-  // change the status (unidentified -> allergens, allergenFree -> unidentified)
+  // Change the status (unidentified -> allergenFree (not present), allergenFree -> allergens (present))
   if (status === "unidentified") {
-    // If it was unidentified, mark as allergen present
-    dish.allergens.push(allergenKey);
+    // If it was unidentified, mark as not present first
+    pendingChanges[dishId].allergenFree.push(allergenKey);
   } else if (status === false) {
-    // If it was marked as not present, change to unidentified (remove from both arrays)
+    // If it was marked as not present, now mark as present
+    pendingChanges[dishId].allergens.push(allergenKey);
   }
   
-  // Update the database with the changes
+  // Apply pending changes to the dish for immediate UI feedback
+  dish.allergens = [...pendingChanges[dishId].allergens];
+  dish.allergenFree = [...pendingChanges[dishId].allergenFree];
+};
+
+// Save changes to the database
+const saveChanges = async (dishId) => {
+  if (!pendingChanges[dishId]) {
+    showNotification("No changes to save", false);
+    return;
+  }
+  
   try {
-    // just updated information for the backend api 
-    const payload = {
-      dishId: dish.id,
-      allergens: dish.allergens,
-      allergenFree: dish.allergenFree
-    };
+    loading.value = true;
     
     // Send the update to the server
-    const response = await fetch(`http://localhost:3001/api/dishes/${dish.id}/allergens`, {
+    const response = await fetch(`http://localhost:3001/api/dishes/${dishId}/allergens`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(pendingChanges[dishId])
     });
     
     if (!response.ok) {
@@ -231,16 +269,27 @@ const toggleAllergen = async (dishId, allergenKey) => {
     
     console.log('Allergen information updated successfully in database');
     
+    // Clear pending changes for this dish
+    delete pendingChanges[dishId];
+    
     // success notification 
     showNotification('Allergen information updated successfully', false);
+    
+    loading.value = false;
   } catch (error) {
     console.error('Error updating allergen information:', error);
     // error notification
     showNotification(`Error updating allergen information: ${error.message}`, true);
     
-    // revert the change if needed. 
+    // revert the change
     refreshRestaurantData();
+    loading.value = false;
   }
+};
+
+// Check if there are pending changes for a dish
+const hasPendingChanges = (dishId) => {
+  return pendingChanges[dishId] !== undefined;
 };
 </script>
 
@@ -320,7 +369,7 @@ const toggleAllergen = async (dishId, allergenKey) => {
           <div class="flex justify-center">
             <div class="overflow-x-auto w-full">
               <div v-if="editingDishes[dish.id]" class="bg-yellow-100 p-3 mb-3 rounded border border-yellow-400">
-                <p class="text-yellow-800 font-medium">Edit Mode Active: You can only modify unidentified allergens or those marked as not present.</p>
+                <p class="text-yellow-800 font-medium">Edit Mode Active: You can only modify unidentified allergens or those marked as not present. The toggle sequence is: Empty → Not Present (X) → Present (✓).</p>
               </div>
               
               <table class="min-w-full border border-[#914F3B] border-collapse rounded-lg overflow-hidden shadow-lg">
@@ -357,6 +406,23 @@ const toggleAllergen = async (dishId, allergenKey) => {
                   </tr>
                 </tbody>
               </table>
+              
+              <!-- Save Changes Button -->
+              <div v-if="editingDishes[dish.id]" class="mt-4 flex justify-end">
+                <div class="flex items-center">
+                  <span v-if="hasPendingChanges(dish.id)" class="text-orange-600 mr-3">
+                    <strong>* Unsaved Changes</strong>
+                  </span>
+                  <button 
+                    @click="saveChanges(dish.id)" 
+                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded shadow transition"
+                    :disabled="!hasPendingChanges(dish.id)"
+                    :class="{'opacity-50 cursor-not-allowed': !hasPendingChanges(dish.id)}"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
