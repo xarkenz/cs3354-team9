@@ -308,3 +308,4 @@ app.listen(port, () => {
 });
 
 module.exports = { sessions, getSessionToken };
+
