@@ -282,9 +282,11 @@ export default {
           (restaurant.dishes && this.restaurantSupportsAllergy(restaurant, this.selectedAllergy));
         
         // Filter by dietary restriction - check both dietaryRestriction field and icons array
-        const matchesDietary = !this.selectedDietaryRestriction || 
-          this.restaurantSupportsDietary(restaurant, this.selectedDietaryRestriction);
-        
+        const matchesDietary = 
+  !this.selectedDietaryRestriction || 
+  this.selectedDietaryRestriction === 'None' || 
+  this.restaurantSupportsDietary(restaurant, this.selectedDietaryRestriction);
+
         // Filter by price range
         const matchesPrice = !this.selectedPrice || restaurant.priceRange === this.selectedPrice;
         
