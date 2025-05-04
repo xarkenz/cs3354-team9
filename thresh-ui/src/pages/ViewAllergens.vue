@@ -45,7 +45,11 @@ const allergenMap = {
 
 // convert allergen keys to all lowkeycase 
 const normalizeAllergenKey = (key) => {
-  return key.toLowerCase().replace(/\s+/g, '');
+  if (typeof key !== 'string') {
+    console.warn('Expected string key, got:', key);
+    return '';
+  }
+  return key.toLowerCase().replace(/\s+/g, "_");
 };
 
 // fetch data 
@@ -80,8 +84,16 @@ const getAllergenStatus = (dish, allergenKey) => {
   if (!key) return "unidentified";
   
   // convert to lowercase to compare easily 
-  const normalizedAllergens = dish.allergens?.map(a => a.toLowerCase()) || [];
-  const normalizedAllergenFree = dish.allergenFree?.map(a => a.toLowerCase()) || [];
+  const normalizedAllergens = (dish.allergens || [])
+  .filter(a => typeof a === 'string')
+  .map(a => a.toLowerCase());
+
+  const normalizedAllergenFree = (dish.allergenFree || [])
+  .filter(a => typeof a === 'string')
+  .map(a => a.toLowerCase());
+
+  //const normalizedAllergens = dish.allergens?.map(a => a.toLowerCase()) || [];
+  //const normalizedAllergenFree = dish.allergenFree?.map(a => a.toLowerCase()) || [];
   
   // is the allergen in the allergens array 
   if (normalizedAllergens.includes(key.toLowerCase())) {
