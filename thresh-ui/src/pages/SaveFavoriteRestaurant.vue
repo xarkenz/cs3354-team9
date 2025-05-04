@@ -1,76 +1,34 @@
-<!-- 
- Author: Kutsal Aksu
- UC09: Save Favorite Restaurant
- -->
 <template>
   <div class="save-favorite-page">
-    <h2>Restaurants</h2>
-
-    <!-- Search and Filter Controls -->
-    <div class="controls">
-      <input 
-        v-model="searchQuery" 
-        type="text" 
-        placeholder="Search restaurants..." 
-        class="search-input"
-      />
-      
-      <select v-model="selectedCuisine" class="cuisine-select">
-        <option value="all">All Cuisines</option>
-        <option v-for="cuisine in availableCuisines" :key="cuisine" :value="cuisine">
-          {{ cuisine }}
-        </option>
-      </select>
-    </div>
+    <h2>My Favorite Restaurants</h2>
 
     <!-- Messages -->
     <div v-if="errorMessage" class="error-message">
+      <button class="close-btn" @click="errorMessage = ''">×</button>
       {{ errorMessage }}
     </div>
     <div v-if="successMessage" class="success-message">
+      <button class="close-btn" @click="successMessage = ''">×</button>
       {{ successMessage }}
-    </div>
-
-    <!-- Restaurant List -->
-    <div class="restaurant-list">
-      <div
-        v-for="restaurant in filteredRestaurants"
-        :key="restaurant.id"
-        class="restaurant-card"
-      >
-        <div class="restaurant-header">
-          <h3>{{ restaurant.name }}</h3>
-          <span class="rating">⭐ {{ restaurant.rating }}</span>
-          <span class="price">{{ restaurant.priceRange }}</span>
-        </div>
-        <p class="cuisine">{{ restaurant.cuisine }}</p>
-        <p class="location">{{ restaurant.location }}</p>
-        <div class="actions">
-          <button 
-            v-if="!isRestaurantFavorited(restaurant.id)"
-            @click="saveFavorite(restaurant)"
-            class="save-btn"
-          >
-            🤍 Save to Favorites
-          </button>
-          <button 
-            v-else 
-            @click="removeFavorite(restaurant.id)"
-            class="remove-btn"
-          >
-            🗑️ Remove from Favorites
-          </button>
-        </div>
-      </div>
     </div>
 
     <!-- Favorites Section -->
     <div class="favorites-section">
-      <h3>Your Favorites ({{ getFavoriteCount() }})</h3>
-      <ul class="favorites-list">
-        <li v-for="fav in favorites" :key="fav.id" class="favorite-item">
-          {{ fav.name }} - {{ fav.cuisine }}
-          <button @click="removeFavorite(fav.id)" class="remove-btn">🗑️</button>
+      <h3>Your Favorite Restaurants</h3>
+      
+      <div v-if="favorites.length === 0" class="no-favorites">
+        <p>You haven't saved any favorites yet.</p>
+      </div>
+      
+      <ul v-else class="favorites-list">
+        <li v-for="(favorite, index) in favorites" :key="index" class="favorite-item">
+          <div class="favorite-info">
+            <strong>{{ favorite.name }}</strong>
+            <span v-if="favorite.cuisine" class="cuisine-tag">{{ favorite.cuisine }}</span>
+          </div>
+          <button @click="removeFavorite(favorite)" class="remove-fav-btn">
+            <span class="trash-icon">🗑️</span> Remove
+          </button>
         </li>
       </ul>
     </div>
@@ -83,160 +41,75 @@ export default {
 
   data() {
     return {
-      restaurants: [], // Restaurants will be populated dynamically
       favorites: [],
-      testMode: process.env.NODE_ENV === 'test',
-      // New data properties for use cases
-      searchQuery: '',
-      selectedCuisine: 'all',
-      showOnlyFavorites: false,
       errorMessage: '',
       successMessage: ''
     };
   },
 
-  computed: {
-    // Filter and sort restaurants based on user preferences
-    filteredRestaurants() {
-      let result = this.restaurants;
-      
-      // Filter by search query
-      if (this.searchQuery) {
-        result = result.filter(restaurant => 
-          restaurant.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          restaurant.cuisine.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-      }
-      
-      // Filter by cuisine
-      if (this.selectedCuisine !== 'all') {
-        result = result.filter(restaurant => 
-          restaurant.cuisine.toLowerCase() === this.selectedCuisine.toLowerCase()
-        );
-      }
-      
-      return result;
-    },
-
-    // Get unique cuisines for filter dropdown
-    availableCuisines() {
-      const cuisines = new Set(this.restaurants.map(r => r.cuisine));
-      return ['all', ...cuisines];
-    }
-  },
-
   methods: {
-    saveFavorite(restaurant) {
-      if (!restaurant || !restaurant.id) {
-        this.errorMessage = 'Invalid restaurant data';
-        setTimeout(() => this.errorMessage = '', 3000);
-        return;
-      }
+    // removes from favorites 
+    removeFavorite(favorite) {
+      // finds the index from the cookie array
+      const index = this.favorites.findIndex(fav => fav.name === favorite.name);
       
-      const exists = this.favorites.find(fav => fav.id === restaurant.id);
-      if (!exists) {
-        this.favorites.push(restaurant);
-        this.successMessage = `Added ${restaurant.name} to favorites!`;
-        setTimeout(() => this.successMessage = '', 3000);
-        this.$emit('favorite-added', restaurant);
-      } else {
-        this.errorMessage = `${restaurant.name} is already in your favorites`;
-        setTimeout(() => this.errorMessage = '', 3000);
-        this.$emit('favorite-duplicate', restaurant);
+      if (index !== -1) {
+        // Remove from array
+        const removedName = this.favorites[index].name;
+        this.favorites.splice(index, 1);
+        
+        // update cookie
+        this.saveFavoritesToCookie();
+        
+        // Show success message
+        this.showSuccess(`${removedName} removed from favorites`);
       }
     },
 
-    removeFavorite(restaurantId) {
-      this.favorites = this.favorites.filter(fav => fav.id !== restaurantId);
-      this.successMessage = 'Restaurant removed from favorites';
-      setTimeout(() => this.successMessage = '', 3000);
-      this.$emit('favorite-removed', restaurantId);
+    // save favorites to cookies when you update 
+    saveFavoritesToCookie() {
+      document.cookie = `favorites=${encodeURIComponent(JSON.stringify(this.favorites))}; path=/; max-age=31536000`;
+      console.log('Updated favorites:', this.favorites);
     },
 
-    loadRestaurants() {
-      // Dummy restaurant data for testing
-      this.restaurants = [
-        {
-          id: 86,
-          name: "Mi Cocina",
-          cuisine: "Mexican",
-          location: "32.9789318021346,-96.7666886932541",
-          priceRange: "$$",
-        },
-        {
-          id: 50,
-          name: "My Canh Restaurant",
-          cuisine: "",
-          location: "32.9169266,-96.7010156",
-          rating: 5,
-          priceRange: "$$",
-        },
-        {
-          id: 51,
-          name: "Whataburger",
-          cuisine: "American",
-          location: "32.9086395,-96.69982",
-          rating: 5,
-          priceRange: "$$",
+    // Load favorites from cookie
+    loadFavoritesFromCookie() {
+      const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('favorites='));
+      
+      if (cookieValue) {
+        try {
+          const decodedValue = decodeURIComponent(cookieValue.split('=')[1]);
+          this.favorites = JSON.parse(decodedValue);
+          console.log('Loaded favorites from cookie:', this.favorites);
+        } catch (error) {
+          console.error('Error parsing favorites cookie:', error);
+          this.favorites = [];
+          this.showError('Unable to load your favorites');
         }
-        // {
-        //   id: 1,
-        //   name: "Tasty Tacos",
-        //   cuisine: "Mexican",
-        //   location: "123 Main St, Dallas, TX",
-        //   rating: 4.5,
-        //   priceRange: "$"
-        // },
-        // {
-        //   id: 2,
-        //   name: "Pizza Paradise",
-        //   cuisine: "Italian",
-        //   location: "456 Oak Ave, Dallas, TX",
-        //   rating: 4.2,
-        //   priceRange: "$$"
-        // },
-        // {
-        //   id: 3,
-        //   name: "Sushi Sensation",
-        //   cuisine: "Japanese",
-        //   location: "789 Pine St, Dallas, TX",
-        //   rating: 4.8,
-        //   priceRange: "$$$"
-        // },
-        // {
-        //   id: 4,
-        //   name: "Burger Barn",
-        //   cuisine: "American",
-        //   location: "321 Elm St, Dallas, TX",
-        //   rating: 3.9,
-        //   priceRange: "$"
-        // },
-        // {
-        //   id: 5,
-        //   name: "Curry Corner",
-        //   cuisine: "Indian",
-        //   location: "654 Maple Dr, Dallas, TX",
-        //   rating: 4.6,
-        //   priceRange: "$$"
-        // }
-      ];
-      
-      this.$emit('restaurants-loaded', this.restaurants);
+      } else {
+        console.log('No favorites cookie found');
+        this.favorites = [];
+      }
     },
 
-    // Helper method for testing
-    getFavoriteCount() {
-      return this.favorites.length;
+    // success message 
+    showSuccess(message) {
+      this.successMessage = message;
+      setTimeout(() => this.successMessage = '', 3000);
     },
 
-    // Helper method for testing
-    isRestaurantFavorited(restaurantId) {
-      return this.favorites.some(fav => fav.id === restaurantId);
+    // error message 
+    showError(message) {
+      this.errorMessage = message;
+      setTimeout(() => this.errorMessage = '', 3000);
     }
   },
 
   mounted() {
-    this.loadRestaurants();
+    // Load favorites from cookie when the component mounts
+    this.loadFavoritesFromCookie();
   }
 };
 </script>
@@ -246,123 +119,155 @@ export default {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.controls {
-  display: flex;
-  gap: 10px;
+h2 {
+  color: #914F3B;
   margin-bottom: 20px;
+  border-bottom: 2px solid #f8bbd0;
+  padding-bottom: 10px;
 }
 
-.search-input, .cuisine-select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+h3 {
+  color: #e8f5e9;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+/* Messages */
+.error-message, .success-message {
+  position: relative;
+  padding: 12px 35px 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  animation: fadeIn 0.3s;
 }
 
 .error-message {
-  color: #d32f2f;
+  color: #666;
   background-color: #ffebee;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-left: 4px solid #666;
 }
 
 .success-message {
-  color: #388e3c;
+  color: #914F3B;
   background-color: #e8f5e9;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-left: 4px solid #914F3B;
 }
 
-.restaurant-list {
-  margin-bottom: 20px;
-}
-
-.restaurant-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  background-color: white;
-}
-
-.restaurant-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.rating {
-  color: #ff9800;
-}
-
-.price {
-  color: #4caf50;
-}
-
-.cuisine {
-  color: #666;
-  font-style: italic;
-}
-
-.location {
-  color: #666;
-  font-size: 0.9em;
-}
-
-.actions {
-  margin-top: 10px;
-}
-
-.save-btn {
-  background-color: #f44336;
-  color: white;
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
+  font-size: 18px;
   cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
 }
 
-.save-btn:hover {
-  background-color: #d32f2f;
+.close-btn:hover {
+  opacity: 1;
 }
 
-.remove-btn {
-  background-color: #666;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.remove-btn:hover {
-  background-color: #444;
-}
-
+/* Favorites Section */
 .favorites-section {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #ccc;
+  background-color: #8b946f;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .favorites-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .favorite-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.favorite-item:last-child {
-  border-bottom: none;
+.favorite-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.favorite-info {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cuisine-tag {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background-color: #DDA15E;
+  color: #DDA15E;
+  font-weight: normal;
+}
+
+.remove-fav-btn {
+  background-color: #f5f5f5;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.remove-fav-btn:hover {
+  background-color: #914F3B;
+  color: #ffebee;
+}
+
+.trash-icon {
+  font-size: 16px;
+}
+
+.no-favorites {
+  text-align: center;
+  padding: 30px;
+  color: #914F3B;
+  background-color:#914F3B;
+  border-radius: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .favorite-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .remove-fav-btn {
+    align-self: flex-end;
+  }
 }
 </style>
