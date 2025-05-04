@@ -158,9 +158,9 @@ export default {
       this.restaurants = [
         {
           id: 86,
-          name: "Mi Cocina",
-          cuisine: "Mexican",
-          location: "32.9789318021346,-96.7666886932541",
+          name: "Balsas Mexican Restaurant",
+          cuisine: "",
+          location: "32.9101708,-96.6833805",
           priceRange: "$$",
         },
         {

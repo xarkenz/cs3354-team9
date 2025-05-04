@@ -83,9 +83,14 @@
               <div class="price-tag">{{ restaurant.priceRange }}</div>
             </div>
             
-            <div class="restaurant-image" v-if="restaurant.imageUrl">
-              <img :src="restaurant.imageUrl" :alt="restaurant.name">
+            <div class="restaurant-image">
+              <img
+                :src="restaurant.imageUrl || fallbackImage"
+                :alt="restaurant.name"
+                @error="handleImageError($event)"
+              >
             </div>
+
             
             <div class="restaurant-details">
               <div class="detail-item" v-if="restaurant.cuisine">
@@ -142,6 +147,9 @@
 </template>
 
 <script>
+import defaultImage from '../assets/default.jpg';
+
+
 export default {
   name: 'FilterSearch',
   data() {
@@ -157,6 +165,7 @@ export default {
       loading: false,
       allRestaurants: [],
       userLocation: null,
+      fallbackImage: defaultImage,
       error: null
     };
   },
@@ -337,6 +346,14 @@ export default {
       // If no icon or icons, check the dietaryRestriction field
       return restaurant.dietaryRestriction === dietaryRestriction;
     },
+
+    handleImageError(event) {
+  if (event.target.src !== this.fallbackImage) {
+    event.target.src = this.fallbackImage;
+  }
+},
+
+
     
     // Map from frontend allergy filter to backend allergy key
     getAllergyKey(allergyType) {

@@ -16,7 +16,7 @@
       </button>
 
       <!-- Title -->
-      <h2 class="text-2xl font-bold mb-4 text-center text-green-900">Rate this Restaurant</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center text-green-950">Rate this Restaurant</h2>
 
       <!-- Review Title input -->
       <div class="mb-4">
@@ -62,21 +62,31 @@
       <div v-if="!submitted">
         <button
           @click="submitReview"
-          :disabled="rating === 0 || title.trim() === '' || review.trim() === ''"
-          class="bg-green-600 text-white px-6 py-2 rounded-lg w-full disabled:bg-gray-300"
+          class="bg-lime-700 hover:bg-green-950 text-white px-6 py-2 rounded-lg w-full"
         >
           Submit Review
         </button>
+
       </div>
 
       <!-- Success Toast -->
       <div
         v-show="submitted"
-        class="fixed top-1/7 left-1/2 transform -translate-x-1/4 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-[9999] transition-opacity duration-6000 opacity-0"
+        class="fixed top-1/7 left-1/2 transform -translate-x-1/4 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-[9999] transition-opacity duration-6000"
         :class="{ 'opacity-100': submitted }"
       >
         Thank you! Your review has been submitted!
       </div>
+
+      <!-- Error Toast -->
+      <div
+        v-show="showError"
+        class="fixed top-1/7 left-1/2 transform -translate-x-1/4 bg-red-600 text-white px-4 py-2 rounded shadow-lg z-[9999] transition-opacity duration-300"
+        :class="{ 'opacity-100': showError }"
+      >
+        {{ errorMessage }}
+      </div>
+
     </div>
   </div>
 </template>
@@ -97,6 +107,8 @@ export default {
       title: '',
       review: '',
       submitted: false,
+      errorMessage: '',
+      showError: false,
     };
   },
   mounted() {
@@ -112,7 +124,23 @@ export default {
   },
   methods: {
     async submitReview() {
-  if (!this.rating || !this.review.trim() || !this.title.trim()) return;
+      if (this.rating === 0) {
+        this.errorMessage = 'Please select a star rating.';
+        console.log("can't submit without rating")
+        this.triggerErrorToast();
+        return;
+      }
+      if (this.title.trim() === '') {
+        this.errorMessage = 'Please enter a review title.';
+        this.triggerErrorToast();
+        return;
+      }
+      if (this.review.trim() === '') {
+        this.errorMessage = 'Please enter your review text.';
+        this.triggerErrorToast();
+        return;
+      }
+
 
   try {
     const response = await fetch('http://localhost:3000/api/reviews', {
@@ -130,6 +158,7 @@ export default {
     });
 
     if (!response.ok) throw new Error('Failed to submit review');
+    
 
     this.submitted = true;
     console.log("Submitted set to true");
@@ -150,6 +179,14 @@ export default {
   }
 },
 
+triggerErrorToast() {
+  this.showError = true;
+  setTimeout(() => {
+    this.showError = false;
+  }, 3000);
+}
+
+
   },
 };
 </script>
@@ -163,4 +200,9 @@ input:focus {
   border-color: #4ade80; /* Tailwind green-400 */
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.3);
 }
+
+.opacity-100 {
+  opacity: 1 !important;
+}
+
 </style>
