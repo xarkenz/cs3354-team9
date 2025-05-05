@@ -191,7 +191,7 @@ function saveToFavorites(event){
         <!-- View Allergen List Button -->
         <a
           :href="`/view-allergens/${place.id}`"
-          class="bg-amber-800 text-white px-3 py-2 rounded flex items-center gap-2"
+          class="bg-amber-800 text-white px-3 py-2 rounded flex items-center gap-2 hover:amber-900"
         >
           <DocumentTextIcon class="w-5 h-5 text-white" />
           View Allergen List
